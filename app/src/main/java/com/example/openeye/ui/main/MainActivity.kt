@@ -1,34 +1,31 @@
-package com.example.openeye.ui
+package com.example.openeye.ui.main
 
 import android.content.Intent
-import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.view.KeyEvent
 import android.widget.ImageView
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
-import com.example.openeye.MyFragmentPagerAdapter
 import com.example.openeye.R
+import com.example.openeye.ui.base.BaseActivity
+import com.example.openeye.ui.feed.FeedFragment
 import com.example.openeye.ui.home.HomeFragment
 import com.example.openeye.ui.video.VideoActivity
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlin.math.abs
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
 
     private lateinit var viewpager: ViewPager2
     lateinit var toolbar: MaterialToolbar
     lateinit var searchIv: ImageView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
-        ViewCompat.getWindowInsetsController(window.decorView)?.isAppearanceLightStatusBars =
-            true // 设置状态栏字体颜色为黑色
+
         setContentView(R.layout.activity_main)
+
 
         viewpager = findViewById<ViewPager2>(R.id.main_vp)
         searchIv = findViewById(R.id.main_iv_search)
@@ -58,7 +55,7 @@ class MainActivity : AppCompatActivity() {
         }
         viewpager.setPageTransformer(animatorVp)
         val mFragments = ArrayList<Fragment>()
-        mFragments.add(HomeFragment())
+        mFragments.add(FeedFragment())
         mFragments.add(HomeFragment())
         mFragments.add(HomeFragment())
         mFragments.add(HomeFragment())

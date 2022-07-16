@@ -1,5 +1,6 @@
 package com.example.openeye.ui.video
 
+import android.graphics.drawable.Animatable
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
@@ -13,6 +14,7 @@ class VideoActivity : GSYBaseActivityDetail<StandardGSYVideoPlayer>() {
 
     lateinit var videoPlayer: StandardGSYVideoPlayer
     lateinit var orientationUtils: OrientationUtils
+    lateinit var button: ImageView
     private val url =
         "http://baobab.kaiyanapp.com/api/v1/playUrl?vid=106404&resourceType=video&editionType=default&source=aliyun&playUrlType=url_oss&udid="
 
@@ -20,6 +22,10 @@ class VideoActivity : GSYBaseActivityDetail<StandardGSYVideoPlayer>() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_video)
         videoPlayer = findViewById(R.id.video_player)
+        button = findViewById(R.id.video_iv_animator)
+        button.setOnClickListener {
+            (button.drawable as Animatable).start()
+        }
         videoPlayer.titleTextView.visibility = View.GONE
         videoPlayer.backButton.visibility = View.GONE
         initVideoBuilderMode()

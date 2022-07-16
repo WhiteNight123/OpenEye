@@ -10,7 +10,6 @@ import androidx.annotation.CallSuper
 import androidx.annotation.IdRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
-import androidx.core.view.WindowCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.lifecycle.LiveData
@@ -70,7 +69,7 @@ abstract class BaseActivity(
         // 注意，使用了下面这个方法后，状态栏不会再有东西占位，
         // 可以给根布局加上 android:fitsSystemWindows=true
         // 不同布局该属性效果不同，请给合适的布局添加
-        WindowCompat.setDecorFitsSystemWindows(window, false)
+        //WindowCompat.setDecorFitsSystemWindows(window, false)
         val windowInsetsController = ViewCompat.getWindowInsetsController(decorView)
         windowInsetsController?.isAppearanceLightStatusBars = true // 设置状态栏字体颜色为黑色
         window.statusBarColor = Color.TRANSPARENT //把状态栏颜色设置成透明

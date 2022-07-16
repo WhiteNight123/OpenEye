@@ -1,4 +1,13 @@
 <resources>
+    <!-- Splash启动页Style -->
+    <style name="Theme.SplashScreen.Demo" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <!-- 设置statusBarColor 为透明-->
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowBackground">@drawable/ic_background</item>
+    </style>
+
     <!-- Base application theme. -->
     <style name="Theme.OpenEye" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->

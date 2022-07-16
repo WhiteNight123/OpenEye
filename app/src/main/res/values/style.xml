@@ -9,4 +9,15 @@
     <style name="bottom_tab_title_inactive">
         <item name="android:textSize">12sp</item>
     </style>
+
+    <!--ShapeableImageView 圆角-->
+    <style name="RoundedStyle">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">10dp</item>
+    </style>
+    <!--ShapeableImageView 圆 -->
+    <style name="CircleStyle">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
 </resources>

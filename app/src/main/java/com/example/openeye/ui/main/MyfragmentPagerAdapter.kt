@@ -1,4 +1,4 @@
-package com.example.openeye
+package com.example.openeye.ui.main
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
