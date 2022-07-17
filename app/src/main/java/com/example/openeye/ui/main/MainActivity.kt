@@ -23,26 +23,26 @@ class MainActivity : BaseActivity() {
     lateinit var searchIv: ImageView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setContentView(R.layout.activity_main)
 
-
-        viewpager = findViewById<ViewPager2>(R.id.main_vp)
+        viewpager = findViewById(R.id.main_vp)
         searchIv = findViewById(R.id.main_iv_search)
+
         val bottomNavigationView =
             findViewById<BottomNavigationView>(R.id.main_bottom_navigation_view)
         toolbar = findViewById(R.id.toolbar)
         val badge =
             bottomNavigationView.getOrCreateBadge(bottomNavigationView.menu.getItem(3).itemId)
-        badge.number = 2000
+        badge.number = 200
+        badge.maxCharacterCount = 3
         toolbar.apply {
-            title = "Banzai"
+            title = "RedRock"
         }
         searchIv.setOnClickListener {
             val intent = Intent(this, VideoActivity::class.java)
             //val pair1 = Pair.create(view, view.transitionName)
             //val compat = ActivityOptionsCompat.makeSceneTransitionAnimation(this, pair1, pair2, pair3)
-            startActivity(intent)
+            //startActivity(intent)
         }
         val animatorVp = ViewPager2.PageTransformer { page, position ->
             val absPos = abs(position)
@@ -92,10 +92,7 @@ class MainActivity : BaseActivity() {
         })
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-    }
-
+    private var mExitTime: Long = 0
     override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             if (System.currentTimeMillis() - mExitTime > 2000) {
@@ -108,7 +105,5 @@ class MainActivity : BaseActivity() {
         }
         return super.onKeyDown(keyCode, event)
     }
-
-    private var mExitTime: Long = 0
 
 }

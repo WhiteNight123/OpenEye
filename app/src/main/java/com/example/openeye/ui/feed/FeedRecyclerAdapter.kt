@@ -12,7 +12,7 @@ import com.example.openeye.logic.model.VideoDetailsBean
 
 class FeedRecyclerAdapter(
     private val data: ArrayList<VideoDetailsBean>,
-    private val onClick: (view: View) -> Unit
+    private val onClick: (view: View, videoBean: VideoDetailsBean) -> Unit
 ) : RecyclerView.Adapter<FeedRecyclerAdapter.InnerHolder>() {
     inner class InnerHolder(view: View) : RecyclerView.ViewHolder(view) {
         var mTvTitle: TextView
@@ -28,7 +28,7 @@ class FeedRecyclerAdapter(
             mIvAuthor = view.findViewById(R.id.feed_iv_author)
             mIvCover = view.findViewById(R.id.feed_iv_cover)
             mIvCover.setOnClickListener {
-                onClick(mIvCover)
+                onClick(mIvCover, data[absoluteAdapterPosition])
             }
         }
     }
@@ -44,12 +44,11 @@ class FeedRecyclerAdapter(
         holder.apply {
             holder.mTvTitle.text = data[position].videoTitle
             mTvLable.text = data[position].authorName
-            mTvTime.text = data[position].videoId
+            mTvTime.text = data[position].videoDuration
             Glide.with(mIvCover).load(data[position].videoCover).centerCrop()
                 .into(mIvCover)
             Glide.with(mIvAuthor).load(data[position].authorIcon).centerCrop()
                 .into(mIvAuthor)
-
         }
     }
 

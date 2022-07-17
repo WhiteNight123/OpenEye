@@ -1,20 +1,32 @@
 package com.example.openeye.logic.model
 
-import android.os.Parcelable
-import kotlinx.parcelize.Parcelize
+import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
-@Parcelize
 
 data class VideoDetailsBean(
+    @SerializedName("videoTitle")
     val videoTitle: String,
+    @SerializedName("videoUrl")
     val videoUrl: String,
+    @SerializedName("videoId")
     val videoId: String,
+    @SerializedName("videoDescription")
     val videoDescription: String,
-    val likeCount: Int,
+    @SerializedName("likeCount")
+    var likeCount: Int,
+    @SerializedName("shareCount")
     val shareCount: Int,
+    @SerializedName("replyCount")
     val replyCount: Int,
-    val authorIcon: String,
+    @SerializedName("authorIcon")
+    val authorIcon: String?,
+    @SerializedName("authorName")
     val authorName: String,
+    @SerializedName("authorDescription")
     val authorDescription: String?,
-    val videoCover: String
-) : Parcelable
+    @SerializedName("videoCover")
+    val videoCover: String,
+    @SerializedName("videoDuration")
+    val videoDuration: String
+) : Serializable

@@ -6,6 +6,7 @@
     tools:context=".ui.feed.FeedFragment">
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/feed_srl_refresh"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 

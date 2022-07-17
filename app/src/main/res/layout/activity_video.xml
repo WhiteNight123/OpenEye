@@ -1,45 +1,213 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/activity_detail_player"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer
+        android:id="@+id/video_player"
+        android:layout_width="match_parent"
+        android:layout_height="225dp"
+        android:transitionName="video_cover"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
     <androidx.core.widget.NestedScrollView
         android:id="@+id/post_detail_nested_scroll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fillViewport="true">
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/video_player"
+        app:layout_constraintVertical_bias="0.0">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="wrap_content">
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="225dp" />
-
-            <ImageView
-                android:id="@+id/video_iv_animator"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_gravity="center_horizontal"
-                app:srcCompat="@drawable/asld_eye" />
-
-            <TextView
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="  但风向是会转变的。终有一天，会吹向更有光亮的方向。从今往后，带着我的祝福，活得更加从容一些把。但风向是会转变的。终有一天，会吹向更有光亮的方向。从今往后，带着我的祝福，活得更加从容一些把。但风向是会转变的。终有一天，会吹向更有光亮的方向。从今往后，带着我的祝福，活得更加从容一些把。但风向是会转变的。终有一天，会吹向更有光亮的方向。从今往后，带着我的祝福，活得更加从容一些把。但风向是会转变的。终有一天，会吹向更有光亮的方向。从今往后，带着我的祝福，活得更加从容一些把。但风向是会转变的。终有一天，会吹向更有光亮的方向。从今往后，带着我的祝福，活得更加从容一些把。但风向是会转变的。终有一天，会吹向更有光亮的方向。从今往后，带着我的祝福，活得更加从容一些把。但风向是会转变的。终有一天，会吹向更有光亮的方向。从今往后，带着我的祝福，活得更加从容一些把。但风向是会转变的。终有一天，会吹向更有光亮的方向。从今往后，带着我的祝福，活得更加从容一些把。但风向是会转变的。终有一天，会吹向更有光亮的方向。从今往后，带着我的祝福，活得更加从容一些把。但风向是会转变的。终有一天，会吹向更有光亮的方向。从今往后，带着我的祝福，活得更加从容一些把。但风向是会转变的。终有一天，会吹向更有光亮的方向。从今往后，带着我的祝福，活得更加从容一些把。但风向是会转变的。终有一天，会吹向更有光亮的方向。从今往后，带着我的祝福，活得更加从容一些把。但风向是会转变的。终有一天，会吹向更有光亮的方向。从今往后，带着我的祝福，活得更加从容一些把。但风向是会转变的。终有一天，会吹向更有光亮的方向。从今往后，带着我的祝福，活得更加从容一些把。"
-                android:textSize="16sp" />
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                app:cardCornerRadius="10dp"
+                app:contentPadding="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-        </LinearLayout>
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/video_tv_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="奥地利矿业大学，为未来而生的 MZ 世代"
+                        android:textSize="19sp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/video_tv_describe"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:ellipsize="end"
+                        android:maxLines="2"
+                        android:text="这是一则来自 Montanuniversität Leoben 大学的宣传片「为未来而生」。短片中社会在资源、气候、能源和环境领域面临的主要挑战需要技术解决方案。Montanuniversität Leoben 是一所技术大学，也是奥地利唯一一所采矿和冶金大学。From Montanuniversität Leoben"
+                        android:textSize="16sp"
+                        android:textStyle=""
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/video_tv_title" />
+
+                    <ImageView
+                        android:id="@+id/video_iv_unlike"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginTop="4dp"
+                        android:src="@drawable/ic_unlike_24"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/video_tv_describe" />
+
+                    <ImageView
+                        android:id="@+id/video_iv_like"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginTop="4dp"
+                        android:src="@drawable/ic_like_24"
+                        android:visibility="invisible"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/video_tv_describe" />
+
+                    <TextView
+                        android:id="@+id/video_tv_like"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginStart="8dp"
+                        android:text="155"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/video_iv_like"
+                        app:layout_constraintTop_toTopOf="@+id/video_iv_like" />
+
+                    <ImageView
+                        android:id="@+id/video_iv_share"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginStart="24dp"
+                        android:layout_marginTop="4dp"
+                        android:src="@drawable/ic_share_24"
+                        app:layout_constraintStart_toEndOf="@+id/video_tv_like"
+                        app:layout_constraintTop_toBottomOf="@+id/video_tv_describe" />
+
+                    <TextView
+                        android:id="@+id/video_tv_share"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="22"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/video_iv_share"
+                        app:layout_constraintTop_toTopOf="@+id/video_iv_like" />
+
+                    <ImageView
+                        android:id="@+id/video_iv_reply"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginStart="24dp"
+                        android:layout_marginTop="4dp"
+                        android:src="@drawable/ic_reply_24"
+                        app:layout_constraintStart_toEndOf="@+id/video_tv_share"
+                        app:layout_constraintTop_toBottomOf="@+id/video_tv_describe" />
+
+                    <TextView
+                        android:id="@+id/video_tv_reply"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="6"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/video_iv_reply"
+                        app:layout_constraintTop_toTopOf="@+id/video_iv_like" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardView2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                app:cardCornerRadius="10dp"
+                app:contentPadding="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cardView">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/video_iv_author"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_marginStart="8dp"
+                        android:src="@color/purple_200"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:shapeAppearance="@style/CircleStyle" />
+
+                    <TextView
+                        android:id="@+id/video_tv_author"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="全球广告精选"
+                        android:textSize="19sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toTopOf="@+id/video_tv_author_describe"
+                        app:layout_constraintStart_toEndOf="@+id/video_iv_author"
+                        app:layout_constraintTop_toTopOf="@+id/video_iv_author" />
+
+                    <TextView
+                        android:id="@+id/video_tv_author_describe"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:text="我们精选世界最好看的广告，为全世界广告人的精彩创意点赞。"
+                        android:textSize="16sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/video_iv_author"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/video_iv_author"
+                        app:layout_constraintTop_toBottomOf="@+id/video_tv_author" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/video_rv_recent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cardView2" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
 
     </androidx.core.widget.NestedScrollView>
 
-    <com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer
-        android:id="@+id/video_player"
-        android:layout_width="match_parent"
-        android:layout_height="225dp" />
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
