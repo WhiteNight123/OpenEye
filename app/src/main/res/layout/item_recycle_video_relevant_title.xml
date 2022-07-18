@@ -7,8 +7,8 @@
         android:id="@+id/video_tv_relevant_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginVertical="4dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="8dp"
         android:text="旅行类最新视频"
         android:textSize="16sp" />
 

@@ -11,6 +11,7 @@ import com.example.openeye.R
 import com.example.openeye.ui.base.BaseActivity
 import com.example.openeye.ui.feed.FeedFragment
 import com.example.openeye.ui.home.HomeFragment
+import com.example.openeye.ui.rank.BannerFragment
 import com.example.openeye.ui.video.VideoActivity
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -57,7 +58,7 @@ class MainActivity : BaseActivity() {
         val mFragments = ArrayList<Fragment>()
         mFragments.add(FeedFragment())
         mFragments.add(HomeFragment())
-        mFragments.add(HomeFragment())
+        mFragments.add(BannerFragment())
         mFragments.add(HomeFragment())
         viewpager.adapter = MyFragmentPagerAdapter(this, mFragments)
         bottomNavigationView.setOnItemSelectedListener {

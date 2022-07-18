@@ -19,7 +19,7 @@ data class VideoRelevantBean(
             val actionUrl: String,
             val ad: Boolean,
             val adTrack: List<Any>,
-            val author: Author,
+            val author: Author?,
             val brandWebsiteInfo: Any,
             val campaign: Any,
             val category: String,
@@ -81,7 +81,7 @@ data class VideoRelevantBean(
                 val ifPgc: Boolean,
                 val latestReleaseTime: Long,
                 val link: String,
-                val name: String,
+                val name: String?,
                 val recSort: Int,
                 val shield: Shield,
                 val videoNum: Int

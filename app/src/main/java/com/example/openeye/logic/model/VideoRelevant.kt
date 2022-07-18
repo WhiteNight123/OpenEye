@@ -3,8 +3,7 @@ package com.example.openeye.logic.model
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
-
-data class VideoDetailsBean(
+data class VideoRelevant(
     @SerializedName("videoTitle")
     val videoTitle: String,
     @SerializedName("videoUrl")

@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.openeye.App.Companion.appContext
@@ -16,13 +17,12 @@ class VideoRelevantRvAdapter(
     private val onClick: (view: View, videoBean: VideoDetailsBean) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     companion object {
-        val TITLE = 1
-        val DETAIL = 2
+        const val TITLE = 1
+        const val DETAIL = 2
     }
 
     inner class TitleHolder(view: View) : RecyclerView.ViewHolder(view) {
         val mTvTitle: TextView
-
         init {
             mTvTitle = view.findViewById(R.id.video_tv_relevant_title)
         }
@@ -33,13 +33,15 @@ class VideoRelevantRvAdapter(
         val mTvAuthor: TextView
         var mTvTime: TextView
         var mIvCover: ImageView
+        var mConstraintLayout: ConstraintLayout
 
         init {
             mTvTitle = view.findViewById(R.id.video_tv_relevant_detail_title)
             mTvAuthor = view.findViewById(R.id.video_tv_relevant_detail_author)
             mTvTime = view.findViewById(R.id.video_tv_relevant_detail_time)
             mIvCover = view.findViewById(R.id.video_iv_relevant_detail_icon)
-            mIvCover.setOnClickListener {
+            mConstraintLayout = view.findViewById(R.id.video_constraint_layout_detail)
+            mConstraintLayout.setOnClickListener {
                 onClick(mIvCover, data[absoluteAdapterPosition])
             }
         }
@@ -76,9 +78,10 @@ class VideoRelevantRvAdapter(
         } else {
             holder as DetailHolder
             holder.apply {
-                holder.mTvTitle.text = data[position].videoTitle
+                mTvTitle.text = data[position].videoTitle
                 mTvAuthor.text = data[position].authorName
                 mTvTime.text = data[position].videoDuration
+                mIvCover.transitionName = "video_cover$position"
                 Glide.with(mIvCover).load(data[position].videoCover).centerCrop()
                     .into(mIvCover)
             }

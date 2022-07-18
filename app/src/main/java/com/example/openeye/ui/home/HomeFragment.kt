@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
+import android.view.animation.LayoutAnimationController
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -52,6 +54,13 @@ class HomeFragment : Fragment() {
         }
         recyclerView.adapter = HomeRvAdapter(data) { view1, msg ->
         }
+        recyclerView.layoutAnimation = // 入场动画
+            LayoutAnimationController(
+                AnimationUtils.loadAnimation(
+                    context,
+                    R.anim.recycler_view_slide_from_left_to_right_in
+                )
+            )
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.addItemDecoration(
             DividerItemDecoration(

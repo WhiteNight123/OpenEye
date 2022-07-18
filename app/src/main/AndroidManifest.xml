@@ -18,6 +18,9 @@
         android:theme="@style/Theme.OpenEye"
         tools:targetApi="s">
         <activity
+            android:name=".RankActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.SplashActivity"
             android:exported="true"
             android:theme="@style/Theme.SplashScreen.Demo">
@@ -26,7 +29,6 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
         <activity
             android:name=".ui.video.VideoActivity"
@@ -34,9 +36,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.main.MainActivity"
-            android:exported="true">
-
-        </activity>
+            android:exported="true"></activity>
     </application>
 
 </manifest>
