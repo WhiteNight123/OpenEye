@@ -3,6 +3,7 @@ package com.example.openeye.ui.feed
 import android.app.ActivityOptions
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +11,9 @@ import android.view.animation.AnimationUtils
 import android.view.animation.LayoutAnimationController
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.doOnPreDraw
+import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,17 +23,22 @@ import androidx.viewpager2.widget.ViewPager2
 import com.example.openeye.R
 import com.example.openeye.logic.model.VideoDetailsBean
 import com.example.openeye.ui.video.VideoActivity
+import com.example.openeye.ui.widge.FadeDotsIndicator
 
 
 class FeedFragment : Fragment() {
     private val viewModel by lazy { ViewModelProvider(this).get(FeedFragmentViewModel::class.java) }
     lateinit var banner: ViewPager2
+    lateinit var constraintLayout: ConstraintLayout
     lateinit var bannerAdapter: BannerAdapter
+    lateinit var bannerIndicator: FadeDotsIndicator
     lateinit var recyclerView: RecyclerView
     lateinit var rvAdapter: FeedRecyclerAdapter
+    lateinit var nestedScrollView: NestedScrollView
     lateinit var swipeRefresh: SwipeRefreshLayout
     lateinit var mTvError: TextView
     lateinit var mIvError: ImageView
+    lateinit var layoutManager: LinearLayoutManager
 
 
     override fun onCreateView(
@@ -50,9 +58,54 @@ class FeedFragment : Fragment() {
         mTvError = view.findViewById(R.id.feed_tv_net_error)
         mIvError = view.findViewById(R.id.feed_iv_net_error)
         banner = view.findViewById(R.id.banner_viewpager)
+        bannerIndicator = view.findViewById(R.id.banner_indicator)
+        constraintLayout = view.findViewById(R.id.feed_constrain_layout)
+        nestedScrollView = view.findViewById(R.id.feed_nest_scroll_view)
 
+        initBanner()
+        initView()
+        initObserve()
+        viewModel.getBanner()
+        viewModel.getFeed()
+    }
+
+    private fun initView() {
+        swipeRefresh.isRefreshing = true
+        swipeRefresh.setOnRefreshListener {
+            viewModel.getFeed()
+            viewModel.getBanner()
+        }
+    }
+
+    private fun initRecyclerView() {
+        val layoutManager = LinearLayoutManager(context)
+        recyclerView.layoutManager = layoutManager
+        recyclerView.layoutAnimation = // 入场动画
+            LayoutAnimationController(
+                AnimationUtils.loadAnimation(
+                    context,
+                    R.anim.recycler_view_fade_in
+                )
+            )
+        rvAdapter = FeedRecyclerAdapter(viewModel.videoData) { view1, videoDetail ->
+            startActivity(view1, videoDetail)
+        }
+        recyclerView.adapter = rvAdapter
+        nestedScrollView.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
+            //判断是否滑到的底部
+            if (scrollY == v.getChildAt(0).measuredHeight - v.measuredHeight) {
+                viewModel.videoData[viewModel.videoData.size - 1].nextPageUrl?.let {
+                    viewModel.getNextFeed(
+                        it
+                    )
+                }
+            }
+        })
+    }
+
+    private fun initBanner() {
         bannerAdapter = BannerAdapter(viewModel.bannerData) { view, videoBean ->
-
+            startActivity(view, videoBean)
         }
         banner.adapter = bannerAdapter
         banner.registerOnPageChangeCallback(object :
@@ -79,56 +132,51 @@ class FeedFragment : Fragment() {
             }
         }
         banner.postDelayed(mLooper, 2000)
+    }
 
-
-        viewModel.getBanner()
+    private fun initObserve() {
         viewModel.banner.observe(viewLifecycleOwner) {
             viewModel.bannerData.clear()
             viewModel.bannerData.addAll(it)
-            bannerAdapter.notifyDataSetChanged()
+            bannerIndicator.setViewPager2(banner)
+            bannerAdapter.notifyItemRangeChanged(0, it.size - 1)
         }
-
-        recyclerView.layoutManager = LinearLayoutManager(context)
-        rvAdapter = FeedRecyclerAdapter(viewModel.videoData) { view1, videoDetail ->
-            startActivity(view1, videoDetail)
-        }
-        recyclerView.adapter = rvAdapter
-        recyclerView.layoutAnimation = // 入场动画
-            LayoutAnimationController(
-                AnimationUtils.loadAnimation(
-                    context,
-                    R.anim.recycler_view_fade_in
-                )
-            )
-        swipeRefresh.isRefreshing = true
-        swipeRefresh.setOnRefreshListener {
-            viewModel.getFeed()
-            viewModel.getBanner()
-        }
-
-        viewModel.getFeed()
-
         viewModel.refresh.observe(viewLifecycleOwner) {
             if (it) {
+                viewModel.videoData.clear()
                 mIvError.visibility = View.INVISIBLE
                 mTvError.visibility = View.INVISIBLE
-                recyclerView.visibility = View.VISIBLE
-                banner.visibility = View.VISIBLE
+                if (::rvAdapter.isInitialized) {
+                    rvAdapter.fadeTip = true
+                }
+                constraintLayout.visibility = View.VISIBLE
             } else {
-                recyclerView.visibility = View.INVISIBLE
-                banner.visibility = View.INVISIBLE
+                if (::rvAdapter.isInitialized) {
+                    rvAdapter.fadeTip = false
+                }
+
+                constraintLayout.visibility = View.INVISIBLE
                 mIvError.visibility = View.VISIBLE
                 mTvError.visibility = View.VISIBLE
             }
             swipeRefresh.isRefreshing = false
         }
         viewModel.feedBean.observe(viewLifecycleOwner) {
-            viewModel.videoData.clear()
+            val current = viewModel.videoData.size
             viewModel.videoData.addAll(it)
-            rvAdapter.notifyItemRangeChanged(0, viewModel.videoData.size)
+            if (!this::layoutManager.isInitialized) {
+                initRecyclerView()
+            }
+            //rvAdapter.fadeTip = true
 
+            Log.d("TAG", "onViewCreated: ${current - 1}    ${viewModel.videoData.size - 1}")
+            rvAdapter.notifyDataSetChanged()
+            //rvAdapter.notifyItemRangeChanged(0, viewModel.videoData.size)
         }
-
+        viewModel.feedNextBean.observe(viewLifecycleOwner) {
+            viewModel.videoData.addAll(it)
+            rvAdapter.notifyDataSetChanged()
+        }
     }
 
     private fun startActivity(view: View, videoDetail: VideoDetailsBean) {
@@ -140,20 +188,8 @@ class FeedFragment : Fragment() {
         startActivity(intent, options.toBundle())
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment FeedFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            FeedFragment().apply {
 
-            }
+    companion object {
+
     }
 }

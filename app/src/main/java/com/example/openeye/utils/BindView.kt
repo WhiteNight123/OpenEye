@@ -1,6 +1,7 @@
 package com.example.openeye.utils
 
 
+import android.content.res.Resources
 import android.view.View
 import androidx.activity.ComponentActivity
 import androidx.annotation.IdRes
@@ -99,3 +100,5 @@ class BindView<T : View>(
         fun invoke(): ComponentActivity
     }
 }
+
+fun Int.toDp(): Float = this * Resources.getSystem().displayMetrics.density

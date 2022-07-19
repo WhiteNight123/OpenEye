@@ -40,7 +40,7 @@ data class FeedBean(
                     val adTrack: List<Any>,
                     val addWatermark: Boolean,
                     val area: String,
-                    val author: Author,
+                    val author: Author?,
                     val brandWebsiteInfo: Any,
                     val campaign: Any,
                     val category: String,
