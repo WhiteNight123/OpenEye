@@ -1,6 +1,6 @@
 package com.example.openeye.logic.model
 
-data class RecommendBean(
+data class FeedBean1(
     val adExist: Boolean,
     val count: Int,
     val itemList: ArrayList<Item>,
@@ -317,7 +317,7 @@ data class RecommendBean(
                         data class Data(
                             val ad: Boolean,
                             val adTrack: List<Any>,
-                            val author: Author,
+                            val author: Author?,
                             val brandWebsiteInfo: Any,
                             val campaign: Any,
                             val category: String,

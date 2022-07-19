@@ -12,7 +12,7 @@ import com.example.openeye.ui.base.BaseActivity
 import com.example.openeye.ui.feed.FeedFragment
 import com.example.openeye.ui.home.HomeFragment
 import com.example.openeye.ui.rank.BannerFragment
-import com.example.openeye.ui.video.VideoActivity
+import com.example.openeye.ui.search.SearchActivity
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlin.math.abs
@@ -40,10 +40,12 @@ class MainActivity : BaseActivity() {
             title = "RedRock"
         }
         searchIv.setOnClickListener {
-            val intent = Intent(this, VideoActivity::class.java)
+            //val intent = Intent(this, VideoActivity::class.java)
             //val pair1 = Pair.create(view, view.transitionName)
             //val compat = ActivityOptionsCompat.makeSceneTransitionAnimation(this, pair1, pair2, pair3)
             //startActivity(intent)
+            val intent = Intent(this, SearchActivity::class.java)
+            startActivity(intent)
         }
         val animatorVp = ViewPager2.PageTransformer { page, position ->
             val absPos = abs(position)

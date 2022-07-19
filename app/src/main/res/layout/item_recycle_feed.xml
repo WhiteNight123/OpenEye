@@ -49,7 +49,7 @@
         app:layout_constraintStart_toEndOf="@+id/feed_iv_author"
         app:layout_constraintTop_toTopOf="@+id/feed_iv_author" />
 
-    <com.google.android.material.textview.MaterialTextView
+    <TextView
         android:id="@+id/feed_tv_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -59,7 +59,7 @@
         app:layout_constraintStart_toEndOf="@+id/feed_iv_author"
         app:layout_constraintTop_toBottomOf="@+id/feed_tv_title" />
 
-    <com.google.android.material.textview.MaterialTextView
+    <TextView
         android:id="@+id/feed_tv_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

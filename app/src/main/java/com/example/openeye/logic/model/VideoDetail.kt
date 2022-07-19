@@ -28,5 +28,7 @@ data class VideoDetailsBean(
     @SerializedName("videoCover")
     val videoCover: String?,
     @SerializedName("videoDuration")
-    val videoDuration: String?
+    val videoDuration: String?,
+    @SerializedName("nextPageUrl")
+    var nextPageUrl: String?
 ) : Serializable

@@ -5,9 +5,10 @@
     android:layout_height="match_parent">
 
     <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/banner_iv_picture"
+        android:id="@+id/feed_iv_banner_picture"
         android:layout_width="match_parent"
         android:layout_height="200dp"
+        android:transitionName="video_cover"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="8dp"
@@ -16,5 +17,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:shapeAppearance="@style/RoundedStyle" />
+
+    <TextView
+        android:id="@+id/feed_tv_banner_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
+        android:layout_marginBottom="2dp"
+        android:background="@drawable/bg_banner_text_view_corner"
+        android:text="探索发现「廷巴克图」隐藏的宝藏"
+        android:textColor="@color/white"
+        android:textSize="13sp"
+        app:layout_constraintBottom_toBottomOf="@+id/feed_iv_banner_picture"
+        app:layout_constraintStart_toStartOf="@+id/feed_iv_banner_picture" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

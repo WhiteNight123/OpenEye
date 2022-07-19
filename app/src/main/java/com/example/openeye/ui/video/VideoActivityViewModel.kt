@@ -52,6 +52,7 @@ class VideoActivityViewModel : BaseViewModel() {
                         null,
                         null,
                         null,
+                        null,
                         null
                     )
                 )
@@ -90,7 +91,8 @@ class VideoActivityViewModel : BaseViewModel() {
                         tmp.author?.icon,
                         tmp.author?.name,
                         tmp.author?.description, tmp.cover.feed,
-                        getTime(tmp.duration)
+                        getTime(tmp.duration),
+                        null
                     )
                 )
             }

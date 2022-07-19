@@ -15,16 +15,17 @@
         app:layout_constraintTop_toTopOf="parent"
         app:titleCentered="true">
 
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/main_iv_search"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:layout_marginEnd="8dp"
-            android:src="@drawable/ic_search_24"
-            android:tint="?attr/colorOnSurface" />
-    </com.google.android.material.appbar.MaterialToolbar>
 
+    </com.google.android.material.appbar.MaterialToolbar>
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/main_iv_search"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_gravity="end"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:src="@drawable/ic_search_24"
+        android:tint="?attr/colorOnSurface" />
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/main_vp"
         android:layout_width="match_parent"
