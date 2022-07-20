@@ -29,18 +29,14 @@ class VideoRelevantRvAdapter(
     }
 
     inner class DetailHolder(view: View) : RecyclerView.ViewHolder(view) {
-        var mTvTitle: TextView
-        val mTvAuthor: TextView
-        var mTvTime: TextView
-        var mIvCover: ImageView
-        var mConstraintLayout: ConstraintLayout
+        var mTvTitle: TextView = view.findViewById(R.id.video_tv_relevant_detail_title)
+        val mTvAuthor: TextView = view.findViewById(R.id.video_tv_relevant_detail_author)
+        var mTvTime: TextView = view.findViewById(R.id.video_tv_relevant_detail_time)
+        var mIvCover: ImageView = view.findViewById(R.id.video_iv_relevant_detail_icon)
+        var mConstraintLayout: ConstraintLayout =
+            view.findViewById(R.id.video_constraint_layout_detail)
 
         init {
-            mTvTitle = view.findViewById(R.id.video_tv_relevant_detail_title)
-            mTvAuthor = view.findViewById(R.id.video_tv_relevant_detail_author)
-            mTvTime = view.findViewById(R.id.video_tv_relevant_detail_time)
-            mIvCover = view.findViewById(R.id.video_iv_relevant_detail_icon)
-            mConstraintLayout = view.findViewById(R.id.video_constraint_layout_detail)
             mConstraintLayout.setOnClickListener {
                 onClick(mIvCover, data[absoluteAdapterPosition])
             }
