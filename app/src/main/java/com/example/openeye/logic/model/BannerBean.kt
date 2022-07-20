@@ -1,6 +1,6 @@
 package com.example.openeye.logic.model
 
-data class FeedBean1(
+data class BannerBean(
     val adExist: Boolean,
     val count: Int,
     val itemList: ArrayList<Item>,

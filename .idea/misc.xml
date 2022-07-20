@@ -23,6 +23,8 @@
         <entry key="..\:/Code/MyApplication/My/OpenEye/app/src/main/res/drawable/dot_background.xml" value="0.1685" />
         <entry key="..\:/Code/MyApplication/My/OpenEye/app/src/main/res/drawable/dot_stroke_background.xml" value="0.1685" />
         <entry key="..\:/Code/MyApplication/My/OpenEye/app/src/main/res/drawable/fragment_feed.xml" value="0.1" />
+        <entry key="..\:/Code/MyApplication/My/OpenEye/app/src/main/res/drawable/ic_arrow_back_24.xml" value="0.1" />
+        <entry key="..\:/Code/MyApplication/My/OpenEye/app/src/main/res/drawable/ic_close_24.xml" value="0.1" />
         <entry key="..\:/Code/MyApplication/My/OpenEye/app/src/main/res/drawable/ic_explore_24.xml" value="0.209" />
         <entry key="..\:/Code/MyApplication/My/OpenEye/app/src/main/res/drawable/ic_eye_24.xml" value="0.1" />
         <entry key="..\:/Code/MyApplication/My/OpenEye/app/src/main/res/drawable/ic_home_24.xml" value="0.232" />
@@ -31,13 +33,14 @@
         <entry key="..\:/Code/MyApplication/My/OpenEye/app/src/main/res/drawable/ic_like_24.xml" value="0.225" />
         <entry key="..\:/Code/MyApplication/My/OpenEye/app/src/main/res/drawable/ic_my_24.xml" value="0.209" />
         <entry key="..\:/Code/MyApplication/My/OpenEye/app/src/main/res/drawable/ic_net_error_24.xml" value="0.1" />
+        <entry key="..\:/Code/MyApplication/My/OpenEye/app/src/main/res/drawable/ic_not_data_24.xml" value="0.139" />
         <entry key="..\:/Code/MyApplication/My/OpenEye/app/src/main/res/drawable/ic_reply_24.xml" value="0.2155" />
         <entry key="..\:/Code/MyApplication/My/OpenEye/app/src/main/res/drawable/ic_search_24.xml" value="0.1155" />
         <entry key="..\:/Code/MyApplication/My/OpenEye/app/src/main/res/drawable/ic_share_24.xml" value="0.2155" />
         <entry key="..\:/Code/MyApplication/My/OpenEye/app/src/main/res/drawable/ic_unlike_24.xml" value="0.225" />
         <entry key="..\:/Code/MyApplication/My/OpenEye/app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="..\:/Code/MyApplication/My/OpenEye/app/src/main/res/layout/activity_rank.xml" value="0.26666666666666666" />
-        <entry key="..\:/Code/MyApplication/My/OpenEye/app/src/main/res/layout/activity_search.xml" value="0.2977777777777778" />
+        <entry key="..\:/Code/MyApplication/My/OpenEye/app/src/main/res/layout/activity_search.xml" value="0.4" />
         <entry key="..\:/Code/MyApplication/My/OpenEye/app/src/main/res/layout/activity_splash.xml" value="0.2977777777777778" />
         <entry key="..\:/Code/MyApplication/My/OpenEye/app/src/main/res/layout/activity_video.xml" value="0.2222222222222222" />
         <entry key="..\:/Code/MyApplication/My/OpenEye/app/src/main/res/layout/banner_indicator.xml" value="0.4" />
@@ -45,13 +48,15 @@
         <entry key="..\:/Code/MyApplication/My/OpenEye/app/src/main/res/layout/fragment_feed.xml" value="0.2222222222222222" />
         <entry key="..\:/Code/MyApplication/My/OpenEye/app/src/main/res/layout/fragment_home.xml" value="0.1" />
         <entry key="..\:/Code/MyApplication/My/OpenEye/app/src/main/res/layout/fragment_rank.xml" value="0.2391304347826087" />
+        <entry key="..\:/Code/MyApplication/My/OpenEye/app/src/main/res/layout/fragment_search_result.xml" value="0.14666666666666667" />
         <entry key="..\:/Code/MyApplication/My/OpenEye/app/src/main/res/layout/home_rv_item.xml" value="0.265625" />
         <entry key="..\:/Code/MyApplication/My/OpenEye/app/src/main/res/layout/item_banner.xml" value="0.1" />
-        <entry key="..\:/Code/MyApplication/My/OpenEye/app/src/main/res/layout/item_recycle_feed.xml" value="0.4379432624113475" />
+        <entry key="..\:/Code/MyApplication/My/OpenEye/app/src/main/res/layout/item_recycle_feed.xml" value="0.1" />
         <entry key="..\:/Code/MyApplication/My/OpenEye/app/src/main/res/layout/item_recycle_video_relevant.xml" value="0.265625" />
         <entry key="..\:/Code/MyApplication/My/OpenEye/app/src/main/res/layout/item_recycle_video_relevant_title.xml" value="0.1" />
         <entry key="..\:/Code/MyApplication/My/OpenEye/app/src/main/res/layout/item_recycler_feed_load_more.xml" value="0.26666666666666666" />
         <entry key="..\:/Code/MyApplication/My/OpenEye/app/src/main/res/layout/item_recycler_item_relevant_detail.xml" value="0.48888888888888893" />
+        <entry key="..\:/Code/MyApplication/My/OpenEye/app/src/main/res/layout/item_recycler_search_result.xml" value="0.2977777777777778" />
         <entry key="..\:/Code/MyApplication/My/OpenEye/app/src/main/res/layout/net_error.xml" value="0.1" />
         <entry key="..\:/Code/MyApplication/My/OpenEye/app/src/main/res/layout/recycle_item_main.xml" value="0.26666666666666666" />
         <entry key="..\:/Code/MyApplication/My/OpenEye/app/src/main/res/layout/rv_pager_view.xml" value="0.26666666666666666" />

@@ -3,8 +3,8 @@ package com.example.openeye.ui.feed
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.example.openeye.logic.model.BannerBean
 import com.example.openeye.logic.model.FeedBean
-import com.example.openeye.logic.model.FeedBean1
 import com.example.openeye.logic.model.VideoDetailsBean
 import com.example.openeye.logic.net.ApiService
 import com.example.openeye.ui.base.BaseViewModel
@@ -111,7 +111,7 @@ class FeedFragmentViewModel : BaseViewModel() {
         return data
     }
 
-    private fun convertToBanner(list: ArrayList<FeedBean1.Item>): ArrayList<VideoDetailsBean> {
+    private fun convertToBanner(list: ArrayList<BannerBean.Item>): ArrayList<VideoDetailsBean> {
         val data: ArrayList<VideoDetailsBean> = arrayListOf()
         for (i in list[0].data.itemList) {
             if (i.type == "followCard") {

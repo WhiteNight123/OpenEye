@@ -1,4 +1,5 @@
-package com.example.openeye.ui.feed
+package com.example.openeye.ui.search
+
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.openeye.App.Companion.appContext
@@ -13,7 +15,7 @@ import com.example.openeye.R
 import com.example.openeye.logic.model.VideoDetailsBean
 
 
-class FeedRecyclerAdapter(
+class SearchResultRecyclerAdapter(
     private val data: ArrayList<VideoDetailsBean>,
     private val onClick: (view: View, videoBean: VideoDetailsBean) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -25,14 +27,15 @@ class FeedRecyclerAdapter(
     var fadeTip = false
 
     inner class NormalHolder(view: View) : RecyclerView.ViewHolder(view) {
-        var mTvTitle: TextView = view.findViewById(R.id.feed_tv_title)
-        val mTvLable: TextView = view.findViewById(R.id.feed_tv_label)
-        var mTvTime: TextView = view.findViewById(R.id.feed_tv_time)
-        var mIvCover: ImageView = view.findViewById(R.id.feed_iv_cover)
-        var mIvAuthor: ImageView = view.findViewById(R.id.feed_iv_author)
+        var mTvTitle: TextView = view.findViewById(R.id.search_tv_result_title)
+        val mTvAuthor: TextView = view.findViewById(R.id.search_tv_result_author)
+        var mTvTime: TextView = view.findViewById(R.id.search_tv_result_time)
+        var mIvCover: ImageView = view.findViewById(R.id.search_iv_result_icon)
+        var mConstraintLayout: ConstraintLayout =
+            view.findViewById(R.id.search_constraint_layout_detail)
 
         init {
-            mIvCover.setOnClickListener {
+            mConstraintLayout.setOnClickListener {
                 onClick(mIvCover, data[absoluteAdapterPosition])
             }
         }
@@ -50,7 +53,7 @@ class FeedRecyclerAdapter(
             )
             NORMAL -> return NormalHolder(
                 LayoutInflater.from(parent.context)
-                    .inflate(R.layout.item_recycle_feed, parent, false)
+                    .inflate(R.layout.item_recycler_search_result, parent, false)
             )
             else -> return FootHolder(
                 View.inflate(
@@ -68,13 +71,12 @@ class FeedRecyclerAdapter(
 
         if (holder is NormalHolder) {
             holder.apply {
-                holder.mTvTitle.text = data[position].videoTitle
-                mTvLable.text = data[position].authorName
+                mTvTitle.text = data[position].videoTitle
+                mTvAuthor.text = data[position].authorName
                 mTvTime.text = data[position].videoDuration
+                mIvCover.transitionName = "video_cover$position"
                 Glide.with(mIvCover).load(data[position].videoCover).centerCrop()
                     .into(mIvCover)
-                Glide.with(mIvAuthor).load(data[position].authorIcon).centerCrop()
-                    .into(mIvAuthor)
             }
         } else {
             holder as FootHolder
@@ -87,7 +89,6 @@ class FeedRecyclerAdapter(
             }
         }
     }
-
 
     fun getRealLastPosition() = data.size
     override fun getItemCount() = data.size + 1

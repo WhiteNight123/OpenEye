@@ -30,13 +30,13 @@
                 <com.example.openeye.ui.widge.ViewPager2Container
                     android:id="@+id/viewPager2Container"
                     android:layout_width="match_parent"
-                    android:layout_marginTop="2dp"
-                    android:layout_height="200dp"
+                    android:layout_height="210dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
                     <androidx.viewpager2.widget.ViewPager2
+                        android:layout_marginTop="10dp"
                         android:id="@+id/banner_viewpager"
                         android:layout_width="match_parent"
                         android:layout_height="200dp" />

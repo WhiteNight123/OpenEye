@@ -27,7 +27,7 @@ import com.example.openeye.ui.widge.FadeDotsIndicator
 
 
 class FeedFragment : Fragment() {
-    private val viewModel by lazy { ViewModelProvider(this).get(FeedFragmentViewModel::class.java) }
+    private val viewModel by lazy { ViewModelProvider(this)[FeedFragmentViewModel::class.java] }
     lateinit var banner: ViewPager2
     lateinit var constraintLayout: ConstraintLayout
     lateinit var bannerAdapter: BannerAdapter
