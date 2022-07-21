@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.openeye.App.Companion.appContext
 import com.example.openeye.R
-import com.example.openeye.logic.model.VideoDetailsBean
+import com.example.openeye.logic.model.VideoDetailData
 import com.shuyu.gsyvideoplayer.GSYBaseActivityDetail
 import com.shuyu.gsyvideoplayer.builder.GSYVideoOptionBuilder
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer
@@ -42,7 +42,7 @@ class VideoActivity : GSYBaseActivityDetail<StandardGSYVideoPlayer>() {
 
     lateinit var adapter: VideoRelevantRvAdapter
     private val videoData by lazy {
-        intent.getSerializableExtra("videoDetail") as VideoDetailsBean
+        intent.getSerializableExtra("videoDetail") as VideoDetailData
     }
 
 
@@ -56,12 +56,12 @@ class VideoActivity : GSYBaseActivityDetail<StandardGSYVideoPlayer>() {
         startPostponedEnterTransition()
 
         mBtnUnlike = findViewById(R.id.video_iv_unlike)
-        mBtnLike = findViewById(R.id.video_iv_like)
+        mBtnLike = findViewById(R.id.topic_iv_detail_like)
         mTvTitle = findViewById(R.id.video_tv_title)
-        mTvDescribe = findViewById(R.id.video_tv_describe)
-        mTvLikeCount = findViewById(R.id.video_tv_like)
+        mTvDescribe = findViewById(R.id.topic_tv_detail_describe)
+        mTvLikeCount = findViewById(R.id.topic_tv_detail_like)
         mTvShareCount = findViewById(R.id.video_tv_share)
-        mtvReplyCount = findViewById(R.id.video_tv_reply)
+        mtvReplyCount = findViewById(R.id.topic_tv_detail_reply)
         mIvAuthor = findViewById(R.id.video_iv_author)
         mTvAuthor = findViewById(R.id.video_tv_author)
         mTvAuthorDescribe = findViewById(R.id.video_tv_author_describe)
@@ -140,7 +140,7 @@ class VideoActivity : GSYBaseActivityDetail<StandardGSYVideoPlayer>() {
 //        }
     }
 
-    private fun startActivity(view: View, videoDetail: VideoDetailsBean) {
+    private fun startActivity(view: View, videoDetail: VideoDetailData) {
         val intent = Intent(appContext, VideoActivity::class.java)
         intent.putExtra("videoDetail", videoDetail)
         intent.putExtra("transitionName", view.transitionName)
@@ -161,7 +161,6 @@ class VideoActivity : GSYBaseActivityDetail<StandardGSYVideoPlayer>() {
             .into(imageView);
         //loadCover(imageView, url)
         return GSYVideoOptionBuilder()
-            .setThumbImageView(imageView)
             .setThumbImageView(imageView)
             .setUrl(videoData.videoUrl)
             .setCacheWithPlay(true)

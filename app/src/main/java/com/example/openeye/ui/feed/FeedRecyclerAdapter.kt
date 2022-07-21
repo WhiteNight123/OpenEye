@@ -10,12 +10,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.openeye.App.Companion.appContext
 import com.example.openeye.R
-import com.example.openeye.logic.model.VideoDetailsBean
+import com.example.openeye.logic.model.VideoDetailData
 
 
 class FeedRecyclerAdapter(
-    private val data: ArrayList<VideoDetailsBean>,
-    private val onClick: (view: View, videoBean: VideoDetailsBean) -> Unit
+    private val data: ArrayList<VideoDetailData>,
+    private val onClick: (view: View, videoBean: VideoDetailData) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     companion object {
         const val NORMAL = 1
@@ -25,11 +25,11 @@ class FeedRecyclerAdapter(
     var fadeTip = false
 
     inner class NormalHolder(view: View) : RecyclerView.ViewHolder(view) {
-        var mTvTitle: TextView = view.findViewById(R.id.feed_tv_title)
-        val mTvLable: TextView = view.findViewById(R.id.feed_tv_label)
+        var mTvTitle: TextView = view.findViewById(R.id.topic_tv_detail_title2)
+        val mTvLable: TextView = view.findViewById(R.id.topic_tv_detail_author)
         var mTvTime: TextView = view.findViewById(R.id.feed_tv_time)
         var mIvCover: ImageView = view.findViewById(R.id.feed_iv_cover)
-        var mIvAuthor: ImageView = view.findViewById(R.id.feed_iv_author)
+        var mIvAuthor: ImageView = view.findViewById(R.id.topic_iv_detail_author)
 
         init {
             mIvCover.setOnClickListener {
@@ -50,7 +50,7 @@ class FeedRecyclerAdapter(
             )
             NORMAL -> return NormalHolder(
                 LayoutInflater.from(parent.context)
-                    .inflate(R.layout.item_recycle_feed, parent, false)
+                    .inflate(R.layout.item_recycler_feed, parent, false)
             )
             else -> return FootHolder(
                 View.inflate(

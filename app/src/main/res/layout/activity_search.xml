@@ -7,7 +7,7 @@
     tools:context=".ui.search.SearchActivity">
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/search_iv_back"
         android:layout_width="32dp"
         android:layout_height="32dp"
         android:layout_marginStart="8dp"
@@ -36,7 +36,7 @@
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/imageView"
+        app:layout_constraintStart_toEndOf="@+id/search_iv_back"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
@@ -71,7 +71,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.chip.ChipGroup
-            android:id="@+id/search_chip_group_hot_search"
+            android:id="@+id/topic_chip_group_tag"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -92,7 +92,7 @@
             android:text="搜索历史"
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/search_chip_group_hot_search" />
+            app:layout_constraintTop_toBottomOf="@+id/topic_chip_group_tag" />
 
         <TextView
             android:id="@+id/search_tv_clean_history"

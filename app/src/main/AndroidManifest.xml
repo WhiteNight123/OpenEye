@@ -18,9 +18,11 @@
         android:theme="@style/Theme.OpenEye"
         tools:targetApi="s">
         <activity
+            android:name=".ui.explore.topic.TopicDetailActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.search.SearchActivity"
             android:exported="false" />
-
         <activity
             android:name=".ui.SplashActivity"
             android:exported="true"

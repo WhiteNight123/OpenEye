@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/topic_iv_detail_author"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:src="@color/purple_200"
+        app:layout_constraintEnd_toStartOf="@+id/topic_tv_detail_title2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearance="@style/CircleStyle" />
+
+    <TextView
+        android:id="@+id/topic_tv_detail_title2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="7dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="吉卜力风治愈动画，温柔夏天的离别"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/topic_tv_detail_author"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/topic_iv_detail_author"
+        app:layout_constraintTop_toTopOf="@+id/topic_iv_detail_author" />
+
+    <TextView
+        android:id="@+id/topic_tv_detail_author"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="全球旅行视频精选"
+        app:layout_constraintBottom_toBottomOf="@+id/topic_iv_detail_author"
+        app:layout_constraintStart_toEndOf="@+id/topic_iv_detail_author"
+        app:layout_constraintTop_toBottomOf="@+id/topic_tv_detail_title2" />
+
+    <TextView
+        android:id="@+id/topic_tv_detail_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:text="2021/10/28发布"
+        app:layout_constraintBottom_toBottomOf="@+id/topic_tv_detail_author"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/topic_tv_detail_author" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/topic_tv_detail_describe"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:text="这是一则来自 Montanuniversität Leoben 大学的宣传片「为未来而生」。短片中社会在资源、气候、能源和环境领域面临的主要挑战需要技术解决方案。Montanuniversität Leoben 是一所技术大学，也是奥地利唯一一所采矿和冶金大学。From Montanuniversität Leoben"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/topic_iv_detail_author" />
+
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/topic_chip_group_tag"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:animateLayoutChanges="true"
+        app:chipSpacingVertical="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/topic_tv_detail_describe">
+
+        <com.google.android.material.chip.Chip
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="fsfsdf"
+            android:textColor="@color/purple_200"
+            app:chipCornerRadius="10dp"
+            app:textEndPadding="4dp"
+            app:textStartPadding="4dp" />
+    </com.google.android.material.chip.ChipGroup>
+
+    <com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer
+        android:id="@+id/topic_video_detail"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/topic_chip_group_tag" />
+
+    <ImageView
+        android:id="@+id/topic_iv_detail_like"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:src="@drawable/ic_unlike_24"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/topic_video_detail" />
+
+
+    <TextView
+        android:id="@+id/topic_tv_detail_like"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="16dp"
+        android:text="155"
+        app:layout_constraintBottom_toBottomOf="@+id/topic_iv_detail_like"
+        app:layout_constraintStart_toEndOf="@+id/topic_iv_detail_like"
+        app:layout_constraintTop_toTopOf="@+id/topic_iv_detail_like" />
+
+    <ImageView
+        android:id="@+id/topic_iv_detail_share"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="32dp"
+        android:src="@drawable/ic_share_24"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/topic_video_detail" />
+
+
+    <ImageView
+        android:id="@+id/topic_iv_detail_reply"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="16dp"
+        android:src="@drawable/ic_reply_24"
+        app:layout_constraintBottom_toBottomOf="@+id/topic_tv_detail_like"
+        app:layout_constraintStart_toEndOf="@+id/topic_tv_detail_like"
+        app:layout_constraintTop_toTopOf="@+id/topic_tv_detail_like" />
+
+    <TextView
+        android:id="@+id/topic_tv_detail_reply"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="1dp"
+        android:text="6"
+        app:layout_constraintBottom_toBottomOf="@+id/topic_iv_detail_like"
+        app:layout_constraintStart_toEndOf="@+id/topic_iv_detail_reply"
+        app:layout_constraintTop_toTopOf="@+id/topic_iv_detail_like" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,7 +2,6 @@ package com.example.openeye.ui.widge
 
 import android.content.Context
 import android.util.AttributeSet
-import android.util.Log
 import android.view.MotionEvent
 import android.widget.RelativeLayout
 import androidx.viewpager2.widget.ViewPager2
@@ -21,13 +20,6 @@ class ViewPager2Container @JvmOverloads constructor(
 
     private var startX = 0
     private var startY = 0
-
-    val mLooper = object : Runnable {
-        override fun run() {
-            mViewPager2!!.currentItem = ++mViewPager2!!.currentItem
-            mViewPager2!!.postDelayed(this, 2000)
-        }
-    }
 
     override fun onFinishInflate() {
         super.onFinishInflate()
@@ -53,8 +45,6 @@ class ViewPager2Container @JvmOverloads constructor(
             MotionEvent.ACTION_DOWN -> {
                 startX = ev.x.toInt()
                 startY = ev.y.toInt()
-                mViewPager2!!.removeCallbacks(mLooper)
-                Log.d("TAG", "onInterceptTouchEvent: $mViewPager2")
                 parent.requestDisallowInterceptTouchEvent(!disallowParentInterceptDownEvent)
             }
             MotionEvent.ACTION_MOVE -> {
@@ -70,12 +60,8 @@ class ViewPager2Container @JvmOverloads constructor(
                     onHorizontalActionMove(endX, disX, disY)
                 }
             }
-            MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
-                mViewPager2!!.postDelayed(mLooper, 2000)
+            MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL ->
                 parent.requestDisallowInterceptTouchEvent(false)
-
-            }
-
         }
         return super.onInterceptTouchEvent(ev)
     }

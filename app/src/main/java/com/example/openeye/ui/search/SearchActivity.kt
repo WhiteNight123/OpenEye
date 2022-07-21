@@ -5,6 +5,7 @@ import android.transition.Fade
 import android.transition.Slide
 import android.util.Log
 import android.view.View
+import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.ImageView
@@ -25,6 +26,7 @@ class SearchActivity : BaseActivity() {
     lateinit var mTvCleanHistory: TextView
     lateinit var mEtSearch: EditText
     lateinit var mIvCleanTest: ImageView
+    lateinit var mIvBack: ImageView
 
 
     val viewModel by lazy { ViewModelProvider(this).get(SearchActivityViewModel::class.java) }
@@ -32,12 +34,12 @@ class SearchActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
-        chipGroupHotSearch = findViewById(R.id.search_chip_group_hot_search)
+        chipGroupHotSearch = findViewById(R.id.topic_chip_group_tag)
         chipGroupHistory = findViewById(R.id.search_chip_group_history)
         mTvCleanHistory = findViewById(R.id.search_tv_clean_history)
         mEtSearch = findViewById(R.id.search_et_search)
         mIvCleanTest = findViewById(R.id.search_iv_clean_search)
-
+        mIvBack = findViewById(R.id.search_iv_back)
 
         viewModel.getHotSearch()
         viewModel.hotSearch.observe {
@@ -48,7 +50,6 @@ class SearchActivity : BaseActivity() {
                     chip.setOnClickListener {
                         mEtSearch.text.clear()
                         mEtSearch.setText(i)
-                        viewModel.insertHistory(HistoryEntity(i))
                         startFragment(mEtSearch.text.toString())
 
                     }
@@ -86,9 +87,11 @@ class SearchActivity : BaseActivity() {
         }
         mEtSearch.setOnEditorActionListener { textView, actionId, event ->
             //viewModel.getSearch(textView.text.toString())
-            if (textView.text != null) {
-                viewModel.insertHistory(HistoryEntity(textView.text.toString()))
-                startFragment(textView.text.toString())
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                if (textView.text != null) {
+                    Log.d("TAG", "onCreate: ${textView.text}")
+                    startFragment(textView.text.toString())
+                }
             }
             false
         }
@@ -99,9 +102,14 @@ class SearchActivity : BaseActivity() {
                 mIvCleanTest.visibility = View.INVISIBLE
             }
         }
+        mIvBack.setOnClickListener {
+            finish()
+        }
     }
 
     private fun startFragment(key: String) {
+        // 将数据存入本地历史
+        viewModel.insertHistory(HistoryEntity(key))
         val fragment = SearchResultFragment()
         val bundle = Bundle()
         bundle.putString("key", key)

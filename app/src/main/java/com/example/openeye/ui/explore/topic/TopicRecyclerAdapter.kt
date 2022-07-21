@@ -1,22 +1,20 @@
-package com.example.openeye.ui.feed
+package com.example.openeye.ui.explore.topic
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.openeye.R
-import com.example.openeye.logic.model.VideoDetailData
+import com.example.openeye.logic.model.TopicData
 
-class BannerAdapter(
-    private val data: ArrayList<VideoDetailData>,
-    private val onClick: (view: View, videoBean: VideoDetailData) -> Unit
-) : RecyclerView.Adapter<BannerAdapter.InnerHolder>() {
+class TopicRecyclerAdapter(
+    private val data: ArrayList<TopicData>,
+    private val onClick: (view: View, videoBean: TopicData) -> Unit
+) : RecyclerView.Adapter<TopicRecyclerAdapter.InnerHolder>() {
     inner class InnerHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val mIvCover: ImageView = view.findViewById(R.id.feed_iv_banner_picture)
-        val mTvTitle: TextView = view.findViewById(R.id.feed_tv_banner_title)
+        val mIvCover: ImageView = view.findViewById(R.id.topic_iv_cover)
 
         init {
             mIvCover.setOnClickListener {
@@ -28,13 +26,12 @@ class BannerAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): InnerHolder {
         val view =
-            LayoutInflater.from(parent.context).inflate(R.layout.item_banner, parent, false)
+            LayoutInflater.from(parent.context).inflate(R.layout.item_recycler_topic, parent, false)
         return InnerHolder(view)
     }
 
     override fun onBindViewHolder(holder: InnerHolder, position: Int) {
         holder.apply {
-            mTvTitle.text = data[position].videoTitle
             Glide.with(mIvCover).load(data[position].videoCover).centerCrop()
                 .into(mIvCover)
         }
