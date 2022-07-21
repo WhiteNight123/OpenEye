@@ -4,6 +4,7 @@ import com.example.openeye.logic.model.*
 import com.ndhzs.lib.common.network.ApiGenerator
 import io.reactivex.rxjava3.core.Single
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 const val BASE_URL = "http://baobab.kaiyanapp.com/api/"
@@ -32,6 +33,17 @@ interface ApiService {
     @GET("v4/rankList/videos")
     fun getRank(@Query("strategy") strategy: String): Single<RankBean>
 
+    // 获取关注
+    @GET("v5/community/tab/follow?num=10")
+    fun getFollow(@Query("start") start: Int): Single<FollowBean>
+
+    // 获取专题
+    @GET("v3/specialTopics?vc=591&deviceModel=Che1-CL20&num=10")
+    fun getTopic(@Query("start") start: Int): Single<TopicBean>
+
+    // 获取专题详细
+    @GET("http://baobab.kaiyanapp.com/api/v3/lightTopics/internal/{id}")
+    fun getTopicDetail(@Path("id") id: Int): Single<TopicDetailBean>
 
     companion object {
         val INSTANCE by lazy {

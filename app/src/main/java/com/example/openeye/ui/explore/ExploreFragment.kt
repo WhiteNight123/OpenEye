@@ -1,14 +1,15 @@
-package com.example.openeye.ui.rank
+package com.example.openeye.ui.explore
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
 import com.example.openeye.R
 import com.example.openeye.ui.base.BaseFragmentVPAdapter
+import com.example.openeye.ui.explore.topic.TopicFragment
+import com.example.openeye.ui.home.HomeFragment
 import com.example.openeye.ui.widge.ScaleInTransformer
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
@@ -17,12 +18,9 @@ import com.google.android.material.tabs.TabLayoutMediator
 private const val ARG_PARAM1 = "param1"
 
 
-class RankFragment : Fragment() {
-    private val viewModel by lazy { ViewModelProvider(this).get(RankViewModel::class.java) }
+class ExploreFragment : Fragment() {
     lateinit var mTabLayout: TabLayout
     lateinit var mViewPager2: ViewPager2
-
-
     private var param1: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,13 +35,13 @@ class RankFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_rank, container, false)
+        return inflater.inflate(R.layout.fragment_explore, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        mTabLayout = view.findViewById(R.id.rank_tl_strategy)
-        mViewPager2 = view.findViewById(R.id.rank_vp_strategy)
+        mTabLayout = view.findViewById(R.id.explore_tl_strategy)
+        mViewPager2 = view.findViewById(R.id.explore_vp_strategy)
         initViewPager2()
         initTabLayout()
 
@@ -53,8 +51,11 @@ class RankFragment : Fragment() {
         mViewPager2.adapter = BaseFragmentVPAdapter(
             activity!!,
             listOf(
-                RankDetailFragment.newInstance("historical"),
-                RankDetailFragment.newInstance("weekly"),
+                HomeFragment(),
+                HomeFragment(),
+                TopicFragment(),
+                HomeFragment(),
+                HomeFragment()
             )
         )
 
@@ -76,8 +77,11 @@ class RankFragment : Fragment() {
     // 设置 TabLayout
     private fun initTabLayout() {
         val tabs = arrayOf(
-            "日排行",
-            "周排行"
+            "关注",
+            "分类",
+            "专题",
+            "咨询",
+            "推荐"
         )
         TabLayoutMediator(
             mTabLayout, mViewPager2
@@ -90,7 +94,7 @@ class RankFragment : Fragment() {
 
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            RankFragment().apply {
+            ExploreFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                 }

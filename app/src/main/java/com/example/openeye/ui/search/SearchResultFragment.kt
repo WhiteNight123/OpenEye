@@ -17,7 +17,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.openeye.R
-import com.example.openeye.logic.model.VideoDetailsBean
+import com.example.openeye.logic.model.VideoDetailData
 import com.example.openeye.ui.video.VideoActivity
 import com.example.openeye.utils.toast
 
@@ -124,7 +124,7 @@ class SearchResultFragment : Fragment() {
 
     }
 
-    private fun startActivity(view: View, videoDetail: VideoDetailsBean) {
+    private fun startActivity(view: View, videoDetail: VideoDetailData) {
         val intent = Intent(context, VideoActivity::class.java)
         intent.putExtra("videoDetail", videoDetail)
         intent.putExtra("transitionName", view.transitionName)

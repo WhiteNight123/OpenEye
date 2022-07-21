@@ -12,12 +12,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.openeye.App.Companion.appContext
 import com.example.openeye.R
-import com.example.openeye.logic.model.VideoDetailsBean
+import com.example.openeye.logic.model.VideoDetailData
 
 
 class SearchResultRecyclerAdapter(
-    private val data: ArrayList<VideoDetailsBean>,
-    private val onClick: (view: View, videoBean: VideoDetailsBean) -> Unit
+    private val data: ArrayList<VideoDetailData>,
+    private val onClick: (view: View, videoBean: VideoDetailData) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     companion object {
         const val NORMAL = 1

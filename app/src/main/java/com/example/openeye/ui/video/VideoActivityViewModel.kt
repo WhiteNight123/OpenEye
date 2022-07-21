@@ -2,7 +2,7 @@ package com.example.openeye.ui.video
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.openeye.logic.model.VideoDetailsBean
+import com.example.openeye.logic.model.VideoDetailData
 import com.example.openeye.logic.model.VideoRelevantBean
 import com.example.openeye.logic.net.ApiService
 import com.example.openeye.ui.base.BaseViewModel
@@ -11,13 +11,13 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.schedulers.Schedulers
 
 class VideoActivityViewModel : BaseViewModel() {
-    private val _videoData = MutableLiveData<ArrayList<VideoDetailsBean>>()
-    val videoData1: LiveData<ArrayList<VideoDetailsBean>>
+    private val _videoData = MutableLiveData<ArrayList<VideoDetailData>>()
+    val videoData1: LiveData<ArrayList<VideoDetailData>>
         get() = _videoData
     private val _isFreshSuccess = MutableLiveData<Boolean>()
     val isFreshSuccess: LiveData<Boolean>
         get() = _isFreshSuccess
-    val videoData: ArrayList<VideoDetailsBean> = arrayListOf()
+    val videoData: ArrayList<VideoDetailData> = arrayListOf()
 
     fun getVideoRelevant(id: Int) {
         ApiService.INSTANCE.getVideoRelevant(id)
@@ -35,12 +35,12 @@ class VideoActivityViewModel : BaseViewModel() {
             )
     }
 
-    private fun toVideoDetail(list: List<VideoRelevantBean.Item>): ArrayList<VideoDetailsBean> {
-        val data: ArrayList<VideoDetailsBean> = arrayListOf()
+    private fun toVideoDetail(list: List<VideoRelevantBean.Item>): ArrayList<VideoDetailData> {
+        val data: ArrayList<VideoDetailData> = arrayListOf()
         for (i in list) {
             if (i.type == "textCard") {
                 data.add(
-                    VideoDetailsBean(
+                    VideoDetailData(
                         i.data.text,
                         null,
                         i.data.id,
@@ -80,7 +80,7 @@ class VideoActivityViewModel : BaseViewModel() {
             if (i.type == "videoSmallCard") {
                 val tmp = i.data
                 data.add(
-                    VideoDetailsBean(
+                    VideoDetailData(
                         tmp.title,
                         tmp.playUrl,
                         i.data.id,

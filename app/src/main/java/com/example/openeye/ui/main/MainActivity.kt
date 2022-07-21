@@ -9,9 +9,10 @@ import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.example.openeye.R
 import com.example.openeye.ui.base.BaseActivity
+import com.example.openeye.ui.explore.ExploreFragment
 import com.example.openeye.ui.feed.FeedFragment
-import com.example.openeye.ui.home.HomeFragment
-import com.example.openeye.ui.rank.BannerFragment
+import com.example.openeye.ui.mine.MineFragment
+import com.example.openeye.ui.rank.RankFragment
 import com.example.openeye.ui.search.SearchActivity
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -59,9 +60,9 @@ class MainActivity : BaseActivity() {
         viewpager.setPageTransformer(animatorVp)
         val mFragments = ArrayList<Fragment>()
         mFragments.add(FeedFragment())
-        mFragments.add(HomeFragment())
-        mFragments.add(BannerFragment())
-        mFragments.add(HomeFragment())
+        mFragments.add(ExploreFragment())
+        mFragments.add(RankFragment())
+        mFragments.add(MineFragment())
         viewpager.adapter = MyFragmentPagerAdapter(this, mFragments)
         bottomNavigationView.setOnItemSelectedListener {
             when (it.itemId) {

@@ -10,11 +10,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.openeye.App.Companion.appContext
 import com.example.openeye.R
-import com.example.openeye.logic.model.VideoDetailsBean
+import com.example.openeye.logic.model.VideoDetailData
 
 class VideoRelevantRvAdapter(
-    private val data: ArrayList<VideoDetailsBean>,
-    private val onClick: (view: View, videoBean: VideoDetailsBean) -> Unit
+    private val data: ArrayList<VideoDetailData>,
+    private val onClick: (view: View, videoBean: VideoDetailData) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     companion object {
         const val TITLE = 1
@@ -49,18 +49,18 @@ class VideoRelevantRvAdapter(
             TITLE -> return TitleHolder(
                 View.inflate(
                     appContext,
-                    R.layout.item_recycle_video_relevant_title,
+                    R.layout.item_recycler_video_relevant_header,
                     null
                 )
             )
             DETAIL -> return DetailHolder(
                 LayoutInflater.from(parent.context)
-                    .inflate(R.layout.item_recycler_item_relevant_detail, parent, false)
+                    .inflate(R.layout.item_recycler_video_relevant_detail, parent, false)
             )
             else -> return TitleHolder(
                 View.inflate(
                     appContext,
-                    R.layout.item_recycle_video_relevant_title,
+                    R.layout.item_recycler_video_relevant_header,
                     null
                 )
             )

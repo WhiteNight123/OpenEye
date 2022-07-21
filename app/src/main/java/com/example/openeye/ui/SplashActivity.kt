@@ -10,7 +10,7 @@ import com.example.openeye.R
 import com.example.openeye.ui.main.MainActivity
 import com.google.android.material.textview.MaterialTextView
 
-
+// 不知道为什么SplashScreen失效,只能拿一个Activity作启动图
 class SplashActivity : AppCompatActivity() {
     lateinit var ivIcon: ImageView
     lateinit var ivBrand: ImageView

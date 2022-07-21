@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.openeye.logic.model.BannerBean
 import com.example.openeye.logic.model.FeedBean
-import com.example.openeye.logic.model.VideoDetailsBean
+import com.example.openeye.logic.model.VideoDetailData
 import com.example.openeye.logic.net.ApiService
 import com.example.openeye.ui.base.BaseViewModel
 import com.example.openeye.utils.getTime
@@ -15,18 +15,18 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 class FeedFragmentViewModel : BaseViewModel() {
 
     // banner数据
-    private val _banner = MutableLiveData<ArrayList<VideoDetailsBean>>()
-    val banner: LiveData<ArrayList<VideoDetailsBean>>
+    private val _banner = MutableLiveData<ArrayList<VideoDetailData>>()
+    val banner: LiveData<ArrayList<VideoDetailData>>
         get() = _banner
 
     // 获取首次的 feedBean
-    private val _feedBean = MutableLiveData<ArrayList<VideoDetailsBean>>()
-    val feedBean: LiveData<ArrayList<VideoDetailsBean>>
+    private val _feedBean = MutableLiveData<ArrayList<VideoDetailData>>()
+    val feedBean: LiveData<ArrayList<VideoDetailData>>
         get() = _feedBean
 
     // 获取更多的 feedBean
-    private val _feedNextBean = MutableLiveData<ArrayList<VideoDetailsBean>>()
-    val feedNextBean: LiveData<ArrayList<VideoDetailsBean>>
+    private val _feedNextBean = MutableLiveData<ArrayList<VideoDetailData>>()
+    val feedNextBean: LiveData<ArrayList<VideoDetailData>>
         get() = _feedNextBean
 
     // 刷新状态
@@ -35,8 +35,8 @@ class FeedFragmentViewModel : BaseViewModel() {
         get() = _refresh
 
     // 储存的数据
-    val videoData: ArrayList<VideoDetailsBean> = arrayListOf()
-    val bannerData: ArrayList<VideoDetailsBean> = arrayListOf()
+    val videoData: ArrayList<VideoDetailData> = arrayListOf()
+    val bannerData: ArrayList<VideoDetailData> = arrayListOf()
 
     fun getBanner() {
         ApiService.INSTANCE.getBanner().subscribeOn(Schedulers.io())
@@ -83,13 +83,13 @@ class FeedFragmentViewModel : BaseViewModel() {
     }
 
     // 转换一下返回的数据,这接口给个太乱了😒
-    private fun convertToVideoDetail(rawData: FeedBean): ArrayList<VideoDetailsBean> {
-        val data: ArrayList<VideoDetailsBean> = arrayListOf()
+    private fun convertToVideoDetail(rawData: FeedBean): ArrayList<VideoDetailData> {
+        val data: ArrayList<VideoDetailData> = arrayListOf()
         for (i in rawData.itemList) {
             if (i.type == "followCard") {
                 val tmp = i.data.content.data
                 data.add(
-                    VideoDetailsBean(
+                    VideoDetailData(
                         tmp.title,
                         tmp.playUrl,
                         tmp.id,
@@ -111,13 +111,13 @@ class FeedFragmentViewModel : BaseViewModel() {
         return data
     }
 
-    private fun convertToBanner(list: ArrayList<BannerBean.Item>): ArrayList<VideoDetailsBean> {
-        val data: ArrayList<VideoDetailsBean> = arrayListOf()
+    private fun convertToBanner(list: ArrayList<BannerBean.Item>): ArrayList<VideoDetailData> {
+        val data: ArrayList<VideoDetailData> = arrayListOf()
         for (i in list[0].data.itemList) {
             if (i.type == "followCard") {
                 val tmp = i.data.content.data
                 data.add(
-                    VideoDetailsBean(
+                    VideoDetailData(
                         tmp.title,
                         tmp.playUrl,
                         tmp.id,

@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
 
-data class VideoDetailsBean(
+data class VideoDetailData(
     @SerializedName("videoTitle")
     val videoTitle: String?,
     @SerializedName("videoUrl")

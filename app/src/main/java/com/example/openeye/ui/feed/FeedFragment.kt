@@ -21,7 +21,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import androidx.viewpager2.widget.ViewPager2
 import com.example.openeye.R
-import com.example.openeye.logic.model.VideoDetailsBean
+import com.example.openeye.logic.model.VideoDetailData
 import com.example.openeye.ui.video.VideoActivity
 import com.example.openeye.ui.widge.FadeDotsIndicator
 
@@ -179,7 +179,7 @@ class FeedFragment : Fragment() {
         }
     }
 
-    private fun startActivity(view: View, videoDetail: VideoDetailsBean) {
+    private fun startActivity(view: View, videoDetail: VideoDetailData) {
         val intent = Intent(context, VideoActivity::class.java)
         intent.putExtra("videoDetail", videoDetail)
         intent.putExtra("transitionName", view.transitionName)

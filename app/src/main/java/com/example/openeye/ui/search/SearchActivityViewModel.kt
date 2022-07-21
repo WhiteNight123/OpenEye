@@ -3,8 +3,8 @@ package com.example.openeye.ui.search
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.example.openeye.logic.net.ApiService
-import com.example.openeye.logic.room.AppDatabase
 import com.example.openeye.logic.room.HistoryEntity
+import com.example.openeye.logic.room.HistorySearchDatabase
 import com.example.openeye.ui.base.BaseViewModel
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.schedulers.Schedulers
@@ -34,7 +34,8 @@ class SearchActivityViewModel : BaseViewModel() {
     }
 
     fun getHistory() {
-        AppDatabase.getDatabase(appContext).historyDao().getAll().subscribeOn(Schedulers.io())
+        HistorySearchDatabase.getDatabase(appContext).historyDao().getAll()
+            .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .safeSubscribeBy(
                 onError = { it.printStackTrace() },
@@ -42,7 +43,7 @@ class SearchActivityViewModel : BaseViewModel() {
     }
 
     fun insertHistory(historyEntity: HistoryEntity) {
-        AppDatabase.getDatabase(appContext).historyDao().insert(historyEntity)
+        HistorySearchDatabase.getDatabase(appContext).historyDao().insert(historyEntity)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .safeSubscribeBy(onError = { it.printStackTrace() }, onSuccess = {
@@ -54,7 +55,7 @@ class SearchActivityViewModel : BaseViewModel() {
     }
 
     fun deleteHistory() {
-        AppDatabase.getDatabase(appContext).historyDao().delete()
+        HistorySearchDatabase.getDatabase(appContext).historyDao().delete()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .safeSubscribeBy(onError = { it.printStackTrace() }, onSuccess = {
