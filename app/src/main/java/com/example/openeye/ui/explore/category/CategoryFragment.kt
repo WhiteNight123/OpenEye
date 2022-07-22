@@ -1,4 +1,4 @@
-package com.example.openeye.ui.explore.topic
+package com.example.openeye.ui.explore.category
 
 import android.app.ActivityOptions
 import android.content.Intent
@@ -8,28 +8,22 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.view.animation.LayoutAnimationController
+import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.openeye.R
-import com.example.openeye.logic.model.TopicData
+import com.example.openeye.logic.model.CategoryData
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [TopicFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class TopicFragment : Fragment() {
-    private val viewModel by lazy { ViewModelProvider(this)[TopicFragmentViewModel::class.java] }
-
+class CategoryFragment : Fragment() {
+    private val viewModel by lazy { ViewModelProvider(this)[CategoryFragmentViewModel::class.java] }
     lateinit var recyclerView: RecyclerView
-    lateinit var adapter: TopicRecyclerAdapter
+    lateinit var adapter: CategoryRecyclerAdapter
 
     // TODO: Rename and change types of parameters
     private var param1: String? = null
@@ -48,22 +42,25 @@ class TopicFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_topic, container, false)
+        return inflater.inflate(R.layout.fragment_category, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        recyclerView = view.findViewById(R.id.explore_rv_topic)
+        postponeEnterTransition()
+        view.doOnPreDraw { startPostponedEnterTransition() }
+
+        recyclerView = view.findViewById(R.id.category_rv)
         initRecyclerView()
-        viewModel.getTopic()
-        viewModel.topicBean.observe(viewLifecycleOwner) {
-            viewModel.topicData.addAll(it)
+        viewModel.getCategory()
+        viewModel.categoryBean.observe(viewLifecycleOwner) {
+            viewModel.categoryData.addAll(it)
             adapter.notifyDataSetChanged()
         }
     }
 
     private fun initRecyclerView() {
-        val layoutManager = LinearLayoutManager(context)
+        val layoutManager = GridLayoutManager(context, 2)
         recyclerView.layoutManager = layoutManager
         recyclerView.layoutAnimation = // 入场动画
             LayoutAnimationController(
@@ -72,28 +69,27 @@ class TopicFragment : Fragment() {
                     R.anim.recycler_view_fade_in
                 )
             )
-        adapter = TopicRecyclerAdapter(viewModel.topicData) { view1, topicData ->
-            startActivity(view1, topicData)
+        adapter = CategoryRecyclerAdapter(viewModel.categoryData) { view1, categoryDetail ->
+            startActivity(view1, categoryDetail)
         }
         recyclerView.adapter = adapter
 
     }
 
-    private fun startActivity(view: View, topicDetail: TopicData) {
-        val intent = Intent(context, TopicDetailActivity::class.java)
-        intent.putExtra("id", topicDetail.videoId)
-        intent.putExtra("topicData", topicDetail)
+    private fun startActivity(view: View, categoryData: CategoryData) {
+        val intent = Intent(context, CategoryDetailActivity::class.java)
+        intent.putExtra("categoryData", categoryData)
         val options =
             ActivityOptions.makeSceneTransitionAnimation(activity, view, view.transitionName)
         startActivity(intent, options.toBundle())
     }
 
-
     companion object {
 
+        // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            TopicFragment().apply {
+            CategoryFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)

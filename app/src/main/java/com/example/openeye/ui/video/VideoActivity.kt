@@ -82,6 +82,7 @@ class VideoActivity : GSYBaseActivityDetail<StandardGSYVideoPlayer>() {
         Glide.with(this).load(videoData.authorIcon).into(mIvAuthor)
         mRvVideoRelevant.layoutManager = LinearLayoutManager(this)
         adapter = VideoRelevantRvAdapter(viewModel.videoData) { view1, videoBean ->
+            viewModel.insertHistory(videoBean)
             startActivity(view1, videoBean)
         }
         mRvVideoRelevant.adapter = adapter

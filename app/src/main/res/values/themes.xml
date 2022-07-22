@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Splash启动页Style -->
     <style name="Theme.SplashScreen.Demo" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="android:windowTranslucentNavigation">true</item>

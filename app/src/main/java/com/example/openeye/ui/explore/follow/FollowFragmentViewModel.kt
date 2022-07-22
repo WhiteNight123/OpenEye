@@ -1,4 +1,4 @@
-package com.example.openeye.ui.explore
+package com.example.openeye.ui.explore.follow
 
 import android.util.Log
 import androidx.lifecycle.LiveData

@@ -42,8 +42,20 @@ interface ApiService {
     fun getTopic(@Query("start") start: Int): Single<TopicBean>
 
     // 获取专题详细
-    @GET("http://baobab.kaiyanapp.com/api/v3/lightTopics/internal/{id}")
+    @GET("v3/lightTopics/internal/{id}")
     fun getTopicDetail(@Path("id") id: Int): Single<TopicDetailBean>
+
+    // 获取分类
+    @GET("v4/categories/all")
+    fun getCategory(): Single<CategoryBean>
+
+    // 获取分类详情
+    @GET("v5/index/tab/category/{id}?udid=435865baacfc49499632ea13c5a78f944c2f28aa")
+    fun getCategoryDetail(@Path("id") id: Int): Single<CategoryDetailBean>
+
+    // 获取消息
+    @GET("v3/messages")
+    fun getMessage(): Single<MessageBean>
 
     companion object {
         val INSTANCE by lazy {

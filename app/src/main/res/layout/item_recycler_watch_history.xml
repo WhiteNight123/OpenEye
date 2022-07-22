@@ -1,21 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
     android:id="@+id/video_constraint_layout_detail"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/history_iv_watch_cover"
         android:layout_width="128dp"
-        android:layout_height="80dp"
-        app:shapeAppearance="@style/RoundedStyle"
+        android:layout_height="85dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-
+        android:transitionName="video_cover"
+        android:layout_marginBottom="8dp"
         android:src="@color/purple_200"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearance="@style/RoundedStyle" />
 
     <TextView
         android:id="@+id/history_tv_watch_title"
@@ -24,11 +26,21 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="12dp"
         android:text="秋天美景:感受不一样的美景"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@+id/history_tv_watch_author"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toTopOf="@+id/history_tv_watch_time"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/history_iv_watch_cover"
         app:layout_constraintTop_toTopOf="@+id/history_iv_watch_cover" />
+
+    <TextView
+        android:id="@+id/history_tv_watch_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="07-22 08:00"
+        app:layout_constraintBottom_toTopOf="@+id/history_tv_watch_author"
+        app:layout_constraintStart_toEndOf="@+id/history_iv_watch_cover"
+        app:layout_constraintTop_toBottomOf="@+id/history_tv_watch_title" />
 
     <TextView
         android:id="@+id/history_tv_watch_author"
@@ -41,7 +53,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/history_iv_watch_cover"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/history_iv_watch_cover"
-        app:layout_constraintTop_toBottomOf="@+id/history_tv_watch_title" />
+        app:layout_constraintTop_toBottomOf="@+id/history_tv_watch_time" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/history_tv_watch_duration"

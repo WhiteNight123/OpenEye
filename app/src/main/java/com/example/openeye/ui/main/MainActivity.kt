@@ -37,9 +37,6 @@ class MainActivity : BaseActivity() {
             bottomNavigationView.getOrCreateBadge(bottomNavigationView.menu.getItem(3).itemId)
         badge.number = 200
         badge.maxCharacterCount = 3
-        toolbar.apply {
-            title = "RedRock"
-        }
         searchIv.setOnClickListener {
             //val intent = Intent(this, VideoActivity::class.java)
             //val pair1 = Pair.create(view, view.transitionName)
