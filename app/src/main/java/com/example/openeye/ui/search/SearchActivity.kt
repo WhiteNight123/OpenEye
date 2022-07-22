@@ -13,7 +13,7 @@ import android.widget.TextView
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.ViewModelProvider
 import com.example.openeye.R
-import com.example.openeye.logic.room.HistoryEntity
+import com.example.openeye.logic.room.HistorySearchEntity
 import com.example.openeye.ui.base.BaseActivity
 import com.example.openeye.utils.toast
 import com.google.android.material.chip.Chip
@@ -36,7 +36,7 @@ class SearchActivity : BaseActivity() {
         setContentView(R.layout.activity_search)
         chipGroupHotSearch = findViewById(R.id.topic_chip_group_tag)
         chipGroupHistory = findViewById(R.id.search_chip_group_history)
-        mTvCleanHistory = findViewById(R.id.search_tv_clean_history)
+        mTvCleanHistory = findViewById(R.id.mine_tv_clean_history)
         mEtSearch = findViewById(R.id.search_et_search)
         mIvCleanTest = findViewById(R.id.search_iv_clean_search)
         mIvBack = findViewById(R.id.search_iv_back)
@@ -109,7 +109,7 @@ class SearchActivity : BaseActivity() {
 
     private fun startFragment(key: String) {
         // 将数据存入本地历史
-        viewModel.insertHistory(HistoryEntity(key))
+        viewModel.insertHistory(HistorySearchEntity(key))
         val fragment = SearchResultFragment()
         val bundle = Bundle()
         bundle.putString("key", key)

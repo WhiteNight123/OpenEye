@@ -1,17 +1,24 @@
 package com.example.openeye.ui.mine
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.example.openeye.R
+import com.example.openeye.ui.mine.history.HistoryWatchActivity
+import com.example.openeye.ui.mine.message.MessageActivity
 
 
 private const val ARG_PARAM1 = "param1"
 
 
 class MineFragment : Fragment() {
+    lateinit var mTvHistoryWatch: TextView
+    lateinit var mTvMessage: TextView
+
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -29,6 +36,20 @@ class MineFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_mine, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        mTvHistoryWatch = view.findViewById(R.id.mine_tv_history_watch)
+        mTvMessage = view.findViewById(R.id.mine_tv_message)
+        mTvHistoryWatch.setOnClickListener {
+            val intent = Intent(context, HistoryWatchActivity::class.java)
+            startActivity(intent)
+        }
+        mTvMessage.setOnClickListener {
+            val intent = Intent(context, MessageActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     companion object {

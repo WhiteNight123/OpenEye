@@ -95,7 +95,7 @@
             app:layout_constraintTop_toBottomOf="@+id/topic_chip_group_tag" />
 
         <TextView
-            android:id="@+id/search_tv_clean_history"
+            android:id="@+id/mine_tv_clean_history"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"

@@ -25,11 +25,11 @@ class FeedRecyclerAdapter(
     var fadeTip = false
 
     inner class NormalHolder(view: View) : RecyclerView.ViewHolder(view) {
-        var mTvTitle: TextView = view.findViewById(R.id.topic_tv_detail_title2)
-        val mTvLable: TextView = view.findViewById(R.id.topic_tv_detail_author)
+        var mTvTitle: TextView = view.findViewById(R.id.feed_tv_title)
+        val mTvLable: TextView = view.findViewById(R.id.feed_tv_author)
         var mTvTime: TextView = view.findViewById(R.id.feed_tv_time)
         var mIvCover: ImageView = view.findViewById(R.id.feed_iv_cover)
-        var mIvAuthor: ImageView = view.findViewById(R.id.topic_iv_detail_author)
+        var mIvAuthor: ImageView = view.findViewById(R.id.feed_iv_author)
 
         init {
             mIvCover.setOnClickListener {

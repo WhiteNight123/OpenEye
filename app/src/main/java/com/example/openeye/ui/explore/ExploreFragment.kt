@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.example.openeye.R
 import com.example.openeye.ui.base.BaseFragmentVPAdapter
+import com.example.openeye.ui.explore.category.CategoryFragment
 import com.example.openeye.ui.explore.topic.TopicFragment
 import com.example.openeye.ui.home.HomeFragment
 import com.example.openeye.ui.widge.ScaleInTransformer
@@ -52,9 +53,8 @@ class ExploreFragment : Fragment() {
             activity!!,
             listOf(
                 HomeFragment(),
-                HomeFragment(),
+                CategoryFragment(),
                 TopicFragment(),
-                HomeFragment(),
                 HomeFragment()
             )
         )
@@ -80,7 +80,6 @@ class ExploreFragment : Fragment() {
             "关注",
             "分类",
             "专题",
-            "咨询",
             "推荐"
         )
         TabLayoutMediator(

@@ -7,6 +7,8 @@ import com.example.openeye.logic.model.BannerBean
 import com.example.openeye.logic.model.FeedBean
 import com.example.openeye.logic.model.VideoDetailData
 import com.example.openeye.logic.net.ApiService
+import com.example.openeye.logic.room.HistoryWatchDatabase
+import com.example.openeye.logic.room.HistoryWatchEntity
 import com.example.openeye.ui.base.BaseViewModel
 import com.example.openeye.utils.getTime
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -81,6 +83,36 @@ class FeedFragmentViewModel : BaseViewModel() {
                 }
             )
     }
+
+    fun insertHistory(videoDetailData: VideoDetailData) {
+        HistoryWatchDatabase.getDatabase(appContext).historyWatchDao()
+            .insert(convertHistoryWatchEntity(videoDetailData))
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .safeSubscribeBy(onError = { it.printStackTrace() }, onSuccess = {
+                Log.e(
+                    "TAG", "insertHistory: $it",
+                )
+            })
+
+    }
+
+    private fun convertHistoryWatchEntity(rawData: VideoDetailData) = HistoryWatchEntity(
+        rawData.videoTitle,
+        rawData.videoUrl,
+        rawData.videoId,
+        rawData.videoDescription,
+        rawData.likeCount,
+        rawData.shareCount,
+        rawData.replyCount,
+        rawData.authorIcon,
+        rawData.authorName,
+        rawData.authorDescription,
+        rawData.videoCover,
+        rawData.videoDuration,
+        System.currentTimeMillis().toString()
+    )
+
 
     // 转换一下返回的数据,这接口给个太乱了😒
     private fun convertToVideoDetail(rawData: FeedBean): ArrayList<VideoDetailData> {

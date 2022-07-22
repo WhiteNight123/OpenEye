@@ -15,7 +15,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:titleCentered="true">
 
-
     </com.google.android.material.appbar.MaterialToolbar>
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/main_iv_search"

@@ -4,9 +4,9 @@ import android.content.Context
 import androidx.room.*
 import io.reactivex.rxjava3.core.Single
 
-@Database(version = 1, entities = [HistoryEntity::class])
+@Database(version = 1, entities = [HistorySearchEntity::class])
 abstract class HistorySearchDatabase : RoomDatabase() {
-    abstract fun historyDao(): HistoryDao
+    abstract fun historySearchDao(): HistorySearchDao
 
     companion object {
         private var instance: HistorySearchDatabase? = null
@@ -28,19 +28,19 @@ abstract class HistorySearchDatabase : RoomDatabase() {
 }
 
 @Entity
-data class HistoryEntity(var key: String?) {
+data class HistorySearchEntity(var key: String?) {
     @PrimaryKey(autoGenerate = true)
     var id: Long = 0
 }
 
 @Dao
-interface HistoryDao {
-    @Query("SELECT * FROM historyentity")
-    fun getAll(): Single<List<HistoryEntity>>
+interface HistorySearchDao {
+    @Query("SELECT * FROM historysearchentity")
+    fun getAll(): Single<List<HistorySearchEntity>>
 
     @Insert
-    fun insert(history: HistoryEntity): Single<Long>
+    fun insert(history: HistorySearchEntity): Single<Long>
 
-    @Query("DELETE FROM historyentity")
+    @Query("DELETE FROM historysearchentity")
     fun delete(): Single<Int>
 }

@@ -22,6 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginBottom="7dp"
         android:ellipsize="end"
         android:maxLines="1"
@@ -69,28 +70,26 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/topic_iv_detail_author" />
 
-    <com.google.android.material.chip.ChipGroup
-        android:id="@+id/topic_chip_group_tag"
+    <HorizontalScrollView
+        android:id="@+id/topic_hsv_chip_group"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:animateLayoutChanges="true"
-        app:chipSpacingVertical="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/topic_tv_detail_describe">
 
-        <com.google.android.material.chip.Chip
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="fsfsdf"
-            android:textColor="@color/purple_200"
-            app:chipCornerRadius="10dp"
-            app:textEndPadding="4dp"
-            app:textStartPadding="4dp" />
-    </com.google.android.material.chip.ChipGroup>
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/topic_chip_group_tag"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:animateLayoutChanges="true"
+            app:singleLine="true">
+
+        </com.google.android.material.chip.ChipGroup>
+    </HorizontalScrollView>
 
     <com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer
         android:id="@+id/topic_video_detail"
@@ -100,7 +99,7 @@
         android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/topic_chip_group_tag" />
+        app:layout_constraintTop_toBottomOf="@+id/topic_hsv_chip_group" />
 
     <ImageView
         android:id="@+id/topic_iv_detail_like"

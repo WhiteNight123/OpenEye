@@ -88,6 +88,7 @@ class FeedFragment : Fragment() {
                 )
             )
         rvAdapter = FeedRecyclerAdapter(viewModel.videoData) { view1, videoDetail ->
+            viewModel.insertHistory(videoDetail)
             startActivity(view1, videoDetail)
         }
         recyclerView.adapter = rvAdapter
@@ -105,6 +106,7 @@ class FeedFragment : Fragment() {
 
     private fun initBanner() {
         bannerAdapter = BannerAdapter(viewModel.bannerData) { view, videoBean ->
+            viewModel.insertHistory(videoBean)
             startActivity(view, videoBean)
         }
         banner.adapter = bannerAdapter
@@ -187,7 +189,6 @@ class FeedFragment : Fragment() {
             ActivityOptions.makeSceneTransitionAnimation(activity, view, view.transitionName)
         startActivity(intent, options.toBundle())
     }
-
 
     companion object {
 
