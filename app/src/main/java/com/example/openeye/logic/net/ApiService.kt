@@ -19,7 +19,43 @@ interface ApiService {
 
     // 获取banner
     @GET("v5/index/tab/allRec?page=0")
-    fun getBanner(): Single<RecommendBean>
+    fun getBanner(): Single<BannerBean>
+
+    // 获取热搜
+    @GET("v3/queries/hot")
+    fun getHotSearch(): Single<HotSearchBean>
+
+    // 搜索
+    @GET("v3/search")
+    fun getSearch(@Query("query") query: String, @Query("start") start: Int): Single<SearchBean>
+
+    // 获取排行
+    @GET("v4/rankList/videos")
+    fun getRank(@Query("strategy") strategy: String): Single<RankBean>
+
+    // 获取关注
+    @GET("v5/community/tab/follow?num=10")
+    fun getFollow(@Query("start") start: Int): Single<FollowBean>
+
+    // 获取专题
+    @GET("v3/specialTopics?vc=591&deviceModel=Che1-CL20&num=10")
+    fun getTopic(@Query("start") start: Int): Single<TopicBean>
+
+    // 获取专题详细
+    @GET("v3/lightTopics/internal/{id}")
+    fun getTopicDetail(@Path("id") id: Int): Single<TopicDetailBean>
+
+    // 获取分类
+    @GET("v4/categories/all")
+    fun getCategory(): Single<CategoryBean>
+
+    // 获取分类详情
+    @GET("v5/index/tab/category/{id}?udid=435865baacfc49499632ea13c5a78f944c2f28aa")
+    fun getCategoryDetail(@Path("id") id: Int): Single<CategoryDetailBean>
+
+    // 获取消息
+    @GET("v3/messages")
+    fun getMessage(): Single<MessageBean>
 
     // 获取热搜
     @GET("v3/queries/hot")
