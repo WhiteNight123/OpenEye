@@ -5,9 +5,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.example.openeye.R
+import com.example.openeye.ui.mine.feedback.FeedbackActivity
 import com.example.openeye.ui.mine.history.HistoryWatchActivity
 import com.example.openeye.ui.mine.message.MessageActivity
 
@@ -16,8 +18,10 @@ private const val ARG_PARAM1 = "param1"
 
 
 class MineFragment : Fragment() {
+    lateinit var mIvPortrait: ImageView
     lateinit var mTvHistoryWatch: TextView
     lateinit var mTvMessage: TextView
+    lateinit var mTvFeedback: TextView
 
     // TODO: Rename and change types of parameters
     private var param1: String? = null
@@ -42,6 +46,8 @@ class MineFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         mTvHistoryWatch = view.findViewById(R.id.mine_tv_history_watch)
         mTvMessage = view.findViewById(R.id.mine_tv_message)
+        mTvFeedback = view.findViewById(R.id.mine_tv_feedback)
+        mIvPortrait = view.findViewById(R.id.mine_iv_portrait)
         mTvHistoryWatch.setOnClickListener {
             val intent = Intent(context, HistoryWatchActivity::class.java)
             startActivity(intent)
@@ -50,12 +56,23 @@ class MineFragment : Fragment() {
             val intent = Intent(context, MessageActivity::class.java)
             startActivity(intent)
         }
+        mTvFeedback.setOnClickListener {
+            val intent = Intent(context, FeedbackActivity::class.java)
+            // 这里用共享元素动画会有奇怪的bug
+//            val options =
+//                ActivityOptions.makeSceneTransitionAnimation(
+//                    activity,
+//                    mIvPortrait,
+//                    mIvPortrait.transitionName
+//                )
+            startActivity(intent)
+        }
     }
 
     companion object {
 
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
+        fun newInstance(param1: String) =
             MineFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)

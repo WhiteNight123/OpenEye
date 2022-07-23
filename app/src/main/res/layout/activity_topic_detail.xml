@@ -4,8 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".ui.explore.topic.TopicDetailActivity">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/topic_toolbar_detail"
+        android:layout_width="match_parent"
+        android:background="?attr/colorSurface"
+        app:titleTextColor="?attr/colorOnSurface"
+        android:layout_height="48dp"
+        app:layout_constraintTop_toTopOf="parent" />
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"

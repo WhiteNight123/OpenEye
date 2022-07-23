@@ -18,6 +18,7 @@ import com.example.openeye.ui.base.BaseActivity
 import com.example.openeye.utils.toast
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
+import com.google.android.material.transition.platform.MaterialSharedAxis
 
 
 class SearchActivity : BaseActivity() {
@@ -32,6 +33,14 @@ class SearchActivity : BaseActivity() {
     val viewModel by lazy { ViewModelProvider(this).get(SearchActivityViewModel::class.java) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        val enter = MaterialSharedAxis(MaterialSharedAxis.Z, true).apply {
+        }
+        window.enterTransition = enter
+        // TODO: Configure a return transition in the backwards direction.
+
+        // Allow Activity A’s exit transition to play at the same time as this Activity’s
+        // enter transition instead of playing them sequentially.
+        window.allowEnterTransitionOverlap = true
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
         chipGroupHotSearch = findViewById(R.id.topic_chip_group_tag)

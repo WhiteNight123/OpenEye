@@ -19,7 +19,7 @@ interface ApiService {
 
     // 获取banner
     @GET("v5/index/tab/allRec?page=0")
-    fun getBanner(): Single<BannerBean>
+    fun getBanner(): Single<RecommendBean>
 
     // 获取热搜
     @GET("v3/queries/hot")
@@ -56,6 +56,10 @@ interface ApiService {
     // 获取消息
     @GET("v3/messages")
     fun getMessage(): Single<MessageBean>
+
+    // 获取社区
+    @GET("v5/index/tab/ugcSelected?start=0")
+    fun getCommunity(): Single<CommunityBean>
 
     companion object {
         val INSTANCE by lazy {

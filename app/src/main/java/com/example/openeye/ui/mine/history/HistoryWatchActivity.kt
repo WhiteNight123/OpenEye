@@ -3,6 +3,7 @@ package com.example.openeye.ui.mine.history
 import android.app.ActivityOptions
 import android.content.Intent
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
 import android.view.animation.AnimationUtils
 import android.view.animation.LayoutAnimationController
@@ -19,6 +20,7 @@ import com.example.openeye.utils.toast
 class HistoryWatchActivity : BaseActivity() {
     private val viewModel by lazy { ViewModelProvider(this)[HistoryWatchActivityViewModel::class.java] }
     lateinit var recyclerView: RecyclerView
+    lateinit var toolbar: androidx.appcompat.widget.Toolbar
     lateinit var adapter: HistoryWatchRecyclerAdapter
     lateinit var mTvClean: TextView
     lateinit var mTvNoData: TextView
@@ -28,6 +30,11 @@ class HistoryWatchActivity : BaseActivity() {
         recyclerView = findViewById(R.id.history_rv_watch)
         mTvClean = findViewById(R.id.history_tv_clean)
         mTvNoData = findViewById(R.id.history_tv_no_data)
+        toolbar = findViewById(R.id.history_toolbar_watch)
+        toolbar.title = "观看历史"
+        setSupportActionBar(toolbar)
+        supportActionBar?.setHomeButtonEnabled(true);
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         initRecyclerView()
         viewModel.getHistory()
         mTvClean.setOnClickListener {
@@ -50,6 +57,13 @@ class HistoryWatchActivity : BaseActivity() {
             }
         }
 
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == android.R.id.home) {
+            finish()
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     private fun initRecyclerView() {

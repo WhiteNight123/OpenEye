@@ -1,5 +1,6 @@
 package com.example.openeye.ui.mine.message
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.openeye.logic.model.MessageBean
@@ -39,7 +40,9 @@ class MessageActivityViewModel : BaseViewModel() {
         val data: ArrayList<MessageBean.Message> = arrayListOf()
         for (i in rawData.messageList) {
             i.date = SimpleDateFormat("yyyy-MM-dd HH:mm").format(i.date.toLong())
+            Log.d("TAG", "convertToMessageBean: ${i.date}")
         }
+        rawData.messageList.removeAt(0)
         return rawData
     }
 }

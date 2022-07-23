@@ -3,8 +3,8 @@ package com.example.openeye.ui.feed
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.openeye.logic.model.BannerBean
 import com.example.openeye.logic.model.FeedBean
+import com.example.openeye.logic.model.RecommendBean
 import com.example.openeye.logic.model.VideoDetailData
 import com.example.openeye.logic.net.ApiService
 import com.example.openeye.logic.room.HistoryWatchDatabase
@@ -47,7 +47,7 @@ class FeedFragmentViewModel : BaseViewModel() {
                     it.printStackTrace()
                 },
                 onSuccess = {
-                    _banner.postValue(convertToBanner(it.itemList))
+                    _banner.postValue(convertToBanner(it))
                 }
             )
     }
@@ -143,9 +143,9 @@ class FeedFragmentViewModel : BaseViewModel() {
         return data
     }
 
-    private fun convertToBanner(list: ArrayList<BannerBean.Item>): ArrayList<VideoDetailData> {
+    private fun convertToBanner(rawData: RecommendBean): ArrayList<VideoDetailData> {
         val data: ArrayList<VideoDetailData> = arrayListOf()
-        for (i in list[0].data.itemList) {
+        for (i in rawData.itemList) {
             if (i.type == "followCard") {
                 val tmp = i.data.content.data
                 data.add(
@@ -160,6 +160,25 @@ class FeedFragmentViewModel : BaseViewModel() {
                         tmp.author?.icon,
                         tmp.author?.name,
                         tmp.author?.description, tmp.cover.feed,
+                        getTime(tmp.duration),
+                        null
+                    )
+                )
+            } else if (i.type == "videoSmallCard") {
+                val tmp = i.data
+                data.add(
+                    VideoDetailData(
+                        tmp.title,
+                        tmp.playUrl,
+                        tmp.id,
+                        tmp.description,
+                        tmp.consumption.collectionCount,
+                        tmp.consumption.shareCount,
+                        tmp.consumption.replyCount,
+                        tmp.author?.icon,
+                        tmp.author?.name,
+                        tmp.author?.description,
+                        tmp.cover.feed,
                         getTime(tmp.duration),
                         null
                     )

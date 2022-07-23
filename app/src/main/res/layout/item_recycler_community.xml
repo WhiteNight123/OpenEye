@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/community_iv_cover"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:src="@color/purple_200"
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearance="@style/RoundedStyle" />
+
+    <TextView
+        android:id="@+id/community_tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:text="不同的人生瞬间，仿佛存在一定的联系，犹如电影中讲述的人生故事"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/community_iv_cover" />
+
+    <TextView
+        android:id="@+id/community_tv_author"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="4dp"
+        android:maxEms="5"
+        android:text="akon_19"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/community_iv_author"
+        app:layout_constraintTop_toBottomOf="@+id/community_tv_title" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/community_iv_author"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@color/teal_200"
+        app:layout_constraintBottom_toBottomOf="@id/community_tv_author"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/community_tv_author"
+        app:shapeAppearance="@style/CircleStyle" />
+
+    <TextView
+        android:id="@+id/community_tv_like"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="99"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageView2" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginEnd="8dp"
+        android:src="@drawable/ic_like_24"
+        app:layout_constraintBottom_toBottomOf="@+id/community_tv_author"
+        app:layout_constraintEnd_toStartOf="@+id/community_tv_like"
+        app:layout_constraintTop_toTopOf="@+id/community_tv_author" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

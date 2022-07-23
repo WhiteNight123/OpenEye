@@ -1,5 +1,6 @@
 package com.example.openeye.ui.video
 
+import android.animation.ValueAnimator
 import android.app.ActivityOptions
 import android.content.Intent
 import android.graphics.Color
@@ -9,6 +10,7 @@ import android.view.animation.AnimationUtils
 import android.view.animation.LayoutAnimationController
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.widget.NestedScrollView
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -39,7 +41,7 @@ class VideoActivity : GSYBaseActivityDetail<StandardGSYVideoPlayer>() {
     lateinit var mTvAuthor: TextView
     lateinit var mTvAuthorDescribe: TextView
     lateinit var mRvVideoRelevant: RecyclerView
-
+    lateinit var mConstraintLayout: ConstraintLayout
     lateinit var adapter: VideoRelevantRvAdapter
     private val videoData by lazy {
         intent.getSerializableExtra("videoDetail") as VideoDetailData
@@ -70,8 +72,16 @@ class VideoActivity : GSYBaseActivityDetail<StandardGSYVideoPlayer>() {
         mIVNetError = findViewById(R.id.video_iv_net_error)
         mTvNetError = findViewById(R.id.video_tv_net_error)
         mNsDetail = findViewById(R.id.video_ns_detail)
+        mConstraintLayout = findViewById(R.id.video_constraint_latout_video_detail)
 
-        videoPlayer.transitionName = intent.getStringExtra("transitionName")
+        initView()
+        initVideoPlayer()
+        initRecyclerView()
+        initObserve()
+        viewModel.getVideoRelevant(videoData.videoId)
+    }
+
+    private fun initView() {
         mTvTitle.text = videoData.videoTitle
         mTvDescribe.text = videoData.videoDescription
         mTvLikeCount.text = videoData.likeCount.toString()
@@ -80,21 +90,48 @@ class VideoActivity : GSYBaseActivityDetail<StandardGSYVideoPlayer>() {
         mTvAuthor.text = videoData.authorName
         mTvAuthorDescribe.text = videoData.authorDescription
         Glide.with(this).load(videoData.authorIcon).into(mIvAuthor)
-        mRvVideoRelevant.layoutManager = LinearLayoutManager(this)
-        adapter = VideoRelevantRvAdapter(viewModel.videoData) { view1, videoBean ->
-            viewModel.insertHistory(videoBean)
-            startActivity(view1, videoBean)
-        }
-        mRvVideoRelevant.adapter = adapter
-        mRvVideoRelevant.layoutAnimation = // 入场动画
-            LayoutAnimationController(
-                AnimationUtils.loadAnimation(
-                    this,
-                    R.anim.recycler_view_slide_from_left_to_right_in
-                )
-            )
-        viewModel.getVideoRelevant(videoData.videoId)
 
+        mTvDescribe.setOnClickListener {
+            if (mTvDescribe.maxLines < 8) {
+//                mTvDescribe.maxLines = 10
+                val animator = ValueAnimator.ofInt(2, 8)
+                animator.duration = 110
+                animator.addUpdateListener { animation ->
+                    val currentValue = animation.animatedValue as Int
+                    mTvDescribe.maxLines = currentValue
+                }
+                animator.start()
+            } else {
+//                mTvDescribe.maxLines = 2
+                val animator = ValueAnimator.ofInt(8, 2)
+                animator.duration = 80
+                animator.addUpdateListener { animation ->
+                    val currentValue = animation.animatedValue as Int
+                    mTvDescribe.maxLines = currentValue
+                }
+                animator.start()
+            }
+        }
+        mBtnUnlike.setOnClickListener {
+            mBtnUnlike.visibility = View.INVISIBLE
+            mBtnLike.visibility = View.VISIBLE
+        }
+        mBtnLike.setOnClickListener {
+            mBtnUnlike.visibility = View.VISIBLE
+            mBtnLike.visibility = View.INVISIBLE
+        }
+    }
+
+    private fun initVideoPlayer() {
+        videoPlayer.transitionName = intent.getStringExtra("transitionName")
+        videoPlayer.titleTextView.visibility = View.VISIBLE
+        videoPlayer.titleTextView.textSize = 16f
+        videoPlayer.backButton.visibility = View.VISIBLE
+        videoPlayer.backButton.setOnClickListener { onBackPressed() }
+        initVideoBuilderMode()
+    }
+
+    private fun initObserve() {
         viewModel.videoData1.observe(this) {
             viewModel.videoData.clear()
             viewModel.videoData.addAll(it)
@@ -112,33 +149,22 @@ class VideoActivity : GSYBaseActivityDetail<StandardGSYVideoPlayer>() {
             }
         }
 
-        mTvDescribe.setOnClickListener {
-            if (mTvDescribe.maxLines < 10) {
-                mTvDescribe.maxLines = 10
-            } else {
-                mTvDescribe.maxLines = 2
-            }
-        }
-        mBtnUnlike.setOnClickListener {
-            mBtnUnlike.visibility = View.INVISIBLE
-            mBtnLike.visibility = View.VISIBLE
-        }
-        mBtnLike.setOnClickListener {
-            mBtnUnlike.visibility = View.VISIBLE
-            mBtnLike.visibility = View.INVISIBLE
-        }
+    }
 
-
-        videoPlayer.titleTextView.visibility = View.VISIBLE
-        videoPlayer.titleTextView.textSize = 16f
-        videoPlayer.backButton.visibility = View.VISIBLE
-        videoPlayer.backButton.setOnClickListener { onBackPressed() }
-        initVideoBuilderMode()
-//        lifecycleScope.launch {
-//            // 延迟播放
-//            delay(1500)
-//            videoPlayer.startPlayLogic()
-//        }
+    private fun initRecyclerView() {
+        mRvVideoRelevant.layoutManager = LinearLayoutManager(this)
+        adapter = VideoRelevantRvAdapter(viewModel.videoData) { view1, videoBean ->
+            viewModel.insertHistory(videoBean)
+            startActivity(view1, videoBean)
+        }
+        mRvVideoRelevant.adapter = adapter
+        mRvVideoRelevant.layoutAnimation = // 入场动画
+            LayoutAnimationController(
+                AnimationUtils.loadAnimation(
+                    this,
+                    R.anim.recycler_view_slide_from_left_to_right_in
+                )
+            )
     }
 
     private fun startActivity(view: View, videoDetail: VideoDetailData) {

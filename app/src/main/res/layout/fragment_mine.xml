@@ -7,10 +7,11 @@
     tools:context=".ui.mine.MineFragment">
 
     <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/mine_iv_portrait"
         android:layout_width="96dp"
         android:layout_height="96dp"
         android:layout_marginTop="32dp"
+        android:transitionName="image_cover"
         android:src="@drawable/ic_my_portrait"
         app:shapeAppearance="@style/CircleStyle"
         app:layout_constraintEnd_toEndOf="parent"
@@ -26,7 +27,7 @@
         android:textSize="32sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+        app:layout_constraintTop_toBottomOf="@+id/mine_iv_portrait" />
 
 
     <ImageView
@@ -48,17 +49,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView3" />
 
-    <TextView
-        android:id="@+id/mine_tv_follow"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="我的关注"
-
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mine_tv_message" />
 
     <TextView
         android:id="@+id/mine_tv_history_watch"
@@ -69,18 +59,20 @@
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mine_tv_follow" />
-
+        app:layout_constraintTop_toBottomOf="@+id/mine_tv_message" />
 
     <TextView
+        android:id="@+id/mine_tv_feedback"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="意见反馈"
         android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mine_tv_history_watch" />
+        app:layout_constraintTop_toBottomOf="@+id/mine_tv_history_watch"
+        app:layout_constraintVertical_bias="0.0" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

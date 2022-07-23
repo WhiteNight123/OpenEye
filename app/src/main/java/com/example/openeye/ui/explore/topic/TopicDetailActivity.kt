@@ -1,10 +1,12 @@
 package com.example.openeye.ui.explore.topic
 
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.animation.AnimationUtils
 import android.view.animation.LayoutAnimationController
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -18,6 +20,7 @@ import com.shuyu.gsyvideoplayer.GSYVideoManager
 class TopicDetailActivity : BaseActivity() {
     private val viewModel by lazy { ViewModelProvider(this)[TopicDetailActivityViewModel::class.java] }
     lateinit var recyclerView: RecyclerView
+    lateinit var toolbar: Toolbar
     lateinit var adapter: TopicDetailRecyclerAdapter
     lateinit var mIvCover: ImageView
     lateinit var mTvDescribe: TextView
@@ -32,10 +35,15 @@ class TopicDetailActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_topic_detail)
 
+        toolbar = findViewById(R.id.topic_toolbar_detail)
         recyclerView = findViewById(R.id.topic_rv_detail)
         mTvDescribe = findViewById(R.id.topic_tv_detail_description)
         mIvCover = findViewById(R.id.topic_iv_detail_cover)
         Glide.with(mIvCover).load(topicData.videoCover).into(mIvCover)
+        toolbar.title = "专题"
+        setSupportActionBar(toolbar)
+        supportActionBar?.setHomeButtonEnabled(true);
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         initRecyclerView()
         viewModel.getDetailTopic(id)
         viewModel.topicDetailBean.observe(this) {
@@ -102,6 +110,13 @@ class TopicDetailActivity : BaseActivity() {
         super.onDestroy()
 
         GSYVideoManager.releaseAllVideos()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == android.R.id.home) {
+            finish()
+        }
+        return super.onOptionsItemSelected(item)
     }
 
 }

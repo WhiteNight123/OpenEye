@@ -18,9 +18,11 @@
         android:theme="@style/Theme.OpenEye"
         tools:targetApi="s">
         <activity
+            android:name=".ui.mine.feedback.FeedbackActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.mine.message.MessageActivity"
-            android:exported="false"
-            android:label="我的消息" />
+            android:exported="false" />
         <activity
             android:name=".ui.explore.category.CategoryDetailActivity"
             android:exported="false" />

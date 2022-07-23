@@ -1,6 +1,7 @@
 package com.example.openeye.ui.mine.message
 
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.animation.AnimationUtils
 import android.view.animation.LayoutAnimationController
 import androidx.appcompat.widget.Toolbar
@@ -20,9 +21,10 @@ class MessageActivity : BaseActivity() {
         setContentView(R.layout.activity_message)
         toolbar = findViewById(R.id.message_toolbar)
         recyclerView = findViewById(R.id.message_rv)
-        setSupportActionBar(toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         toolbar.title = "我的消息"
+        setSupportActionBar(toolbar)
+        supportActionBar?.setHomeButtonEnabled(true);
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         initRecyclerView()
         viewModel.getMessage()
         viewModel.messageBean.observe(this) {
@@ -30,6 +32,13 @@ class MessageActivity : BaseActivity() {
             viewModel.messageData.addAll(it.messageList)
             adapter.notifyDataSetChanged()
         }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == android.R.id.home) {
+            finish()
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     private fun initRecyclerView() {

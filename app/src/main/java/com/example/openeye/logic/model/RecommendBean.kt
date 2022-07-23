@@ -1,9 +1,9 @@
 package com.example.openeye.logic.model
 
-data class BannerBean(
+data class RecommendBean(
     val adExist: Boolean,
     val count: Int,
-    val itemList: ArrayList<Item>,
+    val itemList: List<Item>,
     val nextPageUrl: String,
     val total: Int
 ) {
@@ -19,7 +19,7 @@ data class BannerBean(
             val actionUrl: String,
             val ad: Boolean,
             val adTrack: List<Any>,
-            val author: Author,
+            val author: Author?,
             val brandWebsiteInfo: Any,
             val campaign: Any,
             val category: String,
@@ -60,13 +60,13 @@ data class BannerBean(
             val resourceType: String,
             val searchWeight: Int,
             val shareAdTrack: Any,
-            val slogan: Any,
+            val slogan: String,
             val src: Int,
             val subTitle: Any,
             val subtitles: List<Any>,
             val tags: List<Tag>,
             val text: String,
-            val thumbPlayUrl: Any,
+            val thumbPlayUrl: String,
             val title: String,
             val titlePgc: String,
             val type: String,
@@ -122,7 +122,7 @@ data class BannerBean(
                 data class Data(
                     val ad: Boolean,
                     val adTrack: List<Any>,
-                    val author: Author,
+                    val author: Author?,
                     val brandWebsiteInfo: Any,
                     val campaign: Any,
                     val category: String,

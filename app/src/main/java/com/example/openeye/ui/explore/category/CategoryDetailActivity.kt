@@ -3,6 +3,7 @@ package com.example.openeye.ui.explore.category
 import android.app.ActivityOptions
 import android.content.Intent
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
 import android.view.WindowManager
 import android.view.animation.AnimationUtils
@@ -40,11 +41,12 @@ class CategoryDetailActivity : BaseActivity() {
         recyclerView = findViewById(R.id.category_rv_detail)
         toolBar = findViewById(R.id.category_toolbar)
         imageView = findViewById(R.id.category_iv_detail_image)
+        toolBar.title = categoryData.title
         setSupportActionBar(toolBar)
+        supportActionBar?.setHomeButtonEnabled(true);
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         Glide.with(imageView).load(categoryData.cover).centerCrop().into(imageView)
         initRecyclerView()
-        toolBar.title = "categoryData.title"
         viewModel.getCategory(categoryData.id)
         viewModel.categoryDetailBean.observe(this) {
             viewModel.categoryData.clear()
@@ -52,6 +54,7 @@ class CategoryDetailActivity : BaseActivity() {
             adapter.notifyDataSetChanged()
         }
     }
+
 
     private fun initRecyclerView() {
         val layoutManager = LinearLayoutManager(this)
@@ -77,5 +80,12 @@ class CategoryDetailActivity : BaseActivity() {
         val options =
             ActivityOptions.makeSceneTransitionAnimation(this, view, view.transitionName)
         startActivity(intent, options.toBundle())
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == android.R.id.home) {
+            finish()
+        }
+        return super.onOptionsItemSelected(item)
     }
 }
