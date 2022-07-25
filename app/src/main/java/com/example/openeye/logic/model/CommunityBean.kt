@@ -68,7 +68,7 @@ data class CommunityBean(
                     val uid: Int,
                     val updateTime: Long,
                     val url: String,
-                    val urls: List<String>,
+                    val urls: ArrayList<String>,
                     val urlsWithWatermark: List<String>,
                     val validateResult: String,
                     val validateStatus: String,

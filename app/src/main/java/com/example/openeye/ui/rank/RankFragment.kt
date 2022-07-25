@@ -5,11 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
 import com.example.openeye.R
 import com.example.openeye.ui.base.BaseFragmentVPAdapter
-import com.example.openeye.ui.widge.ScaleInTransformer
+import com.example.openeye.ui.widge.RotationTransformer
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
@@ -18,7 +17,6 @@ private const val ARG_PARAM1 = "param1"
 
 
 class RankFragment : Fragment() {
-    private val viewModel by lazy { ViewModelProvider(this).get(RankViewModel::class.java) }
     lateinit var mTabLayout: TabLayout
     lateinit var mViewPager2: ViewPager2
 
@@ -58,7 +56,7 @@ class RankFragment : Fragment() {
             )
         )
 
-        mViewPager2.setPageTransformer(ScaleInTransformer())
+        mViewPager2.setPageTransformer(RotationTransformer())
         mViewPager2.offscreenPageLimit = 1
         mViewPager2.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageScrolled(

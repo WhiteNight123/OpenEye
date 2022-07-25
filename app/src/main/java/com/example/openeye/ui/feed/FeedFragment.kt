@@ -10,31 +10,31 @@ import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.view.animation.LayoutAnimationController
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.doOnPreDraw
-import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import androidx.viewpager2.widget.ViewPager2
 import com.example.openeye.R
 import com.example.openeye.logic.model.VideoDetailData
 import com.example.openeye.ui.video.VideoActivity
-import com.example.openeye.ui.widge.FadeDotsIndicator
+import com.example.openeye.ui.widge.MyNestScrollView
 
 
 class FeedFragment : Fragment() {
     private val viewModel by lazy { ViewModelProvider(this)[FeedFragmentViewModel::class.java] }
-    lateinit var banner: ViewPager2
-    lateinit var constraintLayout: ConstraintLayout
-    lateinit var bannerAdapter: BannerAdapter
-    lateinit var bannerIndicator: FadeDotsIndicator
+
+    //    lateinit var banner: ViewPager2
+    lateinit var constraintLayout: LinearLayout
+
+    //    lateinit var bannerAdapter: BannerAdapter
+    //lateinit var bannerIndicator: FadeDotsIndicator
     lateinit var recyclerView: RecyclerView
     lateinit var rvAdapter: FeedRecyclerAdapter
-    lateinit var nestedScrollView: NestedScrollView
+    lateinit var nestedScrollView: MyNestScrollView
     lateinit var swipeRefresh: SwipeRefreshLayout
     lateinit var mTvError: TextView
     lateinit var mIvError: ImageView
@@ -57,15 +57,15 @@ class FeedFragment : Fragment() {
         swipeRefresh = view.findViewById(R.id.feed_srl_refresh)
         mTvError = view.findViewById(R.id.feed_tv_net_error)
         mIvError = view.findViewById(R.id.feed_iv_net_error)
-        banner = view.findViewById(R.id.banner_viewpager)
-        bannerIndicator = view.findViewById(R.id.banner_indicator)
+        //banner = view.findViewById(R.id.banner_viewpager)
+        //bannerIndicator = view.findViewById(R.id.banner_indicator)
         constraintLayout = view.findViewById(R.id.feed_constrain_layout)
-        nestedScrollView = view.findViewById(R.id.feed_nest_scroll_view)
+        //nestedScrollView = view.findViewById(R.id.feed_nest_scroll_view)
+        viewModel.getBanner()
 
-        initBanner()
+        //initBanner()
         initView()
         initObserve()
-        viewModel.getBanner()
         viewModel.getFeed()
     }
 
@@ -87,61 +87,99 @@ class FeedFragment : Fragment() {
                     R.anim.recycler_view_fade_in
                 )
             )
-        rvAdapter = FeedRecyclerAdapter(viewModel.videoData) { view1, videoDetail ->
-            viewModel.insertHistory(videoDetail)
-            startActivity(view1, videoDetail)
-        }
+        rvAdapter =
+            FeedRecyclerAdapter(viewModel.videoData, viewModel.bannerData) { view1, videoDetail ->
+                viewModel.insertHistory(videoDetail)
+                startActivity(view1, videoDetail)
+            }
         recyclerView.adapter = rvAdapter
-        nestedScrollView.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
-            //判断是否滑到的底部
-            if (scrollY == v.getChildAt(0).measuredHeight - v.measuredHeight) {
-                viewModel.videoData[viewModel.videoData.size - 1].nextPageUrl?.let {
-                    viewModel.getNextFeed(
-                        it
-                    )
-                }
-            }
-        })
-    }
-
-    private fun initBanner() {
-        bannerAdapter = BannerAdapter(viewModel.bannerData) { view, videoBean ->
-            viewModel.insertHistory(videoBean)
-            startActivity(view, videoBean)
-        }
-        banner.adapter = bannerAdapter
-        banner.registerOnPageChangeCallback(object :
-            ViewPager2.OnPageChangeCallback() {
-            override fun onPageSelected(position: Int) {
-                banner.currentItem = position
-            }
-
-            override fun onPageScrollStateChanged(state: Int) {
-                //只有在空闲状态，才让自动滚动
-                if (state == ViewPager2.SCROLL_STATE_IDLE) {
-                    if (banner.currentItem == 0) {
-                        banner.setCurrentItem(bannerAdapter.itemCount - 2, false)
-                    } else if (banner.currentItem == bannerAdapter.itemCount - 1) {
-                        banner.setCurrentItem(1, false)
+        var lastVisibleItem = 0
+        recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    //判断是否滑动到底部
+                    if (!rvAdapter.isFadeTips() && lastVisibleItem + 1 == rvAdapter.itemCount) {
+                        Log.e("TAG", "onScrollStateChanged: haha1")
+                        viewModel.videoData[viewModel.videoData.size - 1].nextPageUrl?.let {
+                            viewModel.getNextFeed(
+                                it
+                            )
+                        }
                     }
+
                 }
             }
-        })
-        val mLooper = object : Runnable {
-            override fun run() {
-                banner.currentItem = ++banner.currentItem
-                banner.postDelayed(this, 2000)
+
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                //findLastVisibleItemPosition显示界面的最后一个位置
+                lastVisibleItem = layoutManager.findLastVisibleItemPosition()
             }
-        }
-        banner.postDelayed(mLooper, 2000)
+        })
+
+//        nestedScrollView.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
+//            Log.e("TAG", "initRecyclerView: $scrollY", )
+//            //判断是否滑到的底部
+//            if (scrollY == v.getChildAt(0).measuredHeight - v.measuredHeight) {
+//                Log.e("TAG", "initRecyclerView: scrollY $scrollY", )
+//                viewModel.videoData[viewModel.videoData.size - 1].nextPageUrl?.let {
+//                    viewModel.getNextFeed(
+//                        it
+//                    )
+//                }
+//            }
+//        })
     }
+
+//    private fun initBanner() {
+//        bannerAdapter = BannerAdapter(viewModel.bannerData) { view, videoBean ->
+//            viewModel.insertHistory(videoBean)
+//            startActivity(view, videoBean)
+//        }
+//
+
+//        banner.clipChildren = false
+//        banner.setPageTransformer(animatorBanner)
+//        banner.adapter = bannerAdapter
+//        banner.offscreenPageLimit = 1
+//        banner.registerOnPageChangeCallback(object :
+//            ViewPager2.OnPageChangeCallback() {
+//            override fun onPageSelected(position: Int) {
+//                banner.currentItem = position
+//            }
+//
+////            override fun onPageScrollStateChanged(state: Int) {
+////                //只有在空闲状态，才让自动滚动
+////                if (state == ViewPager2.SCROLL_STATE_IDLE) {
+////                    if (banner.currentItem == 0) {
+////                        banner.setCurrentItem(bannerAdapter.itemCount - 2, false)
+////                    } else if (banner.currentItem == bannerAdapter.itemCount - 1) {
+////                        banner.setCurrentItem(1, false)
+////                    }
+////                }
+////            }
+//        })
+////        val mLooper = object : Runnable {
+////            override fun run() {
+////                banner.currentItem = ++banner.currentItem
+////                banner.postDelayed(this, 2000)
+////            }
+////        }
+////        banner.postDelayed(mLooper, 2000)
+//    }
 
     private fun initObserve() {
-        viewModel.banner.observe(viewLifecycleOwner) {
+        viewModel.banner.observe(viewLifecycleOwner) { it1 ->
             viewModel.bannerData.clear()
-            viewModel.bannerData.addAll(it)
-            bannerIndicator.setViewPager2(banner)
-            bannerAdapter.notifyItemRangeChanged(0, it.size - 1)
+            viewModel.bannerData.addAll(it1)
+            //bannerIndicator.setViewPager2(banner)
+            //bannerAdapter.notifyItemRangeChanged(0, it.size - 1)
+            if (::rvAdapter.isInitialized) {
+                rvAdapter.getVHolder(0) {
+                    it.banner.adapter?.notifyDataSetChanged()
+                }
+            }
         }
         viewModel.refresh.observe(viewLifecycleOwner) {
             if (it) {

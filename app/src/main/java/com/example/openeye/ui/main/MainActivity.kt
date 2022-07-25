@@ -17,6 +17,7 @@ import com.example.openeye.ui.feed.FeedFragment
 import com.example.openeye.ui.mine.MineFragment
 import com.example.openeye.ui.rank.RankFragment
 import com.example.openeye.ui.search.SearchActivity
+import com.example.openeye.ui.widge.ScaleInTransformer
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.transition.platform.MaterialSharedAxis
 import kotlin.math.abs
@@ -63,7 +64,7 @@ class MainActivity : BaseActivity() {
                 scaleY = scale
             }
         }
-        viewpager.setPageTransformer(animatorVp)
+        viewpager.setPageTransformer(ScaleInTransformer())
         val mFragments = ArrayList<Fragment>()
         mFragments.add(FeedFragment())
         mFragments.add(ExploreFragment())

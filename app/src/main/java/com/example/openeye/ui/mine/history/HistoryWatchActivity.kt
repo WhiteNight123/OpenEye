@@ -9,6 +9,7 @@ import android.view.animation.AnimationUtils
 import android.view.animation.LayoutAnimationController
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.openeye.R
@@ -41,7 +42,7 @@ class HistoryWatchActivity : BaseActivity() {
             if (viewModel.historyWatchData.isEmpty()) {
                 "还没有观看记录哦".toast()
             } else {
-                viewModel.deleteHistory()
+                viewModel.deleteAllHistory()
                 viewModel.historyWatchData.clear()
                 adapter.notifyDataSetChanged()
             }
@@ -76,11 +77,13 @@ class HistoryWatchActivity : BaseActivity() {
                     R.anim.recycler_view_fade_in
                 )
             )
-        adapter = HistoryWatchRecyclerAdapter(viewModel.historyWatchData) { view, videoBean ->
-            startActivity(view, videoBean)
-
-        }
+        adapter = HistoryWatchRecyclerAdapter(
+            viewModel.historyWatchData,
+            { view, videpData -> startActivity(view, videpData) },
+            { videoBean -> viewModel.deleteHistoryVideo(videoBean) })
         recyclerView.adapter = adapter
+        val mItemTouchHelper = ItemTouchHelper(Callback(adapter));
+        mItemTouchHelper.attachToRecyclerView(recyclerView);
 
     }
 

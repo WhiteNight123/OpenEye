@@ -38,19 +38,52 @@ class VideoActivityViewModel : BaseViewModel() {
             )
     }
 
-    fun insertHistory(videoDetailData: VideoDetailData) {
+    // 添加数据
+    private fun insertHistory(videoDetailData: VideoDetailData) {
         HistoryWatchDatabase.getDatabase(appContext).historyWatchDao()
             .insert(convertHistoryWatchEntity(videoDetailData))
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .safeSubscribeBy(onError = { it.printStackTrace() }, onSuccess = {
-                Log.e(
-                    "TAG", "insertHistory: $it",
-                )
+                Log.d("tag", "(FeedFragmentViewModel.kt:113) -> insert:")
+
             })
 
     }
 
+    //更新数据
+    private fun updateHistory(videoHistoryWatchEntity: HistoryWatchEntity) {
+        HistoryWatchDatabase.getDatabase(appContext).historyWatchDao()
+            .update(videoHistoryWatchEntity)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .safeSubscribeBy(
+                onError = { Log.d("tag", "(FeedFragmentViewModel.kt:110) -> $it") },
+                onSuccess = {
+                    Log.d("tag", "(FeedFragmentViewModel.kt:113) -> update:")
+                })
+
+    }
+
+    // 添加数据,如果存在就更新,如果不存在就插入
+    fun addHistoryVideo(videoDetailData: VideoDetailData) {
+        HistoryWatchDatabase.getDatabase(appContext).historyWatchDao()
+            .findHistoryWatchVideo(convertHistoryWatchEntity(videoDetailData).videoId)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .safeSubscribeBy(onError = { it.printStackTrace() }, onSuccess = {
+                Log.e("TAG", "insertHistory: $it")
+                if (it.isEmpty()) {
+                    insertHistory(videoDetailData)
+                } else {
+                    Log.d("tag", "(FeedFragmentViewModel.kt:126) -> list: $it")
+                    Log.d("tag", "(FeedFragmentViewModel.kt:126) -> id: ${it[0].id}  ")
+                    updateHistory(convertHistoryWatchEntity2(videoDetailData, it[0].id))
+                }
+            })
+    }
+
+    // 转换成Room的数据类
     private fun convertHistoryWatchEntity(rawData: VideoDetailData) = HistoryWatchEntity(
         rawData.videoTitle,
         rawData.videoUrl,
@@ -66,6 +99,27 @@ class VideoActivityViewModel : BaseViewModel() {
         rawData.videoDuration,
         System.currentTimeMillis().toString()
     )
+
+    // 增加了主键
+    private fun convertHistoryWatchEntity2(rawData: VideoDetailData, id: Long): HistoryWatchEntity {
+        val a = HistoryWatchEntity(
+            rawData.videoTitle,
+            rawData.videoUrl,
+            rawData.videoId,
+            rawData.videoDescription,
+            rawData.likeCount,
+            rawData.shareCount,
+            rawData.replyCount,
+            rawData.authorIcon,
+            rawData.authorName,
+            rawData.authorDescription,
+            rawData.videoCover,
+            rawData.videoDuration,
+            System.currentTimeMillis().toString()
+        )
+        a.id = id
+        return a
+    }
 
 
     private fun toVideoDetail(list: List<VideoRelevantBean.Item>): ArrayList<VideoDetailData> {

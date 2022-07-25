@@ -11,8 +11,7 @@ import com.example.openeye.ui.base.BaseFragmentVPAdapter
 import com.example.openeye.ui.explore.category.CategoryFragment
 import com.example.openeye.ui.explore.community.CommunityFragment
 import com.example.openeye.ui.explore.topic.TopicFragment
-import com.example.openeye.ui.home.HomeFragment
-import com.example.openeye.ui.widge.ScaleInTransformer
+import com.example.openeye.ui.widge.SquareBoxTransformer
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
@@ -53,15 +52,15 @@ class ExploreFragment : Fragment() {
         mViewPager2.adapter = BaseFragmentVPAdapter(
             activity!!,
             listOf(
-                HomeFragment(),
                 CategoryFragment(),
                 TopicFragment(),
                 CommunityFragment()
             )
         )
 
-        mViewPager2.setPageTransformer(ScaleInTransformer())
+        mViewPager2.setPageTransformer(SquareBoxTransformer())
         mViewPager2.offscreenPageLimit = 1
+
         mViewPager2.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageScrolled(
                 position: Int,
@@ -78,7 +77,6 @@ class ExploreFragment : Fragment() {
     // 设置 TabLayout
     private fun initTabLayout() {
         val tabs = arrayOf(
-            "关注",
             "分类",
             "专题",
             "社区"

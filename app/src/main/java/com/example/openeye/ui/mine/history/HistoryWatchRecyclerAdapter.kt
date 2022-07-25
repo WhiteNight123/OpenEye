@@ -18,6 +18,7 @@ import com.example.openeye.logic.model.VideoDetailData
 class HistoryWatchRecyclerAdapter(
     private val data: ArrayList<VideoDetailData>,
     private val onClick: (view: View, videoBean: VideoDetailData) -> Unit,
+    private val delete: (videoBeanL: VideoDetailData) -> Unit
 ) : RecyclerView.Adapter<HistoryWatchRecyclerAdapter.InnerHolder>() {
 
     inner class InnerHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -54,4 +55,9 @@ class HistoryWatchRecyclerAdapter(
     }
 
     override fun getItemCount(): Int = data.size
+    fun deleteItem(position: Int) {
+        delete(data[position])
+        data.removeAt(position)
+        notifyItemRemoved(position)
+    }
 }

@@ -51,11 +51,11 @@ class VideoActivity : GSYBaseActivityDetail<StandardGSYVideoPlayer>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         window.statusBarColor = Color.BLACK
-
         setContentView(R.layout.activity_video)
         // 延迟加载动画
         postponeEnterTransition()
         startPostponedEnterTransition()
+        viewModel.addHistoryVideo(videoData)
 
         mBtnUnlike = findViewById(R.id.video_iv_unlike)
         mBtnLike = findViewById(R.id.topic_iv_detail_like)
@@ -154,7 +154,7 @@ class VideoActivity : GSYBaseActivityDetail<StandardGSYVideoPlayer>() {
     private fun initRecyclerView() {
         mRvVideoRelevant.layoutManager = LinearLayoutManager(this)
         adapter = VideoRelevantRvAdapter(viewModel.videoData) { view1, videoBean ->
-            viewModel.insertHistory(videoBean)
+            //viewModel.insertHistory(videoBean)
             startActivity(view1, videoBean)
         }
         mRvVideoRelevant.adapter = adapter

@@ -65,5 +65,10 @@ class SearchActivityViewModel : BaseViewModel() {
             })
     }
 
+    init {
+        getHotSearch()
+        getHistory()
+
+    }
 
 }

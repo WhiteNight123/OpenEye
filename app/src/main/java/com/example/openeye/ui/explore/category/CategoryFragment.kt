@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.openeye.R
 import com.example.openeye.logic.model.CategoryData
 
@@ -24,6 +25,7 @@ class CategoryFragment : Fragment() {
     private val viewModel by lazy { ViewModelProvider(this)[CategoryFragmentViewModel::class.java] }
     lateinit var recyclerView: RecyclerView
     lateinit var adapter: CategoryRecyclerAdapter
+    lateinit var swipeRefreshLayout: SwipeRefreshLayout
 
     // TODO: Rename and change types of parameters
     private var param1: String? = null
@@ -49,12 +51,20 @@ class CategoryFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         postponeEnterTransition()
         view.doOnPreDraw { startPostponedEnterTransition() }
-
         recyclerView = view.findViewById(R.id.category_rv)
+        swipeRefreshLayout = view.findViewById(R.id.category_srl_refresh)
         initRecyclerView()
+        swipeRefreshLayout.isRefreshing = true
+        swipeRefreshLayout.setOnRefreshListener {
+            viewModel.getCategory()
+        }
         viewModel.getCategory()
         viewModel.categoryBean.observe(viewLifecycleOwner) {
             viewModel.categoryData.addAll(it)
+            adapter.notifyDataSetChanged()
+        }
+        viewModel.refreshSuccess.observe(viewLifecycleOwner) {
+            swipeRefreshLayout.isRefreshing = false
             adapter.notifyDataSetChanged()
         }
     }

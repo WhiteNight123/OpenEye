@@ -18,10 +18,10 @@
         android:theme="@style/Theme.OpenEye"
         tools:targetApi="s">
         <activity
-            android:name=".ui.mine.feedback.FeedbackActivity"
+            android:name=".ui.explore.community.PictureDetailActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.mine.message.MessageActivity"
+            android:name=".ui.mine.feedback.FeedbackActivity"
             android:exported="false" />
         <activity
             android:name=".ui.explore.category.CategoryDetailActivity"

@@ -19,6 +19,9 @@ class CategoryFragmentViewModel : BaseViewModel() {
     private val _categoryBean = MutableLiveData<ArrayList<CategoryData>>()
     val categoryBean: LiveData<ArrayList<CategoryData>>
         get() = _categoryBean
+    private val _refreshSuccess = MutableLiveData<Boolean>()
+    val refreshSuccess: LiveData<Boolean>
+        get() = _refreshSuccess
     val categoryData = ArrayList<CategoryData>()
     fun getCategory() {
         ApiService.INSTANCE.getCategory()
@@ -26,10 +29,12 @@ class CategoryFragmentViewModel : BaseViewModel() {
             .observeOn(AndroidSchedulers.mainThread())
             .safeSubscribeBy(
                 onError = {
+                    _refreshSuccess.postValue(false)
                     it.printStackTrace()
                 },
                 onSuccess = {
                     Log.d("TAG", "getFeed: $it")
+                    _refreshSuccess.postValue(true)
                     _categoryBean.postValue(convertToVideoDetail(it))
                 }
             )

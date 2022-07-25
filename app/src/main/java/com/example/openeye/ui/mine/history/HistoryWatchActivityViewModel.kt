@@ -30,7 +30,7 @@ class HistoryWatchActivityViewModel : BaseViewModel() {
     }
 
     private fun convertVideoDetailData(rawData: List<HistoryWatchEntity>): ArrayList<VideoDetailData> {
-        val data: ArrayList<VideoDetailData> = arrayListOf()
+        var data: ArrayList<VideoDetailData> = arrayListOf()
         for (i in rawData) {
             data.add(
                 VideoDetailData(
@@ -49,12 +49,79 @@ class HistoryWatchActivityViewModel : BaseViewModel() {
                 )
             )
         }
+
         return data
     }
 
+    private fun deleteHistory(historyWatchEntity: HistoryWatchEntity) {
+        HistoryWatchDatabase.getDatabase(appContext).historyWatchDao().delete(historyWatchEntity)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .safeSubscribeBy(onError = { it.printStackTrace() }, onSuccess = {
+                Log.e(
+                    "TAG", "insertHistory: $it",
+                )
+            })
+    }
 
-    fun deleteHistory() {
-        HistoryWatchDatabase.getDatabase(appContext).historyWatchDao().delete()
+    fun deleteHistoryVideo(videoDetailData: VideoDetailData) {
+        Log.d("tag", "(HistoryWatchActivityViewModel.kt:67) -> data$videoDetailData")
+        HistoryWatchDatabase.getDatabase(appContext).historyWatchDao()
+            .findHistoryWatchVideo(convertHistoryWatchEntity(videoDetailData).videoId)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .safeSubscribeBy(onError = { it.printStackTrace() }, onSuccess = {
+                Log.e("TAG", "insertHistory: $it")
+                if (it.isEmpty()) {
+                    Log.d("tag", "(HistoryWatchActivityViewModel.kt:76) -> no data")
+                } else {
+                    Log.d("tag", "(FeedFragmentViewModel.kt:126) -> list: $it")
+                    Log.d("tag", "(FeedFragmentViewModel.kt:126) -> id: ${it[0].id}  ")
+                    deleteHistory(convertHistoryWatchEntity2(videoDetailData, it[0].id))
+                }
+            })
+    }
+
+    // 转换成Room的数据类
+    private fun convertHistoryWatchEntity(rawData: VideoDetailData) = HistoryWatchEntity(
+        rawData.videoTitle,
+        rawData.videoUrl,
+        rawData.videoId,
+        rawData.videoDescription,
+        rawData.likeCount,
+        rawData.shareCount,
+        rawData.replyCount,
+        rawData.authorIcon,
+        rawData.authorName,
+        rawData.authorDescription,
+        rawData.videoCover,
+        rawData.videoDuration,
+        System.currentTimeMillis().toString()
+    )
+
+    // 增加了主键
+    private fun convertHistoryWatchEntity2(rawData: VideoDetailData, id: Long): HistoryWatchEntity {
+        val a = HistoryWatchEntity(
+            rawData.videoTitle,
+            rawData.videoUrl,
+            rawData.videoId,
+            rawData.videoDescription,
+            rawData.likeCount,
+            rawData.shareCount,
+            rawData.replyCount,
+            rawData.authorIcon,
+            rawData.authorName,
+            rawData.authorDescription,
+            rawData.videoCover,
+            rawData.videoDuration,
+            System.currentTimeMillis().toString()
+        )
+        a.id = id
+        return a
+    }
+
+    fun deleteAllHistory() {
+        HistoryWatchDatabase.getDatabase(appContext).historyWatchDao().deleteAll()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .safeSubscribeBy(onError = { it.printStackTrace() }, onSuccess = {

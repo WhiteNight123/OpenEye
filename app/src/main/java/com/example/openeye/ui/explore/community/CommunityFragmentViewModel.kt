@@ -16,21 +16,31 @@ import io.reactivex.rxjava3.schedulers.Schedulers
  * @description
  */
 class CommunityFragmentViewModel : BaseViewModel() {
-    // 获取首次的 followBean
+    init {
+        getCommunity()
+    }
+
+    // 获取首次的 communityBean
     private val _communityBean = MutableLiveData<ArrayList<CommunityData>>()
     val communityBean: LiveData<ArrayList<CommunityData>>
         get() = _communityBean
     val communityData = ArrayList<CommunityData>()
-    fun getCommunity() {
-        ApiService.INSTANCE.getCommunity()
+    private val _refreshSuccess = MutableLiveData<Boolean>()
+    val refreshSuccess: LiveData<Boolean>
+        get() = _refreshSuccess
+
+    fun getCommunity(start: Int = 0) {
+        ApiService.INSTANCE.getCommunity(start)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .safeSubscribeBy(
                 onError = {
+                    _refreshSuccess.postValue(false)
                     it.printStackTrace()
                 },
                 onSuccess = {
                     Log.d("TAG", "getFeed: $it")
+                    _refreshSuccess.postValue(true)
                     _communityBean.postValue(convertToTopic(it))
                 }
             )
@@ -49,7 +59,8 @@ class CommunityFragmentViewModel : BaseViewModel() {
                         tmp.owner.avatar,
                         tmp.owner.nickname,
                         tmp.cover.feed,
-                        null
+                        null,
+                        tmp.urls
                     )
                 )
             }

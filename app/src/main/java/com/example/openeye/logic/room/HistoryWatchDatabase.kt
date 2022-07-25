@@ -71,6 +71,18 @@ interface HistoryWatchDao {
     @Insert
     fun insert(history: HistoryWatchEntity): Single<Long>
 
+    // 删库
     @Query("DELETE FROM historywatchentity")
-    fun delete(): Single<Int>
+    fun deleteAll(): Single<Int>
+
+    // 删除某一条数据
+    @Delete
+    fun delete(history: HistoryWatchEntity): Single<Unit>
+
+    @Query("SELECT * FROM historywatchentity WHERE videoId = :videoId")
+    fun findHistoryWatchVideo(videoId: Int): Single<List<HistoryWatchEntity>>
+
+    @Update()
+    fun update(history: HistoryWatchEntity): Single<Unit>
+
 }

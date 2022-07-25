@@ -22,5 +22,7 @@ data class CommunityData(
     @SerializedName("videoCover")
     val videoCover: String?,
     @SerializedName("nextPageUrl")
-    var nextPageUrl: String?
+    var nextPageUrl: String?,
+    @SerializedName("pictureList")
+    val pictureList: ArrayList<String>
 ) : Serializable

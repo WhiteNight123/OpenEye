@@ -1,5 +1,6 @@
 package com.example.openeye.ui.rank
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.openeye.logic.model.RankBean
 import com.example.openeye.logic.model.VideoDetailData
@@ -13,12 +14,17 @@ class RankDetailFragmentViewModel : BaseViewModel() {
     private val _rankData = MutableLiveData<ArrayList<VideoDetailData>>()
     val rankData: MutableLiveData<ArrayList<VideoDetailData>>
         get() = _rankData
+    private val _refreshSuccess = MutableLiveData<Boolean>()
+    val refreshSuccess: LiveData<Boolean>
+        get() = _refreshSuccess
     val videoData: ArrayList<VideoDetailData> = arrayListOf()
     fun getRank(rank: String) {
         ApiService.INSTANCE.getRank(rank).subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread()).safeSubscribeBy(onError = {
+                _refreshSuccess.postValue(false)
                 it.printStackTrace()
             }, onSuccess = {
+                _refreshSuccess.postValue(true)
                 _rankData.postValue(convertToVideoDetail(it))
             })
     }

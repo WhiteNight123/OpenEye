@@ -11,20 +11,30 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.schedulers.Schedulers
 
 class TopicFragmentViewModel : BaseViewModel() {
-    // 获取首次的 followBean
+    init {
+        getTopic()
+    }
+
+    // 获取首次的 topicBean
     private val _topicBean = MutableLiveData<ArrayList<TopicData>>()
     val topicBean: LiveData<ArrayList<TopicData>>
         get() = _topicBean
+    private val _refreshSuccess = MutableLiveData<Boolean>()
+    val refreshSuccess: LiveData<Boolean>
+        get() = _refreshSuccess
     val topicData = ArrayList<TopicData>()
+
     fun getTopic(start: Int = 0) {
         ApiService.INSTANCE.getTopic(start)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .safeSubscribeBy(
                 onError = {
+                    _refreshSuccess.postValue(false)
                     it.printStackTrace()
                 },
                 onSuccess = {
+                    _refreshSuccess.postValue(true)
                     Log.d("TAG", "getFeed: $it")
                     _topicBean.postValue(convertToTopic(it))
                 }

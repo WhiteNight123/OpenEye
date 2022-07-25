@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.openeye.R
 import com.example.openeye.logic.model.VideoDetailData
 import com.example.openeye.ui.rank.RankDetailRvAdapter.Companion.TAG
@@ -33,6 +34,7 @@ class RankDetailFragment : Fragment() {
     private val viewModel by lazy { ViewModelProvider(this).get(RankDetailFragmentViewModel::class.java) }
     lateinit var recyclerView: RecyclerView
     lateinit var adapter: RankDetailRvAdapter
+    lateinit var swipeRefreshLayout: SwipeRefreshLayout
     private var param1: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,12 +55,21 @@ class RankDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         recyclerView = view.findViewById(R.id.rank_rv_detail)
+        swipeRefreshLayout = view.findViewById(R.id.rank_srl_refresh)
         initRecyclerView()
+        swipeRefreshLayout.isRefreshing = true
+        swipeRefreshLayout.setOnRefreshListener {
+            param1?.let { viewModel.getRank(it) }
+        }
         Log.e("TAG", "onViewCreated: $param1")
         param1?.let { viewModel.getRank(it) }
         viewModel.rankData.observe(viewLifecycleOwner) {
             viewModel.videoData.addAll(it)
             adapter.notifyDataSetChanged()
+        }
+        viewModel.refreshSuccess.observe(viewLifecycleOwner) {
+            swipeRefreshLayout.isRefreshing = false
+            // adapter.notifyDataSetChanged()
         }
     }
 

@@ -1,8 +1,12 @@
 package com.example.openeye.ui.widge
 
+import android.animation.Animator
+import android.animation.TimeInterpolator
+import android.animation.ValueAnimator
 import android.content.Context
 import android.util.AttributeSet
 import android.view.MotionEvent
+import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.RelativeLayout
 import androidx.viewpager2.widget.ViewPager2
 import kotlin.math.abs
@@ -45,13 +49,14 @@ class ViewPager2Container @JvmOverloads constructor(
             MotionEvent.ACTION_DOWN -> {
                 startX = ev.x.toInt()
                 startY = ev.y.toInt()
-                parent.requestDisallowInterceptTouchEvent(!disallowParentInterceptDownEvent)
+                parent.requestDisallowInterceptTouchEvent(disallowParentInterceptDownEvent)
             }
             MotionEvent.ACTION_MOVE -> {
                 val endX = ev.x.toInt()
                 val endY = ev.y.toInt()
                 val disX = abs(endX - startX)
                 val disY = abs(endY - startY)
+
                 if (mViewPager2!!.orientation ==
                     ViewPager2.ORIENTATION_VERTICAL
                 ) {
@@ -71,12 +76,19 @@ class ViewPager2Container @JvmOverloads constructor(
             return
         }
         if (disX > disY) {
+//            Log.e("TAG1", "onHorizontalActionMove:disX $disX", )
+//            Log.e("TAG1", "onHorizontalActionMove:disY: ${disY*0.2}", )
+//            Log.e("TAG1", "onInterceptTouchEvent: ${mViewPager2!!.orientation}",)
             val currentItem = mViewPager2?.currentItem
             val itemCount = mViewPager2?.adapter!!.itemCount
             if (currentItem == 0 && endX - startX > 0) {
                 parent.requestDisallowInterceptTouchEvent(false)
             } else {
-                parent.requestDisallowInterceptTouchEvent(currentItem != itemCount - 1 || endX - startX >= 0)
+                if (currentItem == itemCount - 1) {
+                    if (endX < startX) {
+                        parent.requestDisallowInterceptTouchEvent(false)
+                    }
+                }
             }
         } else if (disY > disX) {
             parent.requestDisallowInterceptTouchEvent(false)
@@ -94,7 +106,11 @@ class ViewPager2Container @JvmOverloads constructor(
             if (currentItem == 0 && endY - startY > 0) {
                 parent.requestDisallowInterceptTouchEvent(false)
             } else {
-                parent.requestDisallowInterceptTouchEvent(currentItem != itemCount - 1 || endY - startY >= 0)
+                if (currentItem == itemCount - 1) {
+                    if (endY < startY) {
+                        parent.requestDisallowInterceptTouchEvent(false)
+                    }
+                }
             }
         } else if (disX > disY) {
             parent.requestDisallowInterceptTouchEvent(false)
@@ -117,4 +133,36 @@ class ViewPager2Container @JvmOverloads constructor(
     fun disallowParentInterceptDownEvent(disallowParentInterceptDownEvent: Boolean) {
         this.disallowParentInterceptDownEvent = disallowParentInterceptDownEvent
     }
+}
+
+fun ViewPager2.setCurrentItem(
+    item: Int,
+    duration: Long,
+    interpolator: TimeInterpolator = AccelerateDecelerateInterpolator(),
+    pagePxWidth: Int = width // 使用viewpager2.getWidth()获取
+) {
+    val pxToDrag: Int = pagePxWidth * (item - currentItem)
+    val animator = ValueAnimator.ofInt(0, pxToDrag)
+    var previousValue = 0
+    animator.addUpdateListener { valueAnimator ->
+        val currentValue = valueAnimator.animatedValue as Int
+        val currentPxToDrag = (currentValue - previousValue).toFloat()
+        fakeDragBy(-currentPxToDrag)
+        previousValue = currentValue
+    }
+    animator.addListener(object : Animator.AnimatorListener {
+        override fun onAnimationStart(animation: Animator?) {
+            beginFakeDrag()
+        }
+
+        override fun onAnimationEnd(animation: Animator?) {
+            endFakeDrag()
+        }
+
+        override fun onAnimationCancel(animation: Animator?) {}
+        override fun onAnimationRepeat(animation: Animator?) {}
+    })
+    animator.interpolator = interpolator
+    animator.duration = duration
+    animator.start()
 }

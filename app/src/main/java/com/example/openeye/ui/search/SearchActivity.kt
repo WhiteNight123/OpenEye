@@ -50,7 +50,7 @@ class SearchActivity : BaseActivity() {
         mIvCleanTest = findViewById(R.id.search_iv_clean_search)
         mIvBack = findViewById(R.id.search_iv_back)
 
-        viewModel.getHotSearch()
+
         viewModel.hotSearch.observe {
             if (it.isNotEmpty()) {
                 for (i in it) {
@@ -68,7 +68,6 @@ class SearchActivity : BaseActivity() {
                 "获取热搜失败\n请检查网络T_T".toast()
             }
         }
-        viewModel.getHistory()
         //viewModel.insertHistory(HistoryEntity("haha"))
         viewModel.historySearch.observe {
             Log.e("TAG", "onCreate: $it")

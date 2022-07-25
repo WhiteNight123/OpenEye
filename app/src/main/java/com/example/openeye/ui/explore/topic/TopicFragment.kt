@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.openeye.R
 import com.example.openeye.logic.model.TopicData
 
@@ -28,6 +29,7 @@ private const val ARG_PARAM2 = "param2"
 class TopicFragment : Fragment() {
     private val viewModel by lazy { ViewModelProvider(this)[TopicFragmentViewModel::class.java] }
 
+    lateinit var swipeRefreshLayout: SwipeRefreshLayout
     lateinit var recyclerView: RecyclerView
     lateinit var adapter: TopicRecyclerAdapter
 
@@ -54,11 +56,20 @@ class TopicFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         recyclerView = view.findViewById(R.id.explore_rv_topic)
+        swipeRefreshLayout = view.findViewById(R.id.topic_srl_refresh)
+        swipeRefreshLayout.isRefreshing = true
+        swipeRefreshLayout.setOnRefreshListener {
+            viewModel.getTopic(0)
+        }
         initRecyclerView()
-        viewModel.getTopic()
         viewModel.topicBean.observe(viewLifecycleOwner) {
             viewModel.topicData.addAll(it)
+            swipeRefreshLayout.isRefreshing = false
             adapter.notifyDataSetChanged()
+        }
+        viewModel.refreshSuccess.observe(viewLifecycleOwner) {
+            swipeRefreshLayout.isRefreshing = false
+
         }
     }
 
