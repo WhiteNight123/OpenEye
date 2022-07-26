@@ -20,15 +20,37 @@
 
 ## 效果图
 
-<center class="half">    <img src="https://s2.loli.net/2022/07/26/Mmgjo4IdyZbcwUW.jpg" width="200"/><img src="https://s2.loli.net/2022/07/26/yx7NKbe54XtSvIF.jpg" width="200"/><img src="https://s2.loli.net/2022/07/26/J5MuIbDPEQcStie.jpg" width="200"/> </center>
+|                            启动图                            |                             日报                             |
+| :----------------------------------------------------------: | :----------------------------------------------------------: |
+| <img src="https://s2.loli.net/2022/07/26/Mmgjo4IdyZbcwUW.jpg" width="250dp" /> | <img src="https://s2.loli.net/2022/07/26/yx7NKbe54XtSvIF.jpg" width="250dp" /> |
 
-<center class="half">    <img src="https://s2.loli.net/2022/07/26/jkzOXEGy3YlgDPT.jpg" width="200"/><img src="https://s2.loli.net/2022/07/26/pqBXf7yMPQkw8uR.jpg" width="200"/><img src="https://s2.loli.net/2022/07/26/hkHe8Oj2U5WCXG3.jpg" width="200"/> </center>
+|                             搜索                             |                           搜索详情                           |
+| :----------------------------------------------------------: | :----------------------------------------------------------: |
+| <img src="https://s2.loli.net/2022/07/26/J5MuIbDPEQcStie.jpg" width="250dp" /> | <img src="https://s2.loli.net/2022/07/26/jkzOXEGy3YlgDPT.jpg" width="250dp" /> |
 
-<center class="half">    <img src="https://s2.loli.net/2022/07/26/ShH5zrj1VcKUbmD.jpg" width="200"/><img src="https://s2.loli.net/2022/07/26/dIReAaZr3yhbovq.jpg" width="200"/><img src="https://s2.loli.net/2022/07/26/xXac6p5di7rNvzJ.jpg" width="200"/> </center>
+|                             播放                             |                             分类                             |
+| :----------------------------------------------------------: | :----------------------------------------------------------: |
+| <img src="https://s2.loli.net/2022/07/26/pqBXf7yMPQkw8uR.jpg" width="250dp" /> | <img src="https://s2.loli.net/2022/07/26/hkHe8Oj2U5WCXG3.jpg" width="250dp" /> |
 
-<center class="half">    <img src="https://s2.loli.net/2022/07/26/D1OPneuJiQvMdK2.jpg" width="200"/><img src="https://s2.loli.net/2022/07/26/xJpGcjDHWhiymgL.jpg" width="200"/><img src="https://s2.loli.net/2022/07/26/ELtVlZx2OqbKYmo.jpg" width="200"/> </center>
+|                           分类详情                           |                             专题                             |
+| :----------------------------------------------------------: | :----------------------------------------------------------: |
+| <img src="https://s2.loli.net/2022/07/26/ShH5zrj1VcKUbmD.jpg" width="250dp" /> | <img src="https://s2.loli.net/2022/07/26/dIReAaZr3yhbovq.jpg" width="250dp" /> |
 
-<center class="half">    <img src="https://s2.loli.net/2022/07/26/vhuJjNk4tMxYDra.jpg" width="200"/><img src="https://s2.loli.net/2022/07/26/MCyUo9rkSGqLzvi.jpg" width="200"/><img src="https://s2.loli.net/2022/07/26/jTWqevBtl6hEI8m.jpg" width="200"/> </center>
+|                           专题详情                           |                             社区                             |
+| :----------------------------------------------------------: | :----------------------------------------------------------: |
+| <img src="https://s2.loli.net/2022/07/26/xXac6p5di7rNvzJ.jpg" width="250dp" /> | <img src="https://s2.loli.net/2022/07/26/D1OPneuJiQvMdK2.jpg" width="250dp" /> |
+
+|                           社区大图                           |                           热门排行                           |
+| :----------------------------------------------------------: | :----------------------------------------------------------: |
+| <img src="https://s2.loli.net/2022/07/26/xJpGcjDHWhiymgL.jpg" width="250dp" /> | <img src="https://s2.loli.net/2022/07/26/ELtVlZx2OqbKYmo.jpg" width="250dp" /> |
+
+|                           观看历史                           |                           意见反馈                           |
+| :----------------------------------------------------------: | :----------------------------------------------------------: |
+| <img src="https://s2.loli.net/2022/07/26/vhuJjNk4tMxYDra.jpg" width="250dp" /> | <img src="https://s2.loli.net/2022/07/26/MCyUo9rkSGqLzvi.jpg" width="250dp" /> |
+
+|                           黑夜模式                           |                           无网界面                           |
+| :----------------------------------------------------------: | :----------------------------------------------------------: |
+| <img src="https://s2.loli.net/2022/07/26/jTWqevBtl6hEI8m.jpg" width="250dp" /> | <img src="https://s2.loli.net/2022/07/26/uiVHJfMdsgP85GA.jpg" width="250dp" /> |
 
 主要功能有：启动图，日报，探索，排行，播放，搜索，观看历史，反馈
 
@@ -67,7 +89,6 @@
   考核终于结束了,来网校的这一年中收获了很多,也成长了很多. 不管最终结果怎们样,我的大一生活也画上了圆满的句号.
 
   感谢红岩网校!!!🌹🌹🌹
-
 
 
 
