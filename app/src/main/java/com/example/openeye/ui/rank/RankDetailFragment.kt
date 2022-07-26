@@ -48,7 +48,11 @@ class RankDetailFragment : Fragment() {
         initRecyclerView()
         swipeRefreshLayout.isRefreshing = true
         swipeRefreshLayout.setOnRefreshListener {
-            param1?.let { viewModel.getRank(it) }
+            if (viewModel.videoData.isEmpty()) {
+                param1?.let { viewModel.getRank(it) }
+            } else {
+                swipeRefreshLayout.isRefreshing = false
+            }
         }
         Log.e("TAG", "onViewCreated: $param1")
         param1?.let { viewModel.getRank(it) }

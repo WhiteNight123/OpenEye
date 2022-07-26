@@ -66,7 +66,6 @@ class CommunityFragment : Fragment() {
             Log.d("tag", "(CommunityFragment.kt:62) -> $it")
             swipeRefreshLayout.isRefreshing = false
             adapter.fadeTip = true
-            viewModel.communityData.clear()
             adapter.notifyDataSetChanged()
 //            if (it){
 //                adapter.fadeTip = true

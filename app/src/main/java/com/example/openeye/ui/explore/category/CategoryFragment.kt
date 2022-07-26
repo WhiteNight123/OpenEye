@@ -56,9 +56,12 @@ class CategoryFragment : Fragment() {
         initRecyclerView()
         swipeRefreshLayout.isRefreshing = true
         swipeRefreshLayout.setOnRefreshListener {
-            viewModel.getCategory()
+            if (viewModel.categoryData.isEmpty()) {
+                viewModel.getCategory()
+            } else {
+                swipeRefreshLayout.isRefreshing = false
+            }
         }
-        viewModel.getCategory()
         viewModel.categoryBean.observe(viewLifecycleOwner) {
             viewModel.categoryData.addAll(it)
             adapter.notifyDataSetChanged()

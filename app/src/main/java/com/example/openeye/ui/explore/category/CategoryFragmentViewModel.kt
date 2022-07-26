@@ -17,6 +17,9 @@ import io.reactivex.rxjava3.schedulers.Schedulers
  * @description
  */
 class CategoryFragmentViewModel : BaseViewModel() {
+    init {
+      getCategory()
+    }
     private val _categoryBean = MutableLiveData<ArrayList<CategoryData>>()
     val categoryBean: LiveData<ArrayList<CategoryData>>
         get() = _categoryBean

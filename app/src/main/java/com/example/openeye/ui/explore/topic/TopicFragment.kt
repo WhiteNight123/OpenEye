@@ -59,7 +59,11 @@ class TopicFragment : Fragment() {
         swipeRefreshLayout = view.findViewById(R.id.topic_srl_refresh)
         swipeRefreshLayout.isRefreshing = true
         swipeRefreshLayout.setOnRefreshListener {
-            viewModel.getTopic(0)
+            if (viewModel.topicData.isEmpty()) {
+                viewModel.getTopic(0)
+            } else {
+                swipeRefreshLayout.isRefreshing = false
+            }
         }
         initRecyclerView()
         viewModel.topicBean.observe(viewLifecycleOwner) {
