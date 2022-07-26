@@ -34,31 +34,9 @@ class Callback(mAdapter: HistoryWatchRecyclerAdapter) : ItemTouchHelper.Callback
         return makeMovementFlags(dragFlags, swipeFlags)
     }
 
-
-    /*
-        以下是拖动相关方法
-     */
-    /**
-     * 是否启用长按拖动功能
-     * @return
-     */
     override fun isLongPressDragEnabled(): Boolean {
-        return true
+        return false
     }
-
-    /**
-     * 拖动幅度设置
-     * 组件在宽度 / 高度 上移动超过该比例 , 就认为拖动触发, 执行拖动相关操作
-     * @param viewHolder
-     * @return
-     */
-    override fun getMoveThreshold(viewHolder: RecyclerView.ViewHolder): Float {
-
-        // 该案例中, 拖动操作只能上下进行
-        // 拖动超过条目组件高度超过 0.9 倍, 即可触发拖动操作
-        return 0.9f
-    }
-
     /**
      * 监听滑动事件
      * 滑动分 水平 / 垂直 两个方向
@@ -75,11 +53,9 @@ class Callback(mAdapter: HistoryWatchRecyclerAdapter) : ItemTouchHelper.Callback
 
         // 拖动后交换数据, 该方法中交换 Adapter 中的数据, 并刷新界面
         Log.i(TAG, "触发拖动交换条目")
-        return true
+        return false
     }
-    /*
-        以下是滑动相关方法
-     */
+
     /**
      * 是否启用滑动操作
      * @return 是否启用 true 启用, false 不启用
@@ -108,11 +84,6 @@ class Callback(mAdapter: HistoryWatchRecyclerAdapter) : ItemTouchHelper.Callback
 
     /**
      * 手指离开后的动画持续时间
-     * @param recyclerView
-     * @param animationType
-     * @param animateDx
-     * @param animateDy
-     * @return
      */
     override fun getAnimationDuration(
         recyclerView: RecyclerView,
@@ -130,9 +101,7 @@ class Callback(mAdapter: HistoryWatchRecyclerAdapter) : ItemTouchHelper.Callback
      */
     override fun onSwiped(@NonNull viewHolder: RecyclerView.ViewHolder, direction: Int) {
         Log.i(TAG, "触发侧滑删除条目")
-        // 滑动指定的距离, 达到一定幅度后, 就会触发该方法回调
-        // 这里做的是滑动删除功能, 直接删除滑动项
-        // 该方法中删除指定条目, 并刷新界面
+        // 删除指定条目, 并刷新界面
         mAdapter.deleteItem(viewHolder.absoluteAdapterPosition)
     }
 

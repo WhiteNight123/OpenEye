@@ -35,7 +35,6 @@ class VideoRelevantRvAdapter(
         var mIvCover: ImageView = view.findViewById(R.id.history_iv_watch_cover)
         var mConstraintLayout: ConstraintLayout =
             view.findViewById(R.id.video_constraint_layout_detail)
-
         init {
             mConstraintLayout.setOnClickListener {
                 onClick(mIvCover, data[absoluteAdapterPosition])
@@ -65,7 +64,6 @@ class VideoRelevantRvAdapter(
                 )
             )
         }
-
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
@@ -85,6 +83,8 @@ class VideoRelevantRvAdapter(
     }
 
     override fun getItemCount() = data.size
+
+    // 第一个是头标题,下面5个是具体数据
     override fun getItemViewType(position: Int): Int {
         return if (position % 6 == 0) {
             TITLE

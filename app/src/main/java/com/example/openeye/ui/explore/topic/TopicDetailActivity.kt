@@ -14,7 +14,6 @@ import com.bumptech.glide.Glide
 import com.example.openeye.R
 import com.example.openeye.logic.model.TopicData
 import com.example.openeye.ui.base.BaseActivity
-import com.example.openeye.ui.rank.RankDetailRvAdapter
 import com.shuyu.gsyvideoplayer.GSYVideoManager
 
 class TopicDetailActivity : BaseActivity() {
@@ -81,7 +80,7 @@ class TopicDetailActivity : BaseActivity() {
                     //当前播放的位置
                     val position = GSYVideoManager.instance().playPosition
                     //对应的播放列表TAG
-                    if (GSYVideoManager.instance().playTag == RankDetailRvAdapter.TAG && (position < firstVisibleItem || position > lastVisibleItem)) {
+                    if (GSYVideoManager.instance().playTag == TopicDetailRecyclerAdapter.TAG && (position < firstVisibleItem || position > lastVisibleItem)) {
                         //如果滑出去了上面和下面就是否，和今日头条一样
                         if (!GSYVideoManager.isFullState(this@TopicDetailActivity)) {
                             GSYVideoManager.releaseAllVideos()

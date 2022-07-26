@@ -50,7 +50,11 @@ class CommunityFragment : Fragment() {
         initRecyclerView()
         swipeRefreshLayout.isRefreshing = true
         swipeRefreshLayout.setOnRefreshListener {
-            viewModel.getCommunity(0)
+            if (viewModel.communityData.size > 1) {
+                swipeRefreshLayout.isRefreshing = false
+            } else {
+                viewModel.getCommunity(0)
+            }
         }
         viewModel.communityBean.observe(viewLifecycleOwner) {
             viewModel.communityData.addAll(it)
@@ -62,6 +66,7 @@ class CommunityFragment : Fragment() {
             Log.d("tag", "(CommunityFragment.kt:62) -> $it")
             swipeRefreshLayout.isRefreshing = false
             adapter.fadeTip = true
+            viewModel.communityData.clear()
             adapter.notifyDataSetChanged()
 //            if (it){
 //                adapter.fadeTip = true
@@ -126,12 +131,5 @@ class CommunityFragment : Fragment() {
 
     companion object {
 
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            CommunityFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                }
-            }
     }
 }

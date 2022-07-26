@@ -3,7 +3,9 @@ package com.example.openeye.logic.model
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
-
+/**
+ * 说明一下,Bean是网络请求的数据类,Data是我自己要用的数据类,Entity是Room的数据类
+ */
 data class VideoDetailData(
     @SerializedName("videoTitle")
     val videoTitle: String?,

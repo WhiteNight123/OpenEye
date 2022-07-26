@@ -33,10 +33,6 @@ interface ApiService {
     @GET("v4/rankList/videos")
     fun getRank(@Query("strategy") strategy: String): Single<RankBean>
 
-    // 获取关注
-    @GET("v5/community/tab/follow?num=10")
-    fun getFollow(@Query("start") start: Int): Single<FollowBean>
-
     // 获取专题
     @GET("v3/specialTopics?vc=591&deviceModel=Che1-CL20&num=10")
     fun getTopic(@Query("start") start: Int): Single<TopicBean>
@@ -53,9 +49,6 @@ interface ApiService {
     @GET("v5/index/tab/category/{id}?udid=435865baacfc49499632ea13c5a78f944c2f28aa")
     fun getCategoryDetail(@Path("id") id: Int): Single<CategoryDetailBean>
 
-    // 获取消息
-    @GET("v3/messages")
-    fun getMessage(): Single<MessageBean>
 
     // 获取社区
     @GET("v5/index/tab/ugcSelected")

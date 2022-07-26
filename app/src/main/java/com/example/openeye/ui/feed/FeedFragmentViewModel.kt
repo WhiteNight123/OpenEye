@@ -7,14 +7,17 @@ import com.example.openeye.logic.model.BannerBean
 import com.example.openeye.logic.model.FeedBean
 import com.example.openeye.logic.model.VideoDetailData
 import com.example.openeye.logic.net.ApiService
-import com.example.openeye.logic.room.HistoryWatchDatabase
-import com.example.openeye.logic.room.HistoryWatchEntity
 import com.example.openeye.ui.base.BaseViewModel
 import com.example.openeye.utils.getTime
+import com.example.openeye.utils.toast
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.schedulers.Schedulers
 
 class FeedFragmentViewModel : BaseViewModel() {
+    init {
+        getBanner()
+        getFeed()
+    }
 
     // banner数据
     private val _banner = MutableLiveData<ArrayList<VideoDetailData>>()
@@ -40,6 +43,7 @@ class FeedFragmentViewModel : BaseViewModel() {
     val videoData: ArrayList<VideoDetailData> = arrayListOf()
     val bannerData: ArrayList<VideoDetailData> = arrayListOf()
 
+    // 获取banner数据
     fun getBanner() {
         ApiService.INSTANCE.getBanner().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread()).safeSubscribeBy(
@@ -52,12 +56,14 @@ class FeedFragmentViewModel : BaseViewModel() {
             )
     }
 
+    // 获取首次的feed数据
     fun getFeed(page: String = "") {
         ApiService.INSTANCE.getFeed(page)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .safeSubscribeBy(
                 onError = {
+                    "请求失败了 T_T".toast()
                     it.printStackTrace()
                     _refresh.postValue(false)
                 },
@@ -69,12 +75,14 @@ class FeedFragmentViewModel : BaseViewModel() {
             )
     }
 
+    // 获取下一页的feed数据
     fun getNextFeed(page: String = "1658106000000") {
         ApiService.INSTANCE.getFeed(page)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .safeSubscribeBy(
                 onError = {
+                    "请求失败了 T_T".toast()
                     it.printStackTrace()
                 },
                 onSuccess = {
@@ -83,35 +91,6 @@ class FeedFragmentViewModel : BaseViewModel() {
                 }
             )
     }
-
-    fun insertHistory(videoDetailData: VideoDetailData) {
-        HistoryWatchDatabase.getDatabase(appContext).historyWatchDao()
-            .insert(convertHistoryWatchEntity(videoDetailData))
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .safeSubscribeBy(onError = { it.printStackTrace() }, onSuccess = {
-                Log.e(
-                    "TAG", "insertHistory: $it",
-                )
-            })
-
-    }
-
-    private fun convertHistoryWatchEntity(rawData: VideoDetailData) = HistoryWatchEntity(
-        rawData.videoTitle,
-        rawData.videoUrl,
-        rawData.videoId,
-        rawData.videoDescription,
-        rawData.likeCount,
-        rawData.shareCount,
-        rawData.replyCount,
-        rawData.authorIcon,
-        rawData.authorName,
-        rawData.authorDescription,
-        rawData.videoCover,
-        rawData.videoDuration,
-        System.currentTimeMillis().toString()
-    )
 
 
     // 转换一下返回的数据,这接口给个太乱了😒
@@ -138,11 +117,12 @@ class FeedFragmentViewModel : BaseViewModel() {
                 )
             }
         }
-        // 下一页的url
+        // 加上下一页的url
         data[data.size - 1].nextPageUrl = rawData.nextPageUrl.subSequence(55, 68).toString()
         return data
     }
 
+    // 转换成banner的数据
     private fun convertToBanner(rawData: BannerBean): ArrayList<VideoDetailData> {
         val data: ArrayList<VideoDetailData> = arrayListOf()
         for (i in rawData.itemList) {

@@ -3,7 +3,9 @@ package com.example.openeye.logic.room
 import android.content.Context
 import androidx.room.*
 import io.reactivex.rxjava3.core.Single
-
+/**
+ * 搜索历史的Room
+ **/
 @Database(version = 1, entities = [HistorySearchEntity::class])
 abstract class HistorySearchDatabase : RoomDatabase() {
     abstract fun historySearchDao(): HistorySearchDao
@@ -35,12 +37,15 @@ data class HistorySearchEntity(var key: String?) {
 
 @Dao
 interface HistorySearchDao {
+    // 获取所以
     @Query("SELECT * FROM historysearchentity")
     fun getAll(): Single<List<HistorySearchEntity>>
 
+    // 插入一条
     @Insert
     fun insert(history: HistorySearchEntity): Single<Long>
 
+    // 删库😜
     @Query("DELETE FROM historysearchentity")
     fun delete(): Single<Int>
 }

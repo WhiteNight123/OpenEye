@@ -7,6 +7,7 @@ import com.example.openeye.logic.model.TopicDetailBean
 import com.example.openeye.logic.model.VideoDetailData2
 import com.example.openeye.logic.net.ApiService
 import com.example.openeye.ui.base.BaseViewModel
+import com.example.openeye.utils.toast
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.schedulers.Schedulers
 
@@ -22,6 +23,7 @@ class TopicDetailActivityViewModel : BaseViewModel() {
             .observeOn(AndroidSchedulers.mainThread())
             .safeSubscribeBy(
                 onError = {
+                    "请求失败了 T_T".toast()
                     it.printStackTrace()
                 },
                 onSuccess = {

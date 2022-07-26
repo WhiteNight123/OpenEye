@@ -91,9 +91,9 @@ class VideoActivity : GSYBaseActivityDetail<StandardGSYVideoPlayer>() {
         mTvAuthorDescribe.text = videoData.authorDescription
         Glide.with(this).load(videoData.authorIcon).into(mIvAuthor)
 
+        // 点击展开动画
         mTvDescribe.setOnClickListener {
             if (mTvDescribe.maxLines < 8) {
-//                mTvDescribe.maxLines = 10
                 val animator = ValueAnimator.ofInt(2, 8)
                 animator.duration = 110
                 animator.addUpdateListener { animation ->
@@ -102,7 +102,6 @@ class VideoActivity : GSYBaseActivityDetail<StandardGSYVideoPlayer>() {
                 }
                 animator.start()
             } else {
-//                mTvDescribe.maxLines = 2
                 val animator = ValueAnimator.ofInt(8, 2)
                 animator.duration = 80
                 animator.addUpdateListener { animation ->
@@ -154,7 +153,6 @@ class VideoActivity : GSYBaseActivityDetail<StandardGSYVideoPlayer>() {
     private fun initRecyclerView() {
         mRvVideoRelevant.layoutManager = LinearLayoutManager(this)
         adapter = VideoRelevantRvAdapter(viewModel.videoData) { view1, videoBean ->
-            //viewModel.insertHistory(videoBean)
             startActivity(view1, videoBean)
         }
         mRvVideoRelevant.adapter = adapter
@@ -173,7 +171,6 @@ class VideoActivity : GSYBaseActivityDetail<StandardGSYVideoPlayer>() {
         intent.putExtra("transitionName", view.transitionName)
         val options = ActivityOptions.makeSceneTransitionAnimation(this, view, view.transitionName)
         startActivity(intent, options.toBundle())
-        //finish()
     }
 
     override fun getGSYVideoPlayer(): StandardGSYVideoPlayer {

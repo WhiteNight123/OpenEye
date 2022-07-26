@@ -221,7 +221,7 @@ data class CategoryDetailBean(
                     ) {
                         data class Url(
                             val name: String,
-                            val size: Int,
+                            val size: Long,
                             val url: String
                         )
                     }
@@ -299,7 +299,7 @@ data class CategoryDetailBean(
             ) {
                 data class Url(
                     val name: String,
-                    val size: Int,
+                    val size: Long,
                     val url: String
                 )
             }

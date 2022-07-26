@@ -12,7 +12,6 @@ import com.bumptech.glide.Glide
 import com.example.openeye.App
 import com.example.openeye.R
 import com.example.openeye.logic.model.VideoDetailData2
-import com.example.openeye.ui.rank.RankDetailRvAdapter
 import com.example.openeye.utils.toast
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
@@ -22,6 +21,9 @@ class TopicDetailRecyclerAdapter(
     val context: Context,
     private val data: ArrayList<VideoDetailData2>,
 ) : RecyclerView.Adapter<TopicDetailRecyclerAdapter.InnerHolder>() {
+    companion object {
+        const val TAG = "TopicDetailRecyclerViewVideo"
+    }
 
     inner class InnerHolder(view: View) : RecyclerView.ViewHolder(view) {
         val mIvAuthor: ImageView = view.findViewById(R.id.topic_iv_detail_author)
@@ -62,7 +64,7 @@ class TopicDetailRecyclerAdapter(
             //设置返回键
             videoPlayer
                 .backButton.visibility = View.GONE;
-            videoPlayer.playTag = RankDetailRvAdapter.TAG;
+            videoPlayer.playTag = TAG
             for (i in data[position].tags) {
                 val chip = Chip(context)
                 Log.e("TAG", "onBindViewHolder: $i")

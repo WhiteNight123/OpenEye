@@ -14,7 +14,6 @@ import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer
 
 class RankDetailRvAdapter(
     private val data: ArrayList<VideoDetailData>,
-    private val onClick: (view: View, videoBean: VideoDetailData) -> Unit
 ) : RecyclerView.Adapter<RankDetailRvAdapter.InnerHolder>() {
 
     companion object {
@@ -23,17 +22,9 @@ class RankDetailRvAdapter(
 
     inner class InnerHolder(view: View) : RecyclerView.ViewHolder(view) {
         val mTvTitle: TextView = view.findViewById(R.id.rank_tv_title)
-        val mTvLable: TextView = view.findViewById(R.id.rank_tv_label)
+        val mTvLabel: TextView = view.findViewById(R.id.rank_tv_label)
         var mVideoPlayer: StandardGSYVideoPlayer = view.findViewById(R.id.rank_video_detail)
-
-        //var mIvCover: ImageView = view.findViewById(R.id.feed_iv_cover)
         var mIvAuthor: ImageView = view.findViewById(R.id.rank_iv_author)
-
-        init {
-//            mIvCover.setOnClickListener {
-//                onClick(mIvCover, data[absoluteAdapterPosition])
-//            }
-        }
     }
 
     override fun onCreateViewHolder(
@@ -46,9 +37,7 @@ class RankDetailRvAdapter(
         )
     }
 
-
     override fun getItemCount(): Int = data.size
-
 
     override fun onBindViewHolder(holder: InnerHolder, position: Int) {
         holder.apply {
@@ -58,20 +47,16 @@ class RankDetailRvAdapter(
                 .load(data[position].videoCover)
                 .centerCrop()
                 .into(imageView);
-
             mVideoPlayer.thumbImageView = imageView
             mVideoPlayer.thumbImageViewLayout.visibility = View.VISIBLE
-
             //设置返回键
             mVideoPlayer.backButton.visibility = View.GONE;
             mVideoPlayer.playTag = TAG;
 
             mTvTitle.text = data[position].videoTitle
-            mTvLable.text = data[position].authorName
+            mTvLabel.text = data[position].authorName
             Glide.with(mIvAuthor).load(data[position].authorIcon).centerCrop()
                 .into(mIvAuthor)
         }
     }
-
-
 }

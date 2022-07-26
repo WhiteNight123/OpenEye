@@ -7,6 +7,7 @@ import com.example.openeye.logic.model.CommunityBean
 import com.example.openeye.logic.model.CommunityData
 import com.example.openeye.logic.net.ApiService
 import com.example.openeye.ui.base.BaseViewModel
+import com.example.openeye.utils.toast
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.schedulers.Schedulers
 
@@ -35,13 +36,18 @@ class CommunityFragmentViewModel : BaseViewModel() {
             .observeOn(AndroidSchedulers.mainThread())
             .safeSubscribeBy(
                 onError = {
+                    "请求失败了 T_T".toast()
                     _refreshSuccess.postValue(false)
                     it.printStackTrace()
                 },
                 onSuccess = {
                     Log.d("TAG", "getFeed: $it")
-                    _refreshSuccess.postValue(true)
-                    _communityBean.postValue(convertToTopic(it))
+                    if (it != null) {
+                        _refreshSuccess.postValue(true)
+                        _communityBean.postValue(convertToTopic(it))
+                    } else {
+                        _refreshSuccess.postValue(false)
+                    }
                 }
             )
     }

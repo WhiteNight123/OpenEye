@@ -6,12 +6,12 @@ import androidx.appcompat.widget.Toolbar
 import androidx.viewpager2.widget.ViewPager2
 import com.example.openeye.R
 import com.example.openeye.ui.base.BaseActivity
-import com.example.openeye.ui.widge.IndicatorView
+import com.example.openeye.ui.widge.ViewPager2Indicator
 
 class PictureDetailActivity : BaseActivity() {
     private val communityData by lazy { intent.getStringArrayListExtra("pictureData") }
     lateinit var viewPager2: ViewPager2
-    lateinit var indicator: IndicatorView
+    lateinit var indicator: ViewPager2Indicator
     lateinit var toolbar: Toolbar
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

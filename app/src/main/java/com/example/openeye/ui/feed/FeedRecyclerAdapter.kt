@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide
 import com.example.openeye.App.Companion.appContext
 import com.example.openeye.R
 import com.example.openeye.logic.model.VideoDetailData
+import com.example.openeye.ui.widge.BannerTransformer
 
 
 class FeedRecyclerAdapter(
@@ -27,11 +28,12 @@ class FeedRecyclerAdapter(
         const val FOOT = 2
     }
 
+    // 是否隐藏底部Progressbar
     var fadeTip = false
 
     inner class NormalHolder(view: View) : RecyclerView.ViewHolder(view) {
         var mTvTitle: TextView = view.findViewById(R.id.feed_tv_title)
-        val mTvLable: TextView = view.findViewById(R.id.feed_tv_author)
+        val mTvLabel: TextView = view.findViewById(R.id.feed_tv_author)
         var mTvTime: TextView = view.findViewById(R.id.feed_tv_time)
         var mIvCover: ImageView = view.findViewById(R.id.feed_iv_cover)
         var mIvAuthor: ImageView = view.findViewById(R.id.feed_iv_author)
@@ -58,16 +60,13 @@ class FeedRecyclerAdapter(
 
     inner class HeaderHolder(view: View) : RecyclerView.ViewHolder(view) {
         val banner: ViewPager2 = view.findViewById(R.id.banner_viewpager)
-
         init {
             setIsRecyclable(false)
             bannerAdapter = BannerAdapter(bannerData) { view, videoBean ->
                 onClick(view, videoBean)
             }
             banner.adapter = bannerAdapter
-
         }
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -84,22 +83,16 @@ class FeedRecyclerAdapter(
                 LayoutInflater.from(parent.context).inflate(R.layout.item_banner, parent, false)
             )
             else -> return FootHolder(
-                View.inflate(
-                    appContext,
-                    R.layout.item_recycler_feed_load_more,
-                    null
-                )
+                View.inflate(appContext, R.layout.item_recycler_feed_load_more, null)
             )
         }
-
-
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is NormalHolder) {
             holder.apply {
                 holder.mTvTitle.text = data[position].videoTitle
-                mTvLable.text = data[position].authorName
+                mTvLabel.text = data[position].authorName
                 mTvTime.text = data[position].videoDuration
                 Glide.with(mIvCover).load(data[position].videoCover).centerCrop()
                     .into(mIvCover)
@@ -117,56 +110,14 @@ class FeedRecyclerAdapter(
         } else {
             holder as HeaderHolder
             holder.apply {
-                val animatorBanner = ViewPager2.PageTransformer { page, position ->
-//            val offset: Float = 10 * position
-//            if (banner.getOrientation() == ViewPager2.ORIENTATION_HORIZONTAL) {
-//                page.translationX = if (banner.getLayoutDirection() == 1) -offset else offset
-//            } else {
-//                page.translationY = offset
-//            }
-                    val default = 14 / 15f
-                    val default_trans = 3.6f
-//                    Log.e("TAG0000000", "initBanner: $position")
-                    when {
-                        position <= -1 -> {
-//                            Log.e(" ViewPageTransform", "11111")
-                            page.scaleX = default
-                            page.scaleY = default
-                            page.translationX = default_trans
-                        }
-                        position <= 0 -> {
-                            // Log.e("ViewPageTransform", "22222222")
-                            page.scaleX = 1 + position / 15
-                            page.scaleY = 1 + position / 15
-                            page.translationX = (0 - position) * default
-                            //   page.translationY=(0-position)*default
-
-                        }
-                        position <= 1 -> {
-                            //Log.e("ViewPageTransform", "33333333")
-                            page.scaleX = 1 - position / 15
-                            page.scaleY = 1 - position / 15
-                            page.translationX = (0 - position) * default
-
-                        }
-                        else -> {
-                            // Log.e("ViewPageTransform", "4444444444444")
-                            page.scaleX = default
-                            page.scaleY = default
-                            page.translationX = default_trans
-
-                        }
-                    }
-                }
                 banner.clipChildren = false
-                banner.setPageTransformer(animatorBanner)
+                banner.setPageTransformer(BannerTransformer())
                 banner.offscreenPageLimit = 1
                 banner.registerOnPageChangeCallback(object :
                     ViewPager2.OnPageChangeCallback() {
                     override fun onPageSelected(position: Int) {
                         banner.currentItem = position
                     }
-
                     override fun onPageScrollStateChanged(state: Int) {
                         //只有在空闲状态，才让自动滚动
                         if (state == ViewPager2.SCROLL_STATE_IDLE) {
@@ -190,7 +141,7 @@ class FeedRecyclerAdapter(
         }
     }
 
-
+    // Rv 得到某个 item 的实例
     override fun onBindViewHolder(
         holder: RecyclerView.ViewHolder,
         position: Int,
@@ -213,7 +164,7 @@ class FeedRecyclerAdapter(
         return fadeTip
     }
 
-    fun getRealLastPosition() = data.size
+    // 因为有尾布局,要+1
     override fun getItemCount() = data.size + 1
     override fun getItemViewType(position: Int): Int {
         return when (position) {

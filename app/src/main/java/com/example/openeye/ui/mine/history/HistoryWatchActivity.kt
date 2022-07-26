@@ -25,6 +25,7 @@ class HistoryWatchActivity : BaseActivity() {
     lateinit var adapter: HistoryWatchRecyclerAdapter
     lateinit var mTvClean: TextView
     lateinit var mTvNoData: TextView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_history_watch)
@@ -37,7 +38,6 @@ class HistoryWatchActivity : BaseActivity() {
         supportActionBar?.setHomeButtonEnabled(true);
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         initRecyclerView()
-        viewModel.getHistory()
         mTvClean.setOnClickListener {
             if (viewModel.historyWatchData.isEmpty()) {
                 "还没有观看记录哦".toast()
@@ -57,9 +57,9 @@ class HistoryWatchActivity : BaseActivity() {
                 adapter.notifyDataSetChanged()
             }
         }
-
     }
 
+    // 监听返回键
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) {
             finish()
@@ -79,12 +79,11 @@ class HistoryWatchActivity : BaseActivity() {
             )
         adapter = HistoryWatchRecyclerAdapter(
             viewModel.historyWatchData,
-            { view, videpData -> startActivity(view, videpData) },
+            { view, videoData -> startActivity(view, videoData) },
             { videoBean -> viewModel.deleteHistoryVideo(videoBean) })
         recyclerView.adapter = adapter
         val mItemTouchHelper = ItemTouchHelper(Callback(adapter));
         mItemTouchHelper.attachToRecyclerView(recyclerView);
-
     }
 
     private fun startActivity(view: View, videoDetail: VideoDetailData) {

@@ -21,25 +21,17 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.openeye.R
 import com.example.openeye.logic.model.VideoDetailData
 import com.example.openeye.ui.video.VideoActivity
-import com.example.openeye.ui.widge.MyNestScrollView
 
 
 class FeedFragment : Fragment() {
     private val viewModel by lazy { ViewModelProvider(this)[FeedFragmentViewModel::class.java] }
-
-    //    lateinit var banner: ViewPager2
-    lateinit var constraintLayout: LinearLayout
-
-    //    lateinit var bannerAdapter: BannerAdapter
-    //lateinit var bannerIndicator: FadeDotsIndicator
+    lateinit var linearLayout: LinearLayout
     lateinit var recyclerView: RecyclerView
     lateinit var rvAdapter: FeedRecyclerAdapter
-    lateinit var nestedScrollView: MyNestScrollView
     lateinit var swipeRefresh: SwipeRefreshLayout
     lateinit var mTvError: TextView
     lateinit var mIvError: ImageView
     lateinit var layoutManager: LinearLayoutManager
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -50,6 +42,7 @@ class FeedFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        // 延迟动画
         postponeEnterTransition()
         view.doOnPreDraw { startPostponedEnterTransition() }
 
@@ -57,16 +50,10 @@ class FeedFragment : Fragment() {
         swipeRefresh = view.findViewById(R.id.feed_srl_refresh)
         mTvError = view.findViewById(R.id.feed_tv_net_error)
         mIvError = view.findViewById(R.id.feed_iv_net_error)
-        //banner = view.findViewById(R.id.banner_viewpager)
-        //bannerIndicator = view.findViewById(R.id.banner_indicator)
-        constraintLayout = view.findViewById(R.id.feed_constrain_layout)
-        //nestedScrollView = view.findViewById(R.id.feed_nest_scroll_view)
-        viewModel.getBanner()
+        linearLayout = view.findViewById(R.id.feed_constrain_layout)
 
-        //initBanner()
         initView()
         initObserve()
-        viewModel.getFeed()
     }
 
     private fun initView() {
@@ -89,7 +76,6 @@ class FeedFragment : Fragment() {
             )
         rvAdapter =
             FeedRecyclerAdapter(viewModel.videoData, viewModel.bannerData) { view1, videoDetail ->
-                viewModel.insertHistory(videoDetail)
                 startActivity(view1, videoDetail)
             }
         recyclerView.adapter = rvAdapter
@@ -102,79 +88,25 @@ class FeedFragment : Fragment() {
                     if (!rvAdapter.isFadeTips() && lastVisibleItem + 1 == rvAdapter.itemCount) {
                         Log.e("TAG", "onScrollStateChanged: haha1")
                         viewModel.videoData[viewModel.videoData.size - 1].nextPageUrl?.let {
-                            viewModel.getNextFeed(
-                                it
-                            )
+                            viewModel.getNextFeed(it)
                         }
                     }
-
                 }
             }
 
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
-                //findLastVisibleItemPosition显示界面的最后一个位置
+                // findLastVisibleItemPosition找到界面的最后一个位置
                 lastVisibleItem = layoutManager.findLastVisibleItemPosition()
             }
         })
-
-//        nestedScrollView.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
-//            Log.e("TAG", "initRecyclerView: $scrollY", )
-//            //判断是否滑到的底部
-//            if (scrollY == v.getChildAt(0).measuredHeight - v.measuredHeight) {
-//                Log.e("TAG", "initRecyclerView: scrollY $scrollY", )
-//                viewModel.videoData[viewModel.videoData.size - 1].nextPageUrl?.let {
-//                    viewModel.getNextFeed(
-//                        it
-//                    )
-//                }
-//            }
-//        })
     }
-
-//    private fun initBanner() {
-//        bannerAdapter = BannerAdapter(viewModel.bannerData) { view, videoBean ->
-//            viewModel.insertHistory(videoBean)
-//            startActivity(view, videoBean)
-//        }
-//
-
-//        banner.clipChildren = false
-//        banner.setPageTransformer(animatorBanner)
-//        banner.adapter = bannerAdapter
-//        banner.offscreenPageLimit = 1
-//        banner.registerOnPageChangeCallback(object :
-//            ViewPager2.OnPageChangeCallback() {
-//            override fun onPageSelected(position: Int) {
-//                banner.currentItem = position
-//            }
-//
-////            override fun onPageScrollStateChanged(state: Int) {
-////                //只有在空闲状态，才让自动滚动
-////                if (state == ViewPager2.SCROLL_STATE_IDLE) {
-////                    if (banner.currentItem == 0) {
-////                        banner.setCurrentItem(bannerAdapter.itemCount - 2, false)
-////                    } else if (banner.currentItem == bannerAdapter.itemCount - 1) {
-////                        banner.setCurrentItem(1, false)
-////                    }
-////                }
-////            }
-//        })
-////        val mLooper = object : Runnable {
-////            override fun run() {
-////                banner.currentItem = ++banner.currentItem
-////                banner.postDelayed(this, 2000)
-////            }
-////        }
-////        banner.postDelayed(mLooper, 2000)
-//    }
 
     private fun initObserve() {
         viewModel.banner.observe(viewLifecycleOwner) { it1 ->
             viewModel.bannerData.clear()
             viewModel.bannerData.addAll(it1)
-            //bannerIndicator.setViewPager2(banner)
-            //bannerAdapter.notifyItemRangeChanged(0, it.size - 1)
+            // 防止出现adapter还没加载的空指针
             if (::rvAdapter.isInitialized) {
                 rvAdapter.getVHolder(0) {
                     it.banner.adapter?.notifyDataSetChanged()
@@ -189,13 +121,12 @@ class FeedFragment : Fragment() {
                 if (::rvAdapter.isInitialized) {
                     rvAdapter.fadeTip = true
                 }
-                constraintLayout.visibility = View.VISIBLE
+                linearLayout.visibility = View.VISIBLE
             } else {
                 if (::rvAdapter.isInitialized) {
                     rvAdapter.fadeTip = false
                 }
-
-                constraintLayout.visibility = View.INVISIBLE
+                linearLayout.visibility = View.INVISIBLE
                 mIvError.visibility = View.VISIBLE
                 mTvError.visibility = View.VISIBLE
             }
@@ -207,11 +138,7 @@ class FeedFragment : Fragment() {
             if (!this::layoutManager.isInitialized) {
                 initRecyclerView()
             }
-            //rvAdapter.fadeTip = true
-
-            Log.d("TAG", "onViewCreated: ${current - 1}    ${viewModel.videoData.size - 1}")
             rvAdapter.notifyDataSetChanged()
-            //rvAdapter.notifyItemRangeChanged(0, viewModel.videoData.size)
         }
         viewModel.feedNextBean.observe(viewLifecycleOwner) {
             viewModel.videoData.addAll(it)
@@ -228,7 +155,5 @@ class FeedFragment : Fragment() {
         startActivity(intent, options.toBundle())
     }
 
-    companion object {
-
-    }
+    companion object
 }

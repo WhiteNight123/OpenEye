@@ -107,8 +107,8 @@ class SearchResultFragment : Fragment() {
                 super.onScrollStateChanged(recyclerView, newState)
                 // 在newState为滑到底部时
                 if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                    // 如果没有隐藏footView，那么最后一个条目的位置就比我们的getItemCount少1，自己可以算一下
-                    if (lastVisible + 1 == rvAdapter.getItemCount()) {
+                    // 如果没有隐藏footView，那么最后一个条目的位置就比我们的getItemCount少1
+                    if (lastVisible + 1 == rvAdapter.itemCount) {
                         count += 10
                         viewModel.getSearch("key", count)
                     }
@@ -133,14 +133,5 @@ class SearchResultFragment : Fragment() {
         startActivity(intent, options.toBundle())
     }
 
-    companion object {
-
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            SearchResultFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                }
-            }
-    }
+    companion object
 }

@@ -3,7 +3,9 @@ package com.example.openeye.logic.model
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
-// 比 1 多了个tags
+/**
+ * 比 VideoData1 多了个tags,用于实现标签
+ */
 data class VideoDetailData2(
     @SerializedName("videoTitle")
     val videoTitle: String?,

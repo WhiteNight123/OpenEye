@@ -10,6 +10,7 @@ import com.example.openeye.logic.room.HistoryWatchDatabase
 import com.example.openeye.logic.room.HistoryWatchEntity
 import com.example.openeye.ui.base.BaseViewModel
 import com.example.openeye.utils.getTime
+import com.example.openeye.utils.toast
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.schedulers.Schedulers
 
@@ -22,12 +23,14 @@ class VideoActivityViewModel : BaseViewModel() {
         get() = _isFreshSuccess
     val videoData: ArrayList<VideoDetailData> = arrayListOf()
 
+    // 获得视频相关推荐
     fun getVideoRelevant(id: Int) {
         ApiService.INSTANCE.getVideoRelevant(id)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .safeSubscribeBy(
                 onError = {
+                    "请求失败了 T_T".toast()
                     it.printStackTrace()
                     _isFreshSuccess.postValue(false)
                 },
@@ -77,7 +80,6 @@ class VideoActivityViewModel : BaseViewModel() {
                     insertHistory(videoDetailData)
                 } else {
                     Log.d("tag", "(FeedFragmentViewModel.kt:126) -> list: $it")
-                    Log.d("tag", "(FeedFragmentViewModel.kt:126) -> id: ${it[0].id}  ")
                     updateHistory(convertHistoryWatchEntity2(videoDetailData, it[0].id))
                 }
             })
@@ -121,7 +123,7 @@ class VideoActivityViewModel : BaseViewModel() {
         return a
     }
 
-
+    // 转换成videoDetailData
     private fun toVideoDetail(list: List<VideoRelevantBean.Item>): ArrayList<VideoDetailData> {
         val data: ArrayList<VideoDetailData> = arrayListOf()
         for (i in list) {

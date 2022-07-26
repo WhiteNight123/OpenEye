@@ -1,17 +1,16 @@
 package com.example.openeye.ui.widge
 
-import android.animation.Animator
-import android.animation.TimeInterpolator
-import android.animation.ValueAnimator
 import android.content.Context
 import android.util.AttributeSet
 import android.view.MotionEvent
-import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.RelativeLayout
 import androidx.viewpager2.widget.ViewPager2
 import kotlin.math.abs
 
-
+/**
+ * 解决ViewPager2的滑动冲突
+ * 外层包裹ViewPager2,让内部的ViewPager2可以滑动
+ */
 class ViewPager2Container @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
@@ -135,34 +134,3 @@ class ViewPager2Container @JvmOverloads constructor(
     }
 }
 
-fun ViewPager2.setCurrentItem(
-    item: Int,
-    duration: Long,
-    interpolator: TimeInterpolator = AccelerateDecelerateInterpolator(),
-    pagePxWidth: Int = width // 使用viewpager2.getWidth()获取
-) {
-    val pxToDrag: Int = pagePxWidth * (item - currentItem)
-    val animator = ValueAnimator.ofInt(0, pxToDrag)
-    var previousValue = 0
-    animator.addUpdateListener { valueAnimator ->
-        val currentValue = valueAnimator.animatedValue as Int
-        val currentPxToDrag = (currentValue - previousValue).toFloat()
-        fakeDragBy(-currentPxToDrag)
-        previousValue = currentValue
-    }
-    animator.addListener(object : Animator.AnimatorListener {
-        override fun onAnimationStart(animation: Animator?) {
-            beginFakeDrag()
-        }
-
-        override fun onAnimationEnd(animation: Animator?) {
-            endFakeDrag()
-        }
-
-        override fun onAnimationCancel(animation: Animator?) {}
-        override fun onAnimationRepeat(animation: Animator?) {}
-    })
-    animator.interpolator = interpolator
-    animator.duration = duration
-    animator.start()
-}

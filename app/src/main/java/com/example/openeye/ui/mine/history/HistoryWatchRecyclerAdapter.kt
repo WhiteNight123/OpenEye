@@ -55,6 +55,8 @@ class HistoryWatchRecyclerAdapter(
     }
 
     override fun getItemCount(): Int = data.size
+
+    // 滑动删除某条视频
     fun deleteItem(position: Int) {
         delete(data[position])
         data.removeAt(position)

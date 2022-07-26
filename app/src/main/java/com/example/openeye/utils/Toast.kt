@@ -12,4 +12,3 @@ fun toastLong(s: CharSequence) {
 }
 
 fun String.toast() = toast(this)
-fun String.toastLong() = toastLong(this)

@@ -25,7 +25,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/picture_toolbar_detail" />
 
-    <com.example.openeye.ui.widge.IndicatorView
+    <com.example.openeye.ui.widge.ViewPager2Indicator
         android:id="@+id/picture_vp2_indicator"
         android:layout_width="wrap_content"
         android:layout_height="10dp"

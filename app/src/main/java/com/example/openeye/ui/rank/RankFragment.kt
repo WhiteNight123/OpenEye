@@ -20,7 +20,6 @@ class RankFragment : Fragment() {
     lateinit var mTabLayout: TabLayout
     lateinit var mViewPager2: ViewPager2
 
-
     private var param1: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -73,25 +72,11 @@ class RankFragment : Fragment() {
 
     // 设置 TabLayout
     private fun initTabLayout() {
-        val tabs = arrayOf(
-            "日排行",
-            "周排行"
-        )
+        val tabs = arrayOf("日排行", "周排行")
         TabLayoutMediator(
             mTabLayout, mViewPager2
         ) { tab, position -> tab.text = tabs[position] }.attach()
-
-
     }
 
-    companion object {
-
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            RankFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                }
-            }
-    }
+    companion object
 }

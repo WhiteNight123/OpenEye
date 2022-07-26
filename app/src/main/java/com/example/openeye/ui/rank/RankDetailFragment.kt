@@ -1,7 +1,5 @@
 package com.example.openeye.ui.rank
 
-import android.app.ActivityOptions
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -15,21 +13,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.openeye.R
-import com.example.openeye.logic.model.VideoDetailData
 import com.example.openeye.ui.rank.RankDetailRvAdapter.Companion.TAG
-import com.example.openeye.ui.video.VideoActivity
 import com.shuyu.gsyvideoplayer.GSYVideoManager
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [RankDetailFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+
 class RankDetailFragment : Fragment() {
     private val viewModel by lazy { ViewModelProvider(this).get(RankDetailFragmentViewModel::class.java) }
     lateinit var recyclerView: RecyclerView
@@ -83,9 +72,7 @@ class RankDetailFragment : Fragment() {
                     R.anim.recycler_view_fade_in
                 )
             )
-        adapter = RankDetailRvAdapter(viewModel.videoData) { view1, videoDetail ->
-            //startActivity(view1, videoDetail)
-        }
+        adapter = RankDetailRvAdapter(viewModel.videoData)
         recyclerView.adapter = adapter
         recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             var firstVisibleItem = 0
@@ -115,52 +102,26 @@ class RankDetailFragment : Fragment() {
         })
     }
 
-    fun onBackPressed(): Boolean {
-        return GSYVideoManager.backFromWindowFull(activity)
-    }
-
     override fun onPause() {
         super.onPause()
-        Log.d("RankDetailFragment$param1", "onPause: ")
         if (GSYVideoManager.instance().listener() != null) {
-            Log.d("RankDetailFragment$param1", "onPause:${GSYVideoManager.instance()} ")
             GSYVideoManager.instance().listener().onVideoPause()
         }
     }
 
-
     // 因为两个fragment公用一个生命周期,所以界面回来时不进行播放
     override fun onResume() {
         super.onResume()
-        GSYVideoManager.onResume()
+        //GSYVideoManager.onResume()
     }
 
     override fun onDestroy() {
         super.onDestroy()
         Log.d("RankDetailFragment$param1", "onDestroy: ")
-
         GSYVideoManager.releaseAllVideos()
     }
 
-    private fun startActivity(view: View, videoDetail: VideoDetailData) {
-        val intent = Intent(context, VideoActivity::class.java)
-        intent.putExtra("videoDetail", videoDetail)
-        intent.putExtra("transitionName", view.transitionName)
-        val options =
-            ActivityOptions.makeSceneTransitionAnimation(activity, view, view.transitionName)
-        startActivity(intent, options.toBundle())
-    }
-
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment RankDetailFragment.
-         */
-        // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String) =
             RankDetailFragment().apply {

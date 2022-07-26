@@ -24,6 +24,7 @@ class SearchResultRecyclerAdapter(
         const val FOOT = 2
     }
 
+    // 是否隐藏底布局的progressbar
     var fadeTip = false
 
     inner class NormalHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -63,12 +64,9 @@ class SearchResultRecyclerAdapter(
                 )
             )
         }
-
-
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-
         if (holder is NormalHolder) {
             holder.apply {
                 mTvTitle.text = data[position].videoTitle
@@ -90,16 +88,11 @@ class SearchResultRecyclerAdapter(
         }
     }
 
-    fun getRealLastPosition() = data.size
     override fun getItemCount() = data.size + 1
     override fun getItemViewType(position: Int): Int {
         return when (position) {
-            itemCount - 1 -> {
-                FOOT
-            }
-            else -> {
-                NORMAL
-            }
+            itemCount - 1 -> FOOT
+            else -> NORMAL
         }
     }
 }

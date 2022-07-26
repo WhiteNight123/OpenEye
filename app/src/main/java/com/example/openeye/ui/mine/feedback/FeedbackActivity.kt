@@ -53,10 +53,8 @@ class FeedbackActivity : BaseActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    /**
-     * 跳转QQ聊天界面
-     */
-    fun startQQ(qq: String) {
+    // 跳转QQ聊天界面
+    private fun startQQ(qq: String) {
         try {
             val url = "mqqwpa://im/chat?chat_type=wpa&uin=$qq" //uin是发送过去的qq号码
             startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
@@ -65,5 +63,4 @@ class FeedbackActivity : BaseActivity() {
             "请检查是否安装QQ".toast()
         }
     }
-
 }

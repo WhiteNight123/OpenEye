@@ -62,15 +62,14 @@ class SearchActivity : BaseActivity() {
                         startFragment(mEtSearch.text.toString())
 
                     }
+                    // 动态插入chip
                     chipGroupHotSearch.addView(chip)
                 }
             } else {
                 "获取热搜失败\n请检查网络T_T".toast()
             }
         }
-        //viewModel.insertHistory(HistoryEntity("haha"))
         viewModel.historySearch.observe {
-            Log.e("TAG", "onCreate: $it")
             for (i in it) {
                 val chip = Chip(this@SearchActivity)
                 chip.text = i.key
@@ -79,6 +78,7 @@ class SearchActivity : BaseActivity() {
                     mEtSearch.setText(i.key)
                     startFragment(mEtSearch.text.toString())
                 }
+                // 动态插入chip
                 chipGroupHistory.addView(chip)
             }
         }
@@ -121,6 +121,7 @@ class SearchActivity : BaseActivity() {
         val fragment = SearchResultFragment()
         val bundle = Bundle()
         bundle.putString("key", key)
+        // 转场动画
         fragment.arguments = bundle
         fragment.sharedElementEnterTransition = Fade()
         window.exitTransition = Slide()

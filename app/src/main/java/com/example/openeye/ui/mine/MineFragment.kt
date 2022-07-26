@@ -19,12 +19,8 @@ private const val ARG_PARAM1 = "param1"
 class MineFragment : Fragment() {
     lateinit var mIvPortrait: ImageView
     lateinit var mTvHistoryWatch: TextView
-    lateinit var mTvMessage: TextView
     lateinit var mTvFeedback: TextView
-
-    // TODO: Rename and change types of parameters
     private var param1: String? = null
-    private var param2: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,14 +60,5 @@ class MineFragment : Fragment() {
         }
     }
 
-    companion object {
-
-        @JvmStatic
-        fun newInstance(param1: String) =
-            MineFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                }
-            }
-    }
+    companion object
 }

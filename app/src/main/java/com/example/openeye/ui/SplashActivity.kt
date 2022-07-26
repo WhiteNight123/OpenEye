@@ -7,10 +7,12 @@ import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatTextView
 import com.example.openeye.R
-import com.example.openeye.ui.main.MainActivity
 import com.google.android.material.textview.MaterialTextView
 
-// 不知道为什么SplashScreen失效,只能拿一个Activity作启动图
+/**
+ * 启动页Activity
+ * 不知道为什么SplashScreen失效,只能拿一个Activity作启动图
+ */
 class SplashActivity : AppCompatActivity() {
     lateinit var ivIcon: ImageView
     lateinit var ivBrand: ImageView
@@ -31,7 +33,6 @@ class SplashActivity : AppCompatActivity() {
             Thread.sleep(1500)
             val intent = Intent(this@SplashActivity, MainActivity::class.java)
             startActivity(intent)
-            // 结束当前 Activity
             finish()
         }.start()
 

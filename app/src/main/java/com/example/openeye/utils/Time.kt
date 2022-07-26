@@ -1,8 +1,10 @@
 package com.example.openeye.utils
 
-// 将秒转换成几分几秒
+/**
+ * 将秒转换成几分几秒
+ */
 fun getTime(second: Int): String {
-    var tmp: String = ""
+    var tmp = ""
     if (second >= 600) {
         tmp = if (second % 60 >= 10) {
             tmp + (second / 60).toString() + ":" + (second % 60)
